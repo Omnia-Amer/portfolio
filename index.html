@@ -2144,7 +2144,7 @@
       </label>
       <div class="cform-actions">
         <button type="submit" class="btn solid">Open WhatsApp with my message</button>
-        <span class="cform-note" id="waNote" hidden>Opening WhatsApp&hellip; nothing happened? <a id="waFallback" href="https://wa.me/201558092205" target="_blank" rel="noopener">Tap here</a>. A copy is also emailed so nothing is lost.</span>
+        <span class="cform-note" id="waNote" hidden><span id="waStatus">Opening WhatsApp&hellip;</span> <a id="waFallback" href="https://wa.me/201558092205" target="_blank" rel="noopener">Open WhatsApp manually</a> &middot; a copy is also emailed so nothing is lost.</span>
       </div>
       <noscript><p class="cform-note">This form needs JavaScript. Message me on <a href="https://wa.me/201558092205" target="_blank" rel="noopener">WhatsApp</a> or by <a href="mailto:Omniaamer835@gmail.com">email</a>.</p></noscript>
     </form>
@@ -2383,6 +2383,7 @@
     var PHONE = '201558092205';
     var MAIL = 'https://formsubmit.co/ajax/Omniaamer835@gmail.com';
     var note = document.getElementById('waNote');
+    var stat = document.getElementById('waStatus');
     var fb = document.getElementById('waFallback');
     f.addEventListener('submit', function(e){
       e.preventDefault();
@@ -2401,28 +2402,36 @@
 
       var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
       if(fb) fb.href = url;
-      if(note){ note.hidden = false; }
-      window.open(url, '_blank', 'noopener');
+      if(note) note.hidden = false;
+      if(stat) stat.textContent = 'Opening WhatsApp…';
 
-      // email backup
-      fetch(MAIL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: name, company: company || '—', email: email || '—',
-          topic: topic, message: message,
-          _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
-        })
-      }).then(function(r){ return r.json(); })
-        .then(function(res){
-          var ok = res && (res.success === true || res.success === 'true');
-          if(note) note.textContent = ok
-            ? 'WhatsApp is open — and a copy has been emailed to Omnia. Thanks for reaching out!'
-            : 'WhatsApp is open. If it didn’t, use the WhatsApp or email links above — your message is safe.';
-        })
-        .catch(function(){
-          if(note) note.textContent = 'WhatsApp is open. If it didn’t, use the WhatsApp or email links above — your message is safe.';
-        });
+      // email backup — keepalive lets it finish even after we navigate away
+      try {
+        fetch(MAIL, {
+          method: 'POST', keepalive: true,
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            name: name, company: company || '—', email: email || '—',
+            topic: topic, message: message,
+            _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
+          })
+        }).then(function(r){ return r.json(); })
+          .then(function(res){
+            var ok = res && (res.success === true || res.success === 'true');
+            if(stat) stat.textContent = ok
+              ? 'A copy has been emailed to Omnia.'
+              : 'If WhatsApp didn’t open,';
+          }).catch(function(){ if(stat) stat.textContent = 'If WhatsApp didn’t open,'; });
+      } catch(_){}
+
+      // Open WhatsApp. Try a new tab; if the browser blocks it, navigate this tab
+      // (a plain location change is never popup-blocked). wa.me opens the app on
+      // mobile and web.whatsapp.com on desktop.
+      var win = null;
+      try { win = window.open(url, '_blank'); } catch(_){}
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        setTimeout(function(){ window.location.href = url; }, 120);
+      }
     });
   })();
 </script>
