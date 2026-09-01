@@ -25,7 +25,7 @@ Last updated: 2026-09-02
 | Favicon | ✅ | monogram, readable on light + dark tab strips |
 | 404 / deep links | ✅ | `404.html` redirects to the app, preserving the hash |
 | Mobile | ✅ | verified at 375 px — nav collapses to a working hamburger |
-| Real Lighthouse scores | ⬜ | couldn't run in build env — **please run once and paste below** |
+| Real Lighthouse scores | 🟡 | A11y **100** · SEO **100** · Best Practices **96** · Perf **58** (extension-contaminated — see §6a) · **CLS 0** |
 | Case-study detail (role/year/metrics) | ⛔ | 47 blanks — **needs your facts** (Phase 4) |
 | Analytics | ⛔ | not installed — needs your decision + account |
 | Contact form | ⛔ | `mailto:` only — needs your decision + service |
@@ -74,7 +74,7 @@ skip link resolves to a real `<main>`, `#route-status` present, focus rings visi
 
 | # | Question | Why it matters | Default if no answer |
 |---|----------|----------------|----------------------|
-| Q1 | **Which case studies already have real detail vs need it?** e.g. QNL shows "Role: UX Consultant · Via: Mannai Corporation · Year: 2024–Present" — that's real. Others are blank. | Tells us how big Phase 4 actually is | Assume all 15 need everything |
+| Q1 | **Which case studies already have real detail vs need it?** Confirmed: **QNL is done** (Role: UX Consultant · Via: Mannai Corporation · Year: 2024–Present, full write-up). The other 14 still have `todo` markers. | Tells us how big Phase 4 actually is | Assume the other 14 need everything |
 | Q2 | For each case study that needs it: **role, agency/employer, year(s), the brief, your process, one measurable result.** (See §4 for the checklist.) | This is the whole of Phase 4 — can't be inferred or invented | — blocked — |
 | Q3 | The 3 `confirm` markers in the copy are **unverified claims** (e.g. a Guinness World Record link, specific figures). Are they accurate as written? | Publishing unverified specifics is a credibility risk | Leave hidden |
 | Q4 | Are these the correct, current profile URLs? `behance.net/omnia-amer`, `dribbble.com/Omniaamer`, `linkedin.com/in/omni-aamer/` | They're in the JSON-LD + footer; a wrong LinkedIn slug is bad | Keep as-is |
@@ -125,9 +125,42 @@ Plus the 3 `confirm` fact-checks (Q3).
 
 ---
 
+## 6a. Lighthouse read — 2026-09-02 (route: `#/work/case-qnl`, Moto G Power, Slow 4G)
+
+| Category | Score | |
+|----------|-------|---|
+| Performance | **58** | mostly contaminated — see below |
+| Accessibility | **100** | ✅ |
+| Best Practices | **96** | ✅ (the −4 is a Chrome "Issues panel" logging entry) |
+| SEO | **100** | ✅ structured data valid |
+
+Core Web Vitals: FCP 2.0 s · **LCP 4.1 s** · **TBT 1,850 ms** · **CLS 0** ✅ · SI 2.0 s
+
+**The Performance 58 is not a real reflection of the site.** Lighthouse itself flagged:
+*"Chrome extensions negatively affected this page's load performance."* The report shows
+"Reduce unused JavaScript — **4,315 KiB**", "Minimize main-thread work — 5.5 s",
+"Reduce JS execution — 2.9 s", TBT 1,850 ms. **This site's own JS is ~10 KB.** Those numbers are
+Grammarly / Adobe / other extensions injecting into the page.
+
+➡ **Re-run in an Incognito window** (extensions disabled) — Performance should land in the 80s–90s.
+
+**Real issues in the report, and what was done:**
+
+| Finding | Est. saving | Action |
+|---------|-------------|--------|
+| LCP image was `loading="lazy"` | LCP ↓ | ✅ Fixed — first image on every `work/case-*` page is now `loading="eager" fetchpriority="high"` (commit `a79e7f6`) |
+| Render-blocking font stylesheet | ~450 ms | ✅ Fixed — loads via `media="print"` + `onload` swap + `<noscript>` (commit `a79e7f6`) |
+| "Improve image delivery" | ~258 KiB | ⬜ **S3** — convert JPEGs to WebP (needs `cwebp`/Squoosh locally; can't in build env) |
+| "Use efficient cache lifetimes" | ~369 KiB | ⛔ **Can't on GitHub Pages** — it serves a fixed 10-min cache, no custom headers. Only fixable by fronting with Cloudflare or moving to Netlify/Cloudflare Pages. |
+| "Reduce unused CSS — 341 KiB" | small real cost | ⬜ Low priority — all routes' CSS is inlined in one `<style>` (~30 KB, ~8 KB gzipped). Per-route CSS splitting is a big refactor for little gain. |
+
+**Next Lighthouse run should be in Incognito**, on `#/work/case-qnl` (a heavy case page) *and* `#/` — record both in §8.
+
+---
+
 ## 6. Suggestions (not yet scheduled)
 
-- **S1 — Run Lighthouse now.** Chrome DevTools → Lighthouse → Mobile. Paste Perf / A11y / SEO / Best-Practices into §8. This is the real proof the perf + a11y work landed.
+- **S1 — Re-run Lighthouse in Incognito** (done once with extensions on — see §6a; the Perf number was contaminated). Incognito = extensions off = the real score.
 - **S2 — Manual screen-reader pass.** VoiceOver (Mac) or NVDA (Windows): tab through the nav, trigger the skip link, change routes, confirm the heading is announced. Automated checks can't fully cover this.
 - **S3 — Convert images to WebP.** The 141 JPEGs are ~11 MB on disk; WebP would roughly halve that and speed up case-study pages further. Low risk, one scripted pass.
 - **S4 — Trim `<meta name="description">` to ~155 chars.** Currently 210 — Google truncates it in results. The `og:`/`twitter:` ones can stay long.
@@ -140,14 +173,14 @@ Plus the 3 `confirm` fact-checks (Q3).
 
 ## 7. Next steps (in order)
 
-1. **You:** re-run the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) — confirm the card renders and the warning is gone.
-2. **You:** run Lighthouse (S1) and paste scores into §8.
-3. **You:** answer the open questions in §3 — especially **Q1 + Q2** (case-study content), since that unblocks the largest remaining piece.
+1. ~~LinkedIn Post Inspector~~ — done, warning cleared (2026-09-02).
+2. ~~First Lighthouse run~~ — done (§6a). **Re-run in Incognito** for the true Perf score, record both `#/work/case-qnl` and `#/` in §8.
+3. **You:** answer §3 — especially **Q2** (content for the 14 case studies that still have `todo` markers; QNL is already done).
 4. **You → me:** send full detail for one case study.
-5. **Me:** wire that case study in as the template; you review.
-6. **Me:** roll the same treatment through the rest as you supply content; drop `.todo{display:none}` when done.
-7. **Me:** pick up any Phase 5 items you greenlit (Q7–Q10).
-8. **Optional:** S3 (WebP), S4, S5, S6 as a small polish commit.
+5. **Me:** wire that case study in as the template; you review the format.
+6. **Me:** roll the same through the rest as you supply content; drop `.todo{display:none}` when all done.
+7. **Me:** any Phase 5 items you greenlight (Q7–Q10).
+8. **Me (needs your local tooling for S3):** WebP images, `<meta description>` trim (S4), sitemap `lastmod` (S5), `rel="me"` (S6) — one polish commit.
 
 ---
 
@@ -163,4 +196,6 @@ social card renders · Download CV returns a valid PDF · no console errors · k
 | 2026-09-02 | Phase 2 | — | — | — | — | 14 MB → 192 KB; 141 imgs + video + CV externalised, all load live; width/height + lazy on all imgs; LinkedIn scraper unblocked. |
 | 2026-09-02 | Phase 3 | — | — | — | — | Skip link + SPA focus mgmt + focus rings, verified live; router intact. |
 | 2026-09-02 | QA sweep | — | — | — | — | Desktop + mobile (375 px): all routes render, images load, hamburger works, skip link → real `<main>`, aria-live present, focus rings visible, 0 site console errors. Descriptions → ~194 chars. |
-| _tbd_ | **real Lighthouse** | ? | ? | ? | ? | **← run this and fill in** |
+| 2026-09-02 | Lighthouse (case-qnl, **extensions on**) | 58 | 100 | 100 | 96 | CLS 0 ✅. Perf contaminated by browser extensions (4,315 KiB unused JS not from this site). LCP 4.1s / TBT 1,850ms. |
+| 2026-09-02 | perf fixes | — | — | — | — | Commit `a79e7f6`: LCP image eager+fetchpriority per case page; font CSS non-blocking (−450ms). Fonts verified still rendering. |
+| _tbd_ | **Lighthouse in Incognito** | ? | ? | ? | ? | **← re-run with extensions off, `#/work/case-qnl` + `#/`** |
