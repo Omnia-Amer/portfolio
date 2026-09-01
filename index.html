@@ -353,7 +353,18 @@
   .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
   .reveal.in{opacity:1; transform:none;}
   @media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important;} .reveal{opacity:1; transform:none;} }
+
+  /* ---- a11y: skip link, live region, keyboard focus ---- */
+  .skip-link{position:fixed; top:12px; left:12px; z-index:1000; padding:10px 16px; background:var(--ink); color:var(--bg);
+    font-family:var(--font-mono); font-size:12px; border-radius:8px; transform:translateY(-160%); transition:transform .18s ease;}
+  .skip-link:focus{transform:translateY(0);}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;}
+  a:focus-visible, button:focus-visible, [tabindex="0"]:focus-visible, summary:focus-visible{outline:2px solid var(--ink); outline-offset:3px; border-radius:3px;}
+  main.page:focus, h1:focus, h2:focus{outline:none;}
 </style>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div id="route-status" class="sr-only" role="status" aria-live="polite"></div>
 
 <header class="site">
   <div class="wrap">
@@ -2241,7 +2252,7 @@
     return h;
   }
 
-  function applyRoute(){
+  function applyRoute(isNav){
     const route = parseRoute(location.hash);
     let matched = false;
     pages.forEach(p=>{
@@ -2256,6 +2267,18 @@
     // since a hidden page's elements never intersect while display:none)
     document.querySelectorAll('main.page:not([hidden]) .reveal').forEach(el=> el.classList.add('in'));
     window.scrollTo(0, 0);
+    // a11y: make the shown page the skip-link target; move focus to its heading on navigation
+    const shown = pages.find(p=>!p.hidden);
+    if(shown){
+      pages.forEach(p=>{ if(p!==shown && p.id === 'main-content') p.removeAttribute('id'); });
+      shown.id = 'main-content';
+      shown.setAttribute('tabindex','-1');
+      const heading = shown.querySelector('h1, h2');
+      if(heading && !heading.hasAttribute('tabindex')) heading.setAttribute('tabindex','-1');
+      if(isNav){ (heading || shown).focus({preventScroll:true}); }
+      const status = document.getElementById('route-status');
+      if(status) status.textContent = (heading ? heading.textContent.trim() : 'Page') + ' — loaded';
+    }
     if(navLinks) navLinks.classList.remove('open');
     const topRoute = route.split('/')[0]; // e.g. "work/case-saso" -> "work"
     document.querySelectorAll('nav.links a').forEach(a=>{
@@ -2263,7 +2286,7 @@
       a.classList.toggle('active', href === topRoute);
     });
   }
-  window.addEventListener('hashchange', applyRoute);
-  applyRoute();
+  window.addEventListener('hashchange', function(){ applyRoute(true); });
+  applyRoute(false);
 </script>
 </body></html>
