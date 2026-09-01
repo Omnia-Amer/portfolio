@@ -225,4 +225,5 @@ social card renders · Download CV returns a valid PDF · no console errors · k
 | 2026-09-02 | Lighthouse (case-qnl, **extensions on**) | 58 | 100 | 100 | 96 | CLS 0 ✅. Perf contaminated by browser extensions (4,315 KiB unused JS not from this site). LCP 4.1s / TBT 1,850ms. |
 | 2026-09-02 | perf fixes | — | — | — | — | Commit `a79e7f6`: LCP image eager+fetchpriority per case page; font CSS non-blocking (−450ms). Fonts verified still rendering. |
 | 2026-09-02 | contact form + branding | — | — | — | — | Commits `2da786f`…`6e677c4`: WhatsApp form (URL + message verified live), FormSubmit AJAX reachable (activation email sent), GoatCounter loads, sparkle favicon + logo mark verified, 0 console errors. |
+| 2026-09-02 | contact form fix | — | — | — | — | Commit `46449f5`: "nothing happens" was `window.open` popup-blocked. Now falls back to same-tab nav → verified live: button click lands on the WhatsApp "Chat with +20…" page with the message pre-filled. Empty-submit guard + native no-JS action confirmed. 0 console errors. |
 | _tbd_ | **Lighthouse in Incognito** | ? | ? | ? | ? | **← re-run with extensions off, `#/work/case-qnl` + `#/`** |
