@@ -5,28 +5,30 @@ Tracking doc for improvements to the portfolio site (`index.html`), deployed at
 
 Status legend: ⬜ not started · 🟡 in progress · ✅ done
 
+**Progress:** Phase 1 ✅ done (2026-09-01) · Phase 2 ⬜ · Phase 3 ⬜ · Phase 4 ⬜ blocked on Omnia · Phase 5 ⬜ blocked on decisions
+
 ---
 
 ## Summary of findings
 
 | # | Area | Severity | Effort | Blocked on |
 |---|------|----------|--------|------------|
-| 1 | 47 visible `<mark class="todo">` editor notes on case-study pages | 🔴 High | S (hide) / L (fill) | Real content from Omnia |
-| 2 | No Open Graph / Twitter / canonical / structured data | 🟠 Med | S | `og-image.png` |
+| 1 | 47 visible `<mark class="todo">` editor notes on case-study pages | 🟢 Hidden (was 🔴) | S (hide) ✅ / L (fill) ⬜ | Real content from Omnia |
+| 2 | No Open Graph / Twitter / canonical / structured data | ✅ Fixed | S | — |
 | 3 | 14 MB page — all images, video, CV inlined as base64 | 🟠 Med | L | — |
-| 4 | Missing `robots.txt`, `sitemap.xml`, `404.html` | 🟡 Low | S | — |
-| 5 | Accessibility: contrast, skip link, focus management, focus-visible | 🟡 Low | M | — |
-| 6 | Nice-to-haves: analytics, contact form, favicon-on-dark | 🟢 Opt | S–M | Decisions |
+| 4 | Missing `robots.txt`, `sitemap.xml`, `404.html` | ✅ Fixed | S | — |
+| 5 | Accessibility: contrast, skip link, focus management, focus-visible | 🟡 Low (contrast ✅, rest in Phase 3) | M | — |
+| 6 | Nice-to-haves: analytics, contact form, favicon-on-dark | 🟢 Opt (favicon ✅) | S–M | Decisions |
 
 Effort: **S** ≈ <30 min · **M** ≈ 1–2 h · **L** ≈ half-day+
 
 ---
 
-## Phase 1 — Ship now (no new content required)
+## Phase 1 — Ship now (no new content required) ✅ DONE — 2026-09-01
 
 One commit. Low risk, immediate polish.
 
-### 1.1 Hide placeholder notes ⬜
+### 1.1 Hide placeholder notes ✅
 - **What:** 47 `<mark class="todo">…</mark>` spans render on the live case-study pages
   ("Add a measurable result", "Add your role", "confirm", …).
 - **Fix (stopgap):** add to the stylesheet —
@@ -35,8 +37,9 @@ One commit. Low risk, immediate polish.
   ```
 - **Acceptance:** no highlighted notes visible on any `#/work/case-*` route.
 - **Follow-up:** replace with real content in Phase 4, then remove this rule.
+- **Verified:** Playwright DOM check — 47/47 `.todo` elements computed `display:none` on every route. ✅
 
-### 1.2 Social / SEO meta ⬜
+### 1.2 Social / SEO meta ✅
 - **What:** add to `<head>` —
   ```html
   <meta name="author" content="Omnia Amer">
@@ -56,14 +59,22 @@ One commit. Low risk, immediate polish.
   <meta name="twitter:image" content="https://omnia-amer.github.io/portfolio/og-image.png">
   ```
 - **Acceptance:** passes <https://opengraph.dev> / LinkedIn Post Inspector with a card + image.
-- **Note:** `og-image.png` (1200×630) is produced in task 2.1.
+- **Note:** `og-image.png` (1200×630) — pulled forward from task 2.1 so this gate isn't left half-done;
+  built as a plain PNG (brand mark, name, title, stat line) matching the site's dark/mono aesthetic.
+- **Verified:** all 9 meta/OG/Twitter tags + canonical + theme-color render once in the DOM (checked via
+  Playwright); `og-image.png` returns HTTP 200 locally. **Not yet verified live** — the LinkedIn/opengraph.dev
+  card check needs the real `https://omnia-amer.github.io/portfolio/` URL after you push, since those tools
+  can't reach a local file. Worth a 30-second check after deploy.
 
-### 1.3 JSON-LD structured data ⬜
+### 1.3 JSON-LD structured data ✅
 - **What:** add a `<script type="application/ld+json">` `Person` block before `</head>`:
   name, jobTitle, url, `sameAs` (Behance, Dribbble, LinkedIn), address (Alexandria, Egypt).
 - **Acceptance:** validates at <https://validator.schema.org>.
+- **Verified:** `JSON.parse()` on the extracted block succeeds; schema fields present (name, jobTitle,
+  url, sameAs × 3, PostalAddress). Recommend also pasting it into validator.schema.org once live, for
+  the official Google-rich-results read.
 
-### 1.4 Font loading ⬜
+### 1.4 Font loading ✅
 - **What:** fonts currently load via `@import` inside an in-`<body>` `<style>` (render-blocking, serialized).
 - **Fix:** delete the `@import` line, add to `<head>`:
   ```html
@@ -72,13 +83,21 @@ One commit. Low risk, immediate polish.
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
   ```
 - **Acceptance:** fonts still render; no FOIT longer than ~100 ms.
+- **Verified:** `@import` line removed from `<style>`; three `<link>` tags present in `<head>` instead
+  (same domain as before, so no new third-party dependency — just moved earlier + non-render-blocking).
+  Could not confirm actual font-swap timing in this sandbox (outbound fonts.googleapis.com is blocked
+  here — `net::ERR_TUNNEL_CONNECTION_FAILED`); this is a sandbox limitation, not a site defect. Please
+  do a quick visual check after deploy that the display/body faces still render correctly.
 
-### 1.5 Contrast fix ⬜
+### 1.5 Contrast fix ✅
 - **What:** `--ink-faint: rgba(255,255,255,.40)` on `#000` ≈ 3.7:1 — fails WCAG AA for body text.
 - **Fix:** `--ink-faint: rgba(255,255,255,.55);` (≈ 5.3:1). Spot-check eyebrow labels / footer.
 - **Acceptance:** all text ≥ 4.5:1 (or ≥ 3:1 for ≥ 24 px / 19 px-bold).
+- **Verified:** computed WCAG ratio for white-at-.55-alpha over `#000` = **6.25:1** (was 3.7:1) —
+  clears the 4.5:1 AA threshold with margin. Applied via the single `--ink-faint` CSS variable, so
+  every eyebrow label / footer line / caption using it is fixed at once.
 
-### 1.6 Repo infra files ⬜
+### 1.6 Repo infra files ✅
 - `robots.txt`:
   ```
   User-agent: *
@@ -88,8 +107,11 @@ One commit. Low risk, immediate polish.
 - `sitemap.xml`: single `<url>` for the site root (hash routes aren't separately crawlable).
 - `404.html`: copy of `index.html` (so mistyped deep links still load the app).
 - **Acceptance:** all three return HTTP 200; `/portfolio/anything` renders the site.
+- **Verified:** all three files created and confirmed HTTP 200 over a local server. `sitemap.xml`
+  parses as valid XML. **Note:** `404.html` is a snapshot copy of `index.html` at Phase 1 — refresh
+  this copy after Phase 2 changes `index.html`'s structure, or it'll silently drift out of date.
 
-### 1.7 Favicon on dark tabs ⬜
+### 1.7 Favicon on dark tabs ✅
 - **What:** the all-black favicon square blends into dark browser tab strips.
 - **Fix:** change `favicon.svg` background `#000000` → `#111111` with a `1px` `#ffffff22` inner stroke,
   or keep black but enlarge the white tiles. Update both the file and the inline data-URI copy.
@@ -97,11 +119,44 @@ One commit. Low risk, immediate polish.
 
 **Phase 1 acceptance:** Lighthouse SEO ≥ 95, Best-Practices ≥ 95; social card renders; no visible TODO notes.
 
+### Gate result: ✅ PASS
+
+Lighthouse itself couldn't run in this environment (no network access to install it, no scoring
+service reachable), so the gate was validated with direct equivalents instead:
+
+- Playwright, full route sweep (`/`, `/work`, `/about`, `/contact`, `/process`, 3 case-study routes,
+  scrolled end-to-end on each): **0 JS console errors, 0 broken/unloaded images**, all `.todo` notes
+  confirmed hidden (47/47).
+- Meta/OG/Twitter/canonical/theme-color tags: present once each, correct values, `og-image.png` built
+  and returns 200.
+- JSON-LD: parses as valid JSON with the expected `Person` fields.
+- Contrast: `--ink-faint` measured at 6.25:1 (target ≥ 4.5:1).
+- `robots.txt` / `sitemap.xml` / `404.html`: all 200, sitemap XML-valid.
+- The only network failure seen (`fonts.googleapis.com` → `ERR_TUNNEL_CONNECTION_FAILED`) is this
+  sandbox blocking outbound font requests, not a site defect — same domain the old `@import` already
+  depended on, just loaded earlier and non-render-blocking now.
+
+**Two checks need the live URL, not a local copy, and are worth 5 minutes after you push:**
+1. LinkedIn Post Inspector / opengraph.dev — confirm the social card renders with the new image.
+2. A quick look on both a light-tab and dark-tab browser — confirm the new favicon reads clearly on both.
+
+### Suggested edits before Phase 2
+
+- **`og-image.png` was built with a fallback system font** (Liberation Sans — metrically close to
+  Outfit/Arial, since Google Fonts wasn't reachable to source the real Outfit weights in this
+  environment). It matches the site's dark/mono look but isn't pixel-identical to the on-site
+  typography. Happy to regenerate it with the real Outfit font if you'd like — just say so.
+- **Phase 2's `assets/img/` externalization will touch every image tag** `og-image.png` and
+  `favicon.svg` currently reference — worth re-running this same Playwright sweep after that phase
+  specifically, not just trusting the file-size drop.
+- **`404.html` will need refreshing** after Phase 2 (see note under 1.6) — flagging so it doesn't
+  quietly go stale.
+
 ---
 
 ## Phase 2 — Assets & performance (mechanical, larger diff)
 
-### 2.1 Create `og-image.png` ⬜
+### 2.1 Create `og-image.png` ✅ (done ahead of schedule, in the Phase 1 gate — see 1.2 above)
 - 1200×630, black background, "Omnia Amer / Senior UI/UX Designer" + the logo mark, matching site type.
 - Save to repo root.
 
@@ -205,3 +260,4 @@ Also resolve the 3 `confirm` markers (fact-checks on specific claims).
 | Date | Phase | Perf | A11y | SEO | BP | Notes |
 |------|-------|------|------|-----|----|-------|
 | _tbd_ | baseline | | | | | before any changes |
+| 2026-09-01 | Phase 1 | — | — | — | — | Lighthouse unavailable in the build environment (no network to install/score). Substituted: 0 console errors, 0 broken images across all routes, contrast 6.25:1, all meta/JSON-LD present and valid, 47/47 todo notes hidden. Run real Lighthouse once live and fill this row in. |

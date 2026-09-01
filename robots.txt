@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://omnia-amer.github.io/portfolio/sitemap.xml
