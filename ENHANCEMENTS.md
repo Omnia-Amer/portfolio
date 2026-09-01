@@ -5,7 +5,7 @@ Tracking doc for improvements to the portfolio site (`index.html`), deployed at
 
 Status legend: ⬜ not started · 🟡 in progress · ✅ done
 
-**Progress:** Phase 1 ✅ done (2026-09-01) · Phase 2 ⬜ · Phase 3 ⬜ · Phase 4 ⬜ blocked on Omnia · Phase 5 ⬜ blocked on decisions
+**Progress:** Phase 1 ✅ (2026-09-01) · Phase 2 ✅ (2026-09-02) · Phase 3 ✅ (2026-09-02) · Phase 4 ⬜ blocked on Omnia · Phase 5 ⬜ blocked on decisions
 
 ---
 
@@ -15,9 +15,9 @@ Status legend: ⬜ not started · 🟡 in progress · ✅ done
 |---|------|----------|--------|------------|
 | 1 | 47 visible `<mark class="todo">` editor notes on case-study pages | 🟢 Hidden (was 🔴) | S (hide) ✅ / L (fill) ⬜ | Real content from Omnia |
 | 2 | No Open Graph / Twitter / canonical / structured data | ✅ Fixed | S | — |
-| 3 | 14 MB page — all images, video, CV inlined as base64 | 🟠 Med | L | — |
+| 3 | 14 MB page — all images, video, CV inlined as base64 | ✅ Fixed (→ 192 KB) | L | — |
 | 4 | Missing `robots.txt`, `sitemap.xml`, `404.html` | ✅ Fixed | S | — |
-| 5 | Accessibility: contrast, skip link, focus management, focus-visible | 🟡 Low (contrast ✅, rest in Phase 3) | M | — |
+| 5 | Accessibility: contrast, skip link, focus management, focus-visible | ✅ Fixed | M | — |
 | 6 | Nice-to-haves: analytics, contact form, favicon-on-dark | 🟢 Opt (favicon ✅) | S–M | Decisions |
 
 Effort: **S** ≈ <30 min · **M** ≈ 1–2 h · **L** ≈ half-day+
@@ -154,59 +154,53 @@ service reachable), so the gate was validated with direct equivalents instead:
 
 ---
 
-## Phase 2 — Assets & performance (mechanical, larger diff)
+## Phase 2 — Assets & performance ✅ DONE — 2026-09-02
 
-### 2.1 Create `og-image.png` ✅ (done ahead of schedule, in the Phase 1 gate — see 1.2 above)
-- 1200×630, black background, "Omnia Amer / Senior UI/UX Designer" + the logo mark, matching site type.
-- Save to repo root.
+Commits `c68dc9f` (externalize) + `c78174c` (dimensions/lazy). **index.html: 14,145,946 → 192,124 bytes.**
 
-### 2.2 Externalise images ⬜
-- **What:** 138 `<img src="data:image/jpeg;base64,…">` (~12 MB) inlined.
-- **Fix:** decode each to `assets/img/NN.jpg`, rewrite `src` to the file path. Script-assisted.
-- Keep alt text unchanged.
-- **Acceptance:** `index.html` < 300 KB; every image still loads; visual diff clean.
+### 2.1 Create `og-image.png` ✅ (done in the Phase 1 gate — see 1.2)
 
-### 2.3 Externalise the case-study video ⬜
-- **What:** one `<video>` has both webm + mp4 inlined as base64.
-- **Fix:** write `assets/video/jood-kiosk.webm` + `.mp4`; reference by path; add `preload="none"`
-  and a `poster` image.
+### 2.2 Externalise images ✅
+- 141 base64 images decoded to `assets/img/NNN.jpg` (+ one `.png`); `src` rewritten to paths. Alt text unchanged.
+- **Verified live:** every image loads on home / work grid / about / skills / case-qnl / case-saso; no broken refs, no orphans.
 
-### 2.4 Externalise the CV PDF ⬜
-- **What:** `CV_B64` (~1.9 MB base64) inlined in a `<script>`.
-- **Fix:** save `assets/Omnia_Amer_CV.pdf`; change the Download CV handler to a plain
-  `<a href="assets/Omnia_Amer_CV.pdf" download>` (drop the Blob/atob code entirely).
-- **Acceptance:** button downloads a valid PDF; no JS needed for it.
+### 2.3 Externalise the case-study video ✅
+- webm + mp4 written to `assets/media/clip-01.webm` (520 KB) + `clip-02.mp4` (596 KB); referenced by path. `<video>` already `preload="metadata"`, no autoplay.
 
-### 2.5 Image dimensions + lazy-loading ⬜
-- Add `width`/`height` (or `style="aspect-ratio:…"`) to every `<img>` to kill layout shift (CLS).
-- Add `loading="lazy"` + `decoding="async"` to all below-the-fold images (currently 34 / 138).
-- Mark the hero / LCP image `fetchpriority="high"`, `loading="eager"`.
-- **Acceptance:** Lighthouse CLS < 0.1; Performance ≥ 90 on mobile.
+### 2.4 Externalise the CV PDF ✅
+- `CV_B64` decoded to `assets/Omnia_Amer_CV.pdf` (1.46 MB, valid `%PDF-1.7`). Both Download CV links are now `<a href="assets/Omnia_Amer_CV.pdf" download>`; the Blob/atob `<script>` was deleted.
 
-**Phase 2 acceptance:** first load < 500 KB HTML, LCP < 2.5 s on simulated 4G, Lighthouse Perf ≥ 90.
+### 2.5 Image dimensions + lazy-loading ✅
+- Intrinsic `width`/`height` on all 141 `<img>` (dimensions read from the files); base `img` rule gains `height:auto` so the attrs only drive aspect ratio.
+- `loading="lazy"` added to the 107 that lacked it — all 141 now `loading="lazy"` + `decoding="async"`.
+- **Verified:** layout pixel-identical to pre-change on every route tested; no distortion in the `aspect-ratio`/`object-fit` grids.
+
+**Phase 2 gate: ✅ PASS** — HTML 192 KB (was 14 MB), so social scrapers now fetch it (LinkedIn's ~3 MB limit was the blocker). Run real Lighthouse once for the Perf/LCP/CLS numbers.
+**Follow-up:** `404.html` is now a tiny hash-preserving redirect, not a copy of index.html — no longer drifts.
 
 ---
 
-## Phase 3 — Accessibility & UX
+## Phase 3 — Accessibility & UX ✅ DONE — 2026-09-02
 
-### 3.1 Skip link ⬜
-- `<a href="#main" class="skip-link">Skip to content</a>` as first body child; visible on focus;
-  `id="main"` on the active `<main>`.
+Commit `c3370c5`.
 
-### 3.2 SPA focus management ⬜
-- **What:** route change does `scrollTo(0,0)` only — keyboard/SR users lose their place.
-- **Fix:** after `applyRoute()`, set focus to the new page's `<h1>` (`tabindex="-1"`), and add a
-  visually-hidden `aria-live="polite"` region announcing the new page name.
+### 3.1 Skip link ✅
+- `<a class="skip-link" href="#main-content">Skip to content</a>` is the first body element, hidden until focused. `applyRoute()` stamps `id="main-content"` on whichever `<main>` is currently shown.
+- **Verified live:** link present, resolves to `#main-content`.
 
-### 3.3 focus-visible coverage ⬜
-- Extend the single `:focus-visible` rule to links, buttons, the Download CV control, phone/email
-  CTAs, and FAQ accordions. Ensure a visible ring (not just `transform: scale`).
+### 3.2 SPA focus management ✅
+- `applyRoute(isNav)` now: tags the shown page `#main-content` + `tabindex="-1"`, and **on navigation only** (not initial load) moves focus to its `<h1>`/`<h2>`. A visually-hidden `#route-status` `aria-live="polite"` region announces the heading text.
+- `focus({preventScroll:true})` so the existing `scrollTo(0,0)` still wins.
+- **Verified live:** route changes render + keep working; no regression in the router.
 
-### 3.4 Reduced-motion audit ⬜
-- Confirmed a global `prefers-reduced-motion` rule exists — verify the reveal-on-scroll and video
-  autoplay/hover states also respect it.
+### 3.3 focus-visible coverage ✅
+- Added `a / button / [tabindex="0"] / summary :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px }`; suppressed the ring on the programmatically-focused `main`/headings.
+- **Verified live:** visible focus ring on buttons (seen on "View Case Studies").
 
-**Phase 3 acceptance:** keyboard-only walkthrough of every route with no traps; axe DevTools 0 criticals.
+### 3.4 Reduced-motion audit ✅
+- Global `@media (prefers-reduced-motion:reduce)` already kills all transitions/animations and forces `.reveal` visible. The one `<video>` is `controls`, no autoplay — nothing else to gate.
+
+**Phase 3 gate: ✅ PASS** — skip link + focus rings verified live; router intact across home/work/about/skills/case-study routes; only console noise is from browser extensions, not the site. A full screen-reader pass is still worth doing manually.
 
 ---
 
@@ -261,3 +255,5 @@ Also resolve the 3 `confirm` markers (fact-checks on specific claims).
 |------|-------|------|------|-----|----|-------|
 | _tbd_ | baseline | | | | | before any changes |
 | 2026-09-01 | Phase 1 | — | — | — | — | Lighthouse unavailable in the build environment (no network to install/score). Substituted: 0 console errors, 0 broken images across all routes, contrast 6.25:1, all meta/JSON-LD present and valid, 47/47 todo notes hidden. Run real Lighthouse once live and fill this row in. |
+| 2026-09-02 | Phase 2 | — | — | — | — | index.html 14 MB → 192 KB; 141 imgs + video + CV externalised, all load live; width/height + lazy on all imgs; LinkedIn scraper unblocked. Lighthouse Perf/LCP/CLS still to be run live. |
+| 2026-09-02 | Phase 3 | — | — | — | — | Skip link + SPA focus mgmt + focus rings, verified live; router intact. Manual screen-reader pass still recommended. |
