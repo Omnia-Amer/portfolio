@@ -2390,4 +2390,16 @@
     });
   })();
 </script>
+<!-- GoatCounter — privacy-friendly analytics, no cookies -->
+<script>
+  window.goatcounter = { no_onload: true };  // count manually so SPA hash routes register
+  window.__gcCount = function(){
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: (location.pathname + location.hash) || '/' });
+    }
+  };
+  addEventListener('hashchange', function(){ setTimeout(window.__gcCount, 0); });
+</script>
+<script data-goatcounter="https://omnia.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js" onload="window.__gcCount && window.__gcCount()"></script>
 </body></html>
