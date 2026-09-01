@@ -1,212 +1,100 @@
-# Portfolio — Enhancement Plan
+# Portfolio — Enhancement Plan & Status
 
-Tracking doc for improvements to the portfolio site (`index.html`), deployed at
-<https://omnia-amer.github.io/portfolio/>.
+Tracking doc for <https://omnia-amer.github.io/portfolio/> (repo: `Omnia-Amer/portfolio`).
 
-Status legend: ⬜ not started · 🟡 in progress · ✅ done
+Legend: ⬜ not started · 🟡 in progress · ✅ done · ⛔ blocked on you
 
-**Progress:** Phase 1 ✅ (2026-09-01) · Phase 2 ✅ (2026-09-02) · Phase 3 ✅ (2026-09-02) · Phase 4 ⬜ blocked on Omnia · Phase 5 ⬜ blocked on decisions
+**Progress:** Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ⛔ (needs your content) · Phase 5 ⛔ (needs your decisions)
 
----
-
-## Summary of findings
-
-| # | Area | Severity | Effort | Blocked on |
-|---|------|----------|--------|------------|
-| 1 | 47 visible `<mark class="todo">` editor notes on case-study pages | 🟢 Hidden (was 🔴) | S (hide) ✅ / L (fill) ⬜ | Real content from Omnia |
-| 2 | No Open Graph / Twitter / canonical / structured data | ✅ Fixed | S | — |
-| 3 | 14 MB page — all images, video, CV inlined as base64 | ✅ Fixed (→ 192 KB) | L | — |
-| 4 | Missing `robots.txt`, `sitemap.xml`, `404.html` | ✅ Fixed | S | — |
-| 5 | Accessibility: contrast, skip link, focus management, focus-visible | ✅ Fixed | M | — |
-| 6 | Nice-to-haves: analytics, contact form, favicon-on-dark | 🟢 Opt (favicon ✅) | S–M | Decisions |
-
-Effort: **S** ≈ <30 min · **M** ≈ 1–2 h · **L** ≈ half-day+
+Last updated: 2026-09-02
 
 ---
 
-## Phase 1 — Ship now (no new content required) ✅ DONE — 2026-09-01
+## 1. Status at a glance
 
-One commit. Low risk, immediate polish.
-
-### 1.1 Hide placeholder notes ✅
-- **What:** 47 `<mark class="todo">…</mark>` spans render on the live case-study pages
-  ("Add a measurable result", "Add your role", "confirm", …).
-- **Fix (stopgap):** add to the stylesheet —
-  ```css
-  .todo{ display:none !important; }
-  ```
-- **Acceptance:** no highlighted notes visible on any `#/work/case-*` route.
-- **Follow-up:** replace with real content in Phase 4, then remove this rule.
-- **Verified:** Playwright DOM check — 47/47 `.todo` elements computed `display:none` on every route. ✅
-
-### 1.2 Social / SEO meta ✅
-- **What:** add to `<head>` —
-  ```html
-  <meta name="author" content="Omnia Amer">
-  <link rel="canonical" href="https://omnia-amer.github.io/portfolio/">
-  <meta name="theme-color" content="#000000">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://omnia-amer.github.io/portfolio/">
-  <meta property="og:title" content="Omnia Amer — Senior UI/UX Designer">
-  <meta property="og:description" content="Interface design for government and enterprise products — 15 shipped, 7 national institutions.">
-  <meta property="og:image" content="https://omnia-amer.github.io/portfolio/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Omnia Amer — Senior UI/UX Designer">
-  <meta name="twitter:description" content="Interface design for government and enterprise products.">
-  <meta name="twitter:image" content="https://omnia-amer.github.io/portfolio/og-image.png">
-  ```
-- **Acceptance:** passes <https://opengraph.dev> / LinkedIn Post Inspector with a card + image.
-- **Note:** `og-image.png` (1200×630) — pulled forward from task 2.1 so this gate isn't left half-done;
-  built as a plain PNG (brand mark, name, title, stat line) matching the site's dark/mono aesthetic.
-- **Verified:** all 9 meta/OG/Twitter tags + canonical + theme-color render once in the DOM (checked via
-  Playwright); `og-image.png` returns HTTP 200 locally. **Not yet verified live** — the LinkedIn/opengraph.dev
-  card check needs the real `https://omnia-amer.github.io/portfolio/` URL after you push, since those tools
-  can't reach a local file. Worth a 30-second check after deploy.
-
-### 1.3 JSON-LD structured data ✅
-- **What:** add a `<script type="application/ld+json">` `Person` block before `</head>`:
-  name, jobTitle, url, `sameAs` (Behance, Dribbble, LinkedIn), address (Alexandria, Egypt).
-- **Acceptance:** validates at <https://validator.schema.org>.
-- **Verified:** `JSON.parse()` on the extracted block succeeds; schema fields present (name, jobTitle,
-  url, sameAs × 3, PostalAddress). Recommend also pasting it into validator.schema.org once live, for
-  the official Google-rich-results read.
-
-### 1.4 Font loading ✅
-- **What:** fonts currently load via `@import` inside an in-`<body>` `<style>` (render-blocking, serialized).
-- **Fix:** delete the `@import` line, add to `<head>`:
-  ```html
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  ```
-- **Acceptance:** fonts still render; no FOIT longer than ~100 ms.
-- **Verified:** `@import` line removed from `<style>`; three `<link>` tags present in `<head>` instead
-  (same domain as before, so no new third-party dependency — just moved earlier + non-render-blocking).
-  Could not confirm actual font-swap timing in this sandbox (outbound fonts.googleapis.com is blocked
-  here — `net::ERR_TUNNEL_CONNECTION_FAILED`); this is a sandbox limitation, not a site defect. Please
-  do a quick visual check after deploy that the display/body faces still render correctly.
-
-### 1.5 Contrast fix ✅
-- **What:** `--ink-faint: rgba(255,255,255,.40)` on `#000` ≈ 3.7:1 — fails WCAG AA for body text.
-- **Fix:** `--ink-faint: rgba(255,255,255,.55);` (≈ 5.3:1). Spot-check eyebrow labels / footer.
-- **Acceptance:** all text ≥ 4.5:1 (or ≥ 3:1 for ≥ 24 px / 19 px-bold).
-- **Verified:** computed WCAG ratio for white-at-.55-alpha over `#000` = **6.25:1** (was 3.7:1) —
-  clears the 4.5:1 AA threshold with margin. Applied via the single `--ink-faint` CSS variable, so
-  every eyebrow label / footer line / caption using it is fixed at once.
-
-### 1.6 Repo infra files ✅
-- `robots.txt`:
-  ```
-  User-agent: *
-  Allow: /
-  Sitemap: https://omnia-amer.github.io/portfolio/sitemap.xml
-  ```
-- `sitemap.xml`: single `<url>` for the site root (hash routes aren't separately crawlable).
-- `404.html`: copy of `index.html` (so mistyped deep links still load the app).
-- **Acceptance:** all three return HTTP 200; `/portfolio/anything` renders the site.
-- **Verified:** all three files created and confirmed HTTP 200 over a local server. `sitemap.xml`
-  parses as valid XML. **Note:** `404.html` is a snapshot copy of `index.html` at Phase 1 — refresh
-  this copy after Phase 2 changes `index.html`'s structure, or it'll silently drift out of date.
-
-### 1.7 Favicon on dark tabs ✅
-- **What:** the all-black favicon square blends into dark browser tab strips.
-- **Fix:** change `favicon.svg` background `#000000` → `#111111` with a `1px` `#ffffff22` inner stroke,
-  or keep black but enlarge the white tiles. Update both the file and the inline data-URI copy.
-- **Acceptance:** icon distinguishable on light and dark tab bars.
-
-**Phase 1 acceptance:** Lighthouse SEO ≥ 95, Best-Practices ≥ 95; social card renders; no visible TODO notes.
-
-### Gate result: ✅ PASS
-
-Lighthouse itself couldn't run in this environment (no network access to install it, no scoring
-service reachable), so the gate was validated with direct equivalents instead:
-
-- Playwright, full route sweep (`/`, `/work`, `/about`, `/contact`, `/process`, 3 case-study routes,
-  scrolled end-to-end on each): **0 JS console errors, 0 broken/unloaded images**, all `.todo` notes
-  confirmed hidden (47/47).
-- Meta/OG/Twitter/canonical/theme-color tags: present once each, correct values, `og-image.png` built
-  and returns 200.
-- JSON-LD: parses as valid JSON with the expected `Person` fields.
-- Contrast: `--ink-faint` measured at 6.25:1 (target ≥ 4.5:1).
-- `robots.txt` / `sitemap.xml` / `404.html`: all 200, sitemap XML-valid.
-- The only network failure seen (`fonts.googleapis.com` → `ERR_TUNNEL_CONNECTION_FAILED`) is this
-  sandbox blocking outbound font requests, not a site defect — same domain the old `@import` already
-  depended on, just loaded earlier and non-render-blocking now.
-
-**Two checks need the live URL, not a local copy, and are worth 5 minutes after you push:**
-1. LinkedIn Post Inspector / opengraph.dev — confirm the social card renders with the new image.
-2. A quick look on both a light-tab and dark-tab browser — confirm the new favicon reads clearly on both.
-
-### Suggested edits before Phase 2
-
-- **`og-image.png` was built with a fallback system font** (Liberation Sans — metrically close to
-  Outfit/Arial, since Google Fonts wasn't reachable to source the real Outfit weights in this
-  environment). It matches the site's dark/mono look but isn't pixel-identical to the on-site
-  typography. Happy to regenerate it with the real Outfit font if you'd like — just say so.
-- **Phase 2's `assets/img/` externalization will touch every image tag** `og-image.png` and
-  `favicon.svg` currently reference — worth re-running this same Playwright sweep after that phase
-  specifically, not just trusting the file-size drop.
-- **`404.html` will need refreshing** after Phase 2 (see note under 1.6) — flagging so it doesn't
-  quietly go stale.
+| Area | Status | Notes |
+|------|--------|-------|
+| Site is live & public | ✅ | GitHub Pages, HTTPS enforced |
+| Placeholder "todo" notes visible to visitors | ✅ hidden | 47 notes hidden via CSS until real content lands (Phase 4) |
+| Social share card (LinkedIn/WhatsApp/Slack) | ✅ | OG + Twitter tags, `og-image.png`, descriptions ≥ 100 chars |
+| SEO basics | ✅ | canonical, JSON-LD Person, `robots.txt`, `sitemap.xml` |
+| Page weight | ✅ | 14 MB → **192 KB** (assets moved to `assets/`) |
+| Image performance | ✅ | intrinsic `width`/`height` + `loading="lazy"` on all 141 images |
+| Download CV | ✅ | native `<a download>` → `assets/Omnia_Amer_CV.pdf` |
+| Accessibility | ✅ | contrast fixed, skip link, SPA focus management, focus rings |
+| Favicon | ✅ | monogram, readable on light + dark tab strips |
+| 404 / deep links | ✅ | `404.html` redirects to the app, preserving the hash |
+| Mobile | ✅ | verified at 375 px — nav collapses to a working hamburger |
+| Real Lighthouse scores | ⬜ | couldn't run in build env — **please run once and paste below** |
+| Case-study detail (role/year/metrics) | ⛔ | 47 blanks — **needs your facts** (Phase 4) |
+| Analytics | ⛔ | not installed — needs your decision + account |
+| Contact form | ⛔ | `mailto:` only — needs your decision + service |
+| Custom domain | ⛔ | on `github.io` — needs your decision |
 
 ---
 
-## Phase 2 — Assets & performance ✅ DONE — 2026-09-02
+## 2. What's done (Phases 1–3)
 
-Commits `c68dc9f` (externalize) + `c78174c` (dimensions/lazy). **index.html: 14,145,946 → 192,124 bytes.**
+All committed to `main` and live. Commits: `673510b` (P1), `c68dc9f` + `c78174c` (P2), `c3370c5` (P3), `53aa347` (descriptions), `1eb50a1` (README).
 
-### 2.1 Create `og-image.png` ✅ (done in the Phase 1 gate — see 1.2)
+### Phase 1 — SEO, social, polish
+- **1.1** Hid the 47 `<mark class="todo">` editor notes — `.todo{display:none !important}` stopgap.
+- **1.2** Added `author`, `canonical`, `theme-color`, full Open Graph + Twitter Card set, and built `og-image.png` (1200×630, on-brand).
+- **1.3** Added JSON-LD `Person` structured data (name, jobTitle, url, `sameAs`, address).
+- **1.4** Moved Google Fonts from an in-`<body>` `@import` to `<head>` `preconnect` + `stylesheet` (non-render-blocking).
+- **1.5** Contrast: `--ink-faint` `.40 → .55` alpha — WCAG ratio 3.7:1 → **6.25:1** (passes AA).
+- **1.6** Added `robots.txt`, `sitemap.xml`, `404.html`.
+- **1.7** Favicon: `#111` background + hairline stroke so it reads on dark browser tabs.
 
-### 2.2 Externalise images ✅
-- 141 base64 images decoded to `assets/img/NNN.jpg` (+ one `.png`); `src` rewritten to paths. Alt text unchanged.
-- **Verified live:** every image loads on home / work grid / about / skills / case-qnl / case-saso; no broken refs, no orphans.
+### Phase 2 — Assets & performance (`index.html`: 14 MB → 192 KB)
+- **2.2** 141 base64 images → `assets/img/NNN.jpg` (+ one `.png`); alt text unchanged.
+- **2.3** Case-study video → `assets/media/clip-01.webm` + `clip-02.mp4`.
+- **2.4** CV → `assets/Omnia_Amer_CV.pdf`; Download CV is now a native `<a download>` (Blob/atob JS deleted).
+- **2.5** Intrinsic `width`/`height` on all 141 `<img>` (kills layout shift); `loading="lazy"` on all (was 34/141); base `img` rule gains `height:auto`.
+- **Follow-up done:** `404.html` rewritten as a tiny hash-preserving redirect (no longer a 14 MB copy that drifts).
 
-### 2.3 Externalise the case-study video ✅
-- webm + mp4 written to `assets/media/clip-01.webm` (520 KB) + `clip-02.mp4` (596 KB); referenced by path. `<video>` already `preload="metadata"`, no autoplay.
+### Phase 3 — Accessibility & UX
+- **3.1** "Skip to content" link (visible on focus); `applyRoute()` stamps `id="main-content"` on the active `<main>`.
+- **3.2** On navigation, focus moves to the new page's heading; a visually-hidden `#route-status` `aria-live` region announces it. `focus({preventScroll:true})` keeps the existing scroll-to-top.
+- **3.3** Real `:focus-visible` outlines on links / buttons / `summary`.
+- **3.4** Reduced-motion: global rule already covers it; the one `<video>` has no autoplay.
 
-### 2.4 Externalise the CV PDF ✅
-- `CV_B64` decoded to `assets/Omnia_Amer_CV.pdf` (1.46 MB, valid `%PDF-1.7`). Both Download CV links are now `<a href="assets/Omnia_Amer_CV.pdf" download>`; the Blob/atob `<script>` was deleted.
+### Post-Phase fixes
+- Meta / OG / Twitter descriptions lengthened to ~194 chars (LinkedIn "≥ 100 characters" warning).
+- README rewritten for the new `assets/` structure.
 
-### 2.5 Image dimensions + lazy-loading ✅
-- Intrinsic `width`/`height` on all 141 `<img>` (dimensions read from the files); base `img` rule gains `height:auto` so the attrs only drive aspect ratio.
-- `loading="lazy"` added to the 107 that lacked it — all 141 now `loading="lazy"` + `decoding="async"`.
-- **Verified:** layout pixel-identical to pre-change on every route tested; no distortion in the `aspect-ratio`/`object-fit` grids.
-
-**Phase 2 gate: ✅ PASS** — HTML 192 KB (was 14 MB), so social scrapers now fetch it (LinkedIn's ~3 MB limit was the blocker). Run real Lighthouse once for the Perf/LCP/CLS numbers.
-**Follow-up:** `404.html` is now a tiny hash-preserving redirect, not a copy of index.html — no longer drifts.
-
----
-
-## Phase 3 — Accessibility & UX ✅ DONE — 2026-09-02
-
-Commit `c3370c5`.
-
-### 3.1 Skip link ✅
-- `<a class="skip-link" href="#main-content">Skip to content</a>` is the first body element, hidden until focused. `applyRoute()` stamps `id="main-content"` on whichever `<main>` is currently shown.
-- **Verified live:** link present, resolves to `#main-content`.
-
-### 3.2 SPA focus management ✅
-- `applyRoute(isNav)` now: tags the shown page `#main-content` + `tabindex="-1"`, and **on navigation only** (not initial load) moves focus to its `<h1>`/`<h2>`. A visually-hidden `#route-status` `aria-live="polite"` region announces the heading text.
-- `focus({preventScroll:true})` so the existing `scrollTo(0,0)` still wins.
-- **Verified live:** route changes render + keep working; no regression in the router.
-
-### 3.3 focus-visible coverage ✅
-- Added `a / button / [tabindex="0"] / summary :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px }`; suppressed the ring on the programmatically-focused `main`/headings.
-- **Verified live:** visible focus ring on buttons (seen on "View Case Studies").
-
-### 3.4 Reduced-motion audit ✅
-- Global `@media (prefers-reduced-motion:reduce)` already kills all transitions/animations and forces `.reveal` visible. The one `<video>` is `controls`, no autoplay — nothing else to gate.
-
-**Phase 3 gate: ✅ PASS** — skip link + focus rings verified live; router intact across home/work/about/skills/case-study routes; only console noise is from browser extensions, not the site. A full screen-reader pass is still worth doing manually.
+### Verified live (2026-09-02 QA sweep)
+Desktop + mobile (375 px): all routes render, every image loads from `assets/`, mobile hamburger opens,
+skip link resolves to a real `<main>`, `#route-status` present, focus rings visible, **0 site console errors**
+(only browser-extension noise). Router intact after the `applyRoute` changes.
 
 ---
 
-## Phase 4 — Content (Omnia)
+## 3. Open questions — need your answer to proceed
 
-Replace each `<mark class="todo">` with real detail, then delete the `.todo{display:none}` rule.
+| # | Question | Why it matters | Default if no answer |
+|---|----------|----------------|----------------------|
+| Q1 | **Which case studies already have real detail vs need it?** e.g. QNL shows "Role: UX Consultant · Via: Mannai Corporation · Year: 2024–Present" — that's real. Others are blank. | Tells us how big Phase 4 actually is | Assume all 15 need everything |
+| Q2 | For each case study that needs it: **role, agency/employer, year(s), the brief, your process, one measurable result.** (See §4 for the checklist.) | This is the whole of Phase 4 — can't be inferred or invented | — blocked — |
+| Q3 | The 3 `confirm` markers in the copy are **unverified claims** (e.g. a Guinness World Record link, specific figures). Are they accurate as written? | Publishing unverified specifics is a credibility risk | Leave hidden |
+| Q4 | Are these the correct, current profile URLs? `behance.net/omnia-amer`, `dribbble.com/Omniaamer`, `linkedin.com/in/omni-aamer/` | They're in the JSON-LD + footer; a wrong LinkedIn slug is bad | Keep as-is |
+| Q5 | Is the **phone number** (`+20 155 809 2205`) and **email** on the Contact page correct and OK to expose publicly? | It's live and crawlable now | Keep as-is |
+| Q6 | Is `assets/Omnia_Amer_CV.pdf` your **current** CV? (It came out of the original file — may be old or a placeholder.) | The Download CV button serves it | Keep as-is |
+| Q7 | Keep the URL as `…github.io/portfolio/`, or move to a **root** `omnia-amer.github.io` (no `/portfolio`)? | Cleaner on a CV; one-time repo rename | Keep `/portfolio/` |
+| Q8 | **Custom domain** (e.g. `omniaamer.com`) — do you own one / want one? | Nicer than `github.io`; needs a `CNAME` + DNS | No |
+| Q9 | **Analytics** — do you want to see who visits and what they look at? Which tool? | Needs an account you create; I add the snippet | No analytics |
+| Q10 | **Contact form** — replace `mailto:` with a real form (Formspree / Web3Forms)? | `mailto:` fails for anyone without a desktop mail client | Keep `mailto:` |
+| Q11 | Regenerate `og-image.png` with the **real Outfit font**? (Current one uses a metric-compatible fallback — looks fine, not pixel-perfect.) | Cosmetic | Leave it |
+| Q12 | **Light theme** — confirmed skip? | Big effort; site is dark-by-design | Skip |
+
+---
+
+## 4. Phase 4 — Content you supply ⛔
+
+Replace each `<mark class="todo">` with real detail, then delete the `.todo{display:none}` CSS rule.
+Fastest path: **send me everything for ONE case study**, I wire it in as the template, you review the
+format, then we roll through the rest.
+
 Per case study, fill:
 
 - [ ] **Role** — your exact title on the project
@@ -216,45 +104,63 @@ Per case study, fill:
 - [ ] **Your process** — research method, stakeholder sign-off, IA work, testing
 - [ ] **A measurable result** — adoption, completion rate, tickets reduced, funds raised, sign-off
 
-Case studies needing this: QNL, GAMA, GRSIA (Daman), QU, SASO, MCIT, MECC, Jood Eskan (web + kiosk),
-Optimum Vision, TRAGS, Me7rab, QPMC, CCQ, Surah.
+Case studies with `todo` markers: QNL, GAMA, GRSIA (Daman), QU, SASO, MCIT, MECC,
+Jood Eskan (web), Jood Eskan (kiosk), Optimum Vision, TRAGS, Me7rab, QPMC, CCQ, Surah.
 
-Also resolve the 3 `confirm` markers (fact-checks on specific claims).
+Plus the 3 `confirm` fact-checks (Q3).
 
----
-
-## Phase 5 — Optional
-
-| Item | Notes | Decision |
-|------|-------|----------|
-| Custom domain (e.g. `omniaamer.com`) | `CNAME` file + DNS; nicer on a CV | ⬜ |
-| Privacy-friendly analytics | Plausible or GoatCounter — no cookie banner | ⬜ |
-| Working contact form | Formspree/Web3Forms instead of `mailto:` only | ⬜ |
-| Light theme | Large effort; site is dark-only by design | ⬜ probably skip |
+**Progress:** _none yet — awaiting content._
 
 ---
 
-## Execution order (recommended)
+## 5. Phase 5 — Optional, your call ⛔
 
-1. **Phase 1** — one commit, ship today.
-2. **Phase 2** — one branch, review the visual diff carefully, merge.
-3. **Phase 3** — one commit.
-4. **Phase 4** — ongoing, as Omnia supplies content; ship per-case-study.
-5. **Phase 5** — pick individually.
+| Item | What's involved | Decision (Q#) |
+|------|-----------------|---------------|
+| Custom domain | You provide a domain + set 4 DNS records; I add `CNAME` + wait for cert | Q8 |
+| Analytics | You create a GoatCounter (free) or Plausible (paid) account; send me the snippet; I add it to `<head>` | Q9 |
+| Contact form | You create a Formspree/Web3Forms endpoint; I swap the Contact page `mailto:` for a real `<form>` with validation + a thank-you state | Q10 |
+| Root URL | Rename repo to `omnia-amer.github.io`; I update `canonical`, `og:url`, `sitemap`, `404.html`, README | Q7 |
+| Light theme | New palette + toggle + testing every route in both themes | Q12 (likely skip) |
 
-## Verification checklist (run after each phase)
+---
 
-- [ ] `https://omnia-amer.github.io/portfolio/` loads, all routes render
-- [ ] Lighthouse (mobile): Perf / SEO / Best-Practices / a11y scores recorded below
-- [ ] Social card renders (LinkedIn Post Inspector)
-- [ ] Download CV returns a valid PDF
-- [ ] No console errors
-- [ ] Keyboard-only pass of nav + one case study
+## 6. Suggestions (not yet scheduled)
+
+- **S1 — Run Lighthouse now.** Chrome DevTools → Lighthouse → Mobile. Paste Perf / A11y / SEO / Best-Practices into §8. This is the real proof the perf + a11y work landed.
+- **S2 — Manual screen-reader pass.** VoiceOver (Mac) or NVDA (Windows): tab through the nav, trigger the skip link, change routes, confirm the heading is announced. Automated checks can't fully cover this.
+- **S3 — Convert images to WebP.** The 141 JPEGs are ~11 MB on disk; WebP would roughly halve that and speed up case-study pages further. Low risk, one scripted pass.
+- **S4 — Trim `<meta name="description">` to ~155 chars.** Currently 210 — Google truncates it in results. The `og:`/`twitter:` ones can stay long.
+- **S5 — Add `<lastmod>` to `sitemap.xml`** on each deploy (or just once now).
+- **S6 — `rel="me"` links** to LinkedIn/Behance for identity verification (Mastodon-style, low effort).
+- **S7 — Real-device check.** Emulation ≠ real iOS Safari / Android Chrome. Worth 5 minutes on an actual phone.
+- **S8 — If content will change often,** consider splitting case studies into a small data file the page renders from, instead of hand-editing 15 blocks of HTML. Only worth it if Phase 4 turns into ongoing edits.
+
+---
+
+## 7. Next steps (in order)
+
+1. **You:** re-run the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) — confirm the card renders and the warning is gone.
+2. **You:** run Lighthouse (S1) and paste scores into §8.
+3. **You:** answer the open questions in §3 — especially **Q1 + Q2** (case-study content), since that unblocks the largest remaining piece.
+4. **You → me:** send full detail for one case study.
+5. **Me:** wire that case study in as the template; you review.
+6. **Me:** roll the same treatment through the rest as you supply content; drop `.todo{display:none}` when done.
+7. **Me:** pick up any Phase 5 items you greenlit (Q7–Q10).
+8. **Optional:** S3 (WebP), S4, S5, S6 as a small polish commit.
+
+---
+
+## 8. Verification log
+
+Checklist to run after each change: site loads & all routes render · Lighthouse (mobile) ·
+social card renders · Download CV returns a valid PDF · no console errors · keyboard-only pass.
 
 | Date | Phase | Perf | A11y | SEO | BP | Notes |
 |------|-------|------|------|-----|----|-------|
 | _tbd_ | baseline | | | | | before any changes |
-| 2026-09-01 | Phase 1 | — | — | — | — | Lighthouse unavailable in the build environment (no network to install/score). Substituted: 0 console errors, 0 broken images across all routes, contrast 6.25:1, all meta/JSON-LD present and valid, 47/47 todo notes hidden. Run real Lighthouse once live and fill this row in. |
-| 2026-09-02 | Phase 2 | — | — | — | — | index.html 14 MB → 192 KB; 141 imgs + video + CV externalised, all load live; width/height + lazy on all imgs; LinkedIn scraper unblocked. Lighthouse Perf/LCP/CLS still to be run live. |
-| 2026-09-02 | Phase 3 | — | — | — | — | Skip link + SPA focus mgmt + focus rings, verified live; router intact. Manual screen-reader pass still recommended. |
-| 2026-09-02 | QA sweep | — | — | — | — | Desktop + mobile (375px) live check: all routes render, images load from assets/, mobile hamburger menu opens, skip link → `#main-content` (a real `<main>`), `#route-status` aria-live present, focus rings visible, 0 site console errors. Descriptions lengthened to ~194 chars (LinkedIn ≥100 warning cleared). |
+| 2026-09-01 | Phase 1 | — | — | — | — | Lighthouse unavailable in build env. Substituted: 0 console errors, 0 broken images all routes, contrast 6.25:1, meta/JSON-LD valid, 47/47 todo notes hidden. |
+| 2026-09-02 | Phase 2 | — | — | — | — | 14 MB → 192 KB; 141 imgs + video + CV externalised, all load live; width/height + lazy on all imgs; LinkedIn scraper unblocked. |
+| 2026-09-02 | Phase 3 | — | — | — | — | Skip link + SPA focus mgmt + focus rings, verified live; router intact. |
+| 2026-09-02 | QA sweep | — | — | — | — | Desktop + mobile (375 px): all routes render, images load, hamburger works, skip link → real `<main>`, aria-live present, focus rings visible, 0 site console errors. Descriptions → ~194 chars. |
+| _tbd_ | **real Lighthouse** | ? | ? | ? | ? | **← run this and fill in** |
