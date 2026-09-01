@@ -2231,15 +2231,17 @@
 async function omniaDownloadCV(e){
   if(e) e.preventDefault();
   try {
-    if (!window.claude || !window.claude.use) return;
-    const dl = await window.claude.use('downloads');
-    if (!dl) return;
     const binary = atob(CV_B64);
     const bytes = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    await dl.save({filename: 'Omnia_Amer_CV.pdf', data: bytes.buffer});
+    const blob = new Blob([bytes], {type: "application/pdf"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "Omnia_Amer_CV.pdf";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
   } catch (err) {
-    console.error('CV download unavailable:', err && err.message);
+    console.error("CV download unavailable:", err && err.message);
   }
 }
 document.querySelectorAll('.js-cv-download').forEach(function(b){ b.addEventListener('click', omniaDownloadCV); });
