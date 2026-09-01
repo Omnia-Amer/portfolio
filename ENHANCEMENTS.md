@@ -22,14 +22,17 @@ Last updated: 2026-09-02
 | Image performance | ✅ | intrinsic `width`/`height` + `loading="lazy"` on all 141 images |
 | Download CV | ✅ | native `<a download>` → `assets/Omnia_Amer_CV.pdf` |
 | Accessibility | ✅ | contrast fixed, skip link, SPA focus management, focus rings |
-| Favicon | ✅ | monogram, readable on light + dark tab strips |
+| Favicon | ✅ | colourful gradient sparkle (✨) + gold twinkle, dark rounded square |
+| Logo mark (header/footer) | ✅ | matches the favicon — sparkle, gentle twinkle, spins on hover |
 | 404 / deep links | ✅ | `404.html` redirects to the app, preserving the hash |
 | Mobile | ✅ | verified at 375 px — nav collapses to a working hamburger |
 | Real Lighthouse scores | 🟡 | A11y **100** · SEO **100** · Best Practices **96** · Perf **58** (extension-contaminated — see §6a) · **CLS 0** |
-| Case-study detail (role/year/metrics) | ⛔ | 47 blanks — **needs your facts** (Phase 4) |
-| Analytics | ⛔ | not installed — needs your decision + account |
-| Contact form | ⛔ | `mailto:` only — needs your decision + service |
-| Custom domain | ⛔ | on `github.io` — needs your decision |
+| Contact form | ✅ | Contact page has a real form → opens WhatsApp (+201558092205) with a pre-filled message **and** emails a copy via FormSubmit so nothing is lost |
+| Analytics | 🟡 | GoatCounter snippet installed (SPA-route aware). **Needs the free `omnia.goatcounter.com` site to exist** — your signup |
+| Case-study role / year / employer | ✅ | filled from your CV — role = "Senior UI/UX Designer" on all 15; GAMA + MECC inferred (see §3 Q13) |
+| Case-study brief / process / **metrics** | ⛔ | still `todo` — **needs your input; metrics can't be invented** (see §4) |
+| Image quality (WebP/compression) | ❌ declined | you want max quality / hi-res — WebP + the ~258 KB saving are off the table (see §6a) |
+| Custom domain / cache lifetimes | ⛔ | on `github.io` — the cache-header fix needs Cloudflare or a custom domain (see §6a) |
 
 ---
 
@@ -63,6 +66,14 @@ All committed to `main` and live. Commits: `673510b` (P1), `c68dc9f` + `c78174c`
 - Meta / OG / Twitter descriptions lengthened to ~194 chars (LinkedIn "≥ 100 characters" warning).
 - README rewritten for the new `assets/` structure.
 
+### Session 2 additions (2026-09-02) — commits `2da786f` … `6e677c4`
+- **Perf:** LCP image on each `work/case-*` page → `loading="eager" fetchpriority="high"`; Google Fonts CSS made non-render-blocking (`media="print"` + `onload`).
+- **Contact form** on the Contact page: name / company / email / topic / message → **opens WhatsApp** (`wa.me/201558092205`) with a formatted pre-filled message, **and** POSTs the same data to **FormSubmit** (AJAX) so a copy lands in your inbox even if the WhatsApp message is never sent. Honeypot + native-POST no-JS fallback. ⚠️ **You must click the FormSubmit "Activate Form" email** (sent to Omniaamer835@gmail.com the first time the form was submitted) — until then the email copy doesn't deliver; WhatsApp works regardless.
+- **GoatCounter** analytics snippet added (manual count so SPA hash routes register). Needs the free site `omnia.goatcounter.com` — sign up at goatcounter.com (code: `omnia`).
+- **Case-study meta filled from CV:** "My Role" = "Senior UI/UX Designer" on all 15; Client/Via/Year already present on 13; **GAMA + MECC** set to `Mannai Corporation / 2024 – Present` — *inferred* from the pattern of the other Qatar-gov engagements, **not itemised in the CV** (Q13).
+- **Favicon** redesigned: colourful gradient sparkle (pink→purple→cyan) + gold twinkle on a dark rounded square. File + inline data-URI.
+- **Logo mark** (header + footer) restyled to match: sparkle shape via CSS mask + the same gradient, a slow twinkle, and a spin on `.brand:hover`. `prefers-reduced-motion` disables both.
+
 ### Verified live (2026-09-02 QA sweep)
 Desktop + mobile (375 px): all routes render, every image loads from `assets/`, mobile hamburger opens,
 skip link resolves to a real `<main>`, `#route-status` present, focus rings visible, **0 site console errors**
@@ -77,15 +88,18 @@ skip link resolves to a real `<main>`, `#route-status` present, focus rings visi
 | Q1 | **Which case studies already have real detail vs need it?** Confirmed: **QNL is done** (Role: UX Consultant · Via: Mannai Corporation · Year: 2024–Present, full write-up). The other 14 still have `todo` markers. | Tells us how big Phase 4 actually is | Assume the other 14 need everything |
 | Q2 | For each case study that needs it: **role, agency/employer, year(s), the brief, your process, one measurable result.** (See §4 for the checklist.) | This is the whole of Phase 4 — can't be inferred or invented | — blocked — |
 | Q3 | The 3 `confirm` markers in the copy are **unverified claims** (e.g. a Guinness World Record link, specific figures). Are they accurate as written? | Publishing unverified specifics is a credibility risk | Leave hidden |
-| Q4 | Are these the correct, current profile URLs? `behance.net/omnia-amer`, `dribbble.com/Omniaamer`, `linkedin.com/in/omni-aamer/` | They're in the JSON-LD + footer; a wrong LinkedIn slug is bad | Keep as-is |
-| Q5 | Is the **phone number** (`+20 155 809 2205`) and **email** on the Contact page correct and OK to expose publicly? | It's live and crawlable now | Keep as-is |
-| Q6 | Is `assets/Omnia_Amer_CV.pdf` your **current** CV? (It came out of the original file — may be old or a placeholder.) | The Download CV button serves it | Keep as-is |
-| Q7 | Keep the URL as `…github.io/portfolio/`, or move to a **root** `omnia-amer.github.io` (no `/portfolio`)? | Cleaner on a CV; one-time repo rename | Keep `/portfolio/` |
-| Q8 | **Custom domain** (e.g. `omniaamer.com`) — do you own one / want one? | Nicer than `github.io`; needs a `CNAME` + DNS | No |
-| Q9 | **Analytics** — do you want to see who visits and what they look at? Which tool? | Needs an account you create; I add the snippet | No analytics |
-| Q10 | **Contact form** — replace `mailto:` with a real form (Formspree / Web3Forms)? | `mailto:` fails for anyone without a desktop mail client | Keep `mailto:` |
-| Q11 | Regenerate `og-image.png` with the **real Outfit font**? (Current one uses a metric-compatible fallback — looks fine, not pixel-perfect.) | Cosmetic | Leave it |
-| Q12 | **Light theme** — confirmed skip? | Big effort; site is dark-by-design | Skip |
+| Q4 | Profile URLs `behance.net/omnia-amer`, `dribbble.com/Omniaamer`, `linkedin.com/in/omni-aamer/` | — | ✅ **Answered: correct** |
+| Q5 | Phone `+20 155 809 2205` + email public | — | ✅ **Answered: correct, OK public** |
+| Q6 | Is `assets/Omnia_Amer_CV.pdf` current? | Download CV serves it | ✅ **Answered: keep for now, will be updated later** — swap the file in `assets/` when ready, same name |
+| Q7 | Keep `…github.io/portfolio/` or move to root `omnia-amer.github.io`? | Cleaner on a CV | ⬜ open |
+| Q8 | **Custom domain** (e.g. `omniaamer.com`) — own one / want one? | Also unblocks the cache-lifetime Lighthouse item via Cloudflare | ⬜ open |
+| Q9 | Analytics | — | ✅ **Answered: GoatCounter** — snippet installed; **create the free site** at goatcounter.com (code `omnia`) or it won't record |
+| Q10 | Contact form | — | ✅ **Answered: built** (WhatsApp + FormSubmit email backup). **Click the FormSubmit activation email.** |
+| Q11 | Regenerate `og-image.png` with real Outfit font? | Cosmetic | ⬜ open (low priority) |
+| Q12 | **Light theme** — confirmed skip? | Big effort; dark by design | ⬜ open |
+| Q13 | **GAMA + MECC** are not in your CV. I set both to `Mannai Corporation / 2024 – Present` to match your other Qatar-gov work. **Correct?** | Currently shown as fact on those two case studies | ⬜ **verify** |
+| Q14 | **Metrics** — your CV has no numbers. I will **not** invent results. Options: (a) you give real figures per project, (b) replace the "measurable result" line with a true qualitative outcome, (c) drop that sentence. Which? | Fabricated metrics on a job-search portfolio are a serious risk | ⬜ **need direction** |
+| Q15 | **Hi-res images** — you want 4K/super-res. I can't upscale here, and the source screenshots are 480–1150 px wide. Do you have **higher-res exports** (Figma @2×/@3×, or full-res captures)? | Drop them into `assets/img/` (same filenames) and I'll update the dimensions | ⬜ **need files** |
 
 ---
 
@@ -95,21 +109,27 @@ Replace each `<mark class="todo">` with real detail, then delete the `.todo{disp
 Fastest path: **send me everything for ONE case study**, I wire it in as the template, you review the
 format, then we roll through the rest.
 
-Per case study, fill:
+**Done from the CV:** Role ("Senior UI/UX Designer"), employer, and years are now filled on all 15.
 
-- [ ] **Role** — your exact title on the project
-- [ ] **Agency / employer** it was delivered through (if any)
-- [ ] **Year(s)**
+**Still needed per case study — your knowledge, not on the CV:**
+
 - [ ] **The brief / constraints** you were given
 - [ ] **Your process** — research method, stakeholder sign-off, IA work, testing
-- [ ] **A measurable result** — adoption, completion rate, tickets reduced, funds raised, sign-off
+- [ ] **A measurable result** — see Q14: give a real number, a true qualitative outcome, or say "drop it"
 
-Case studies with `todo` markers: QNL, GAMA, GRSIA (Daman), QU, SASO, MCIT, MECC,
-Jood Eskan (web), Jood Eskan (kiosk), Optimum Vision, TRAGS, Me7rab, QPMC, CCQ, Surah.
+Case studies with narrative `todo` markers (14): GAMA, GRSIA (Daman), QU, SASO, MCIT, MECC,
+Jood Eskan (web), Jood Eskan (kiosk), Optimum Vision, TRAGS, Me7rab, QPMC, CCQ, QNL.
+(Surah has none. QNL only has the process + result markers.)
 
-Plus the 3 `confirm` fact-checks (Q3).
+### On "metrics calculated" — why I didn't
 
-**Progress:** _none yet — awaiting content._
+Your CV is an experience list: titles, employers, dates, project names. **No quantitative
+outcomes** ("reduced X by Y%", "N requests processed", "funds raised"). There is nothing to
+calculate from. Putting invented numbers on a portfolio you send to employers is fabricating
+credentials — I won't do it. Give me the real figures where you have them, or we use honest
+qualitative outcomes, or we cut the metric line and let the work speak. Your call (Q14).
+
+**Progress:** meta (role/year/employer) ✅ · narrative + metrics ⬜ awaiting you.
 
 ---
 
@@ -117,9 +137,9 @@ Plus the 3 `confirm` fact-checks (Q3).
 
 | Item | What's involved | Decision (Q#) |
 |------|-----------------|---------------|
-| Custom domain | You provide a domain + set 4 DNS records; I add `CNAME` + wait for cert | Q8 |
-| Analytics | You create a GoatCounter (free) or Plausible (paid) account; send me the snippet; I add it to `<head>` | Q9 |
-| Contact form | You create a Formspree/Web3Forms endpoint; I swap the Contact page `mailto:` for a real `<form>` with validation + a thank-you state | Q10 |
+| ~~Analytics~~ | ✅ done — GoatCounter snippet in. **Your step:** create the free site at goatcounter.com, code `omnia` | Q9 |
+| ~~Contact form~~ | ✅ done — WhatsApp + FormSubmit email backup. **Your step:** click the FormSubmit activation email | Q10 |
+| Custom domain | You provide a domain + set 4 DNS records; I add `CNAME`. **Also lets Cloudflare fix the cache-lifetime Lighthouse item.** | Q8 |
 | Root URL | Rename repo to `omnia-amer.github.io`; I update `canonical`, `og:url`, `sitemap`, `404.html`, README | Q7 |
 | Light theme | New palette + toggle + testing every route in both themes | Q12 (likely skip) |
 
@@ -150,8 +170,8 @@ Grammarly / Adobe / other extensions injecting into the page.
 |---------|-------------|--------|
 | LCP image was `loading="lazy"` | LCP ↓ | ✅ Fixed — first image on every `work/case-*` page is now `loading="eager" fetchpriority="high"` (commit `a79e7f6`) |
 | Render-blocking font stylesheet | ~450 ms | ✅ Fixed — loads via `media="print"` + `onload` swap + `<noscript>` (commit `a79e7f6`) |
-| "Improve image delivery" | ~258 KiB | ⬜ **S3** — convert JPEGs to WebP (needs `cwebp`/Squoosh locally; can't in build env) |
-| "Use efficient cache lifetimes" | ~369 KiB | ⛔ **Can't on GitHub Pages** — it serves a fixed 10-min cache, no custom headers. Only fixable by fronting with Cloudflare or moving to Netlify/Cloudflare Pages. |
+| "Improve image delivery" | ~258 KiB | ❌ **Declined by Omnia** — wants maximum image quality / hi-res, no WebP or compression. The ~258 KB and its LCP cost are an accepted trade-off for fidelity. (If anything, images will get *bigger* — see Q15 on hi-res sources.) |
+| "Use efficient cache lifetimes" | ~369 KiB | ⛔ **Not possible on bare GitHub Pages** — it serves a fixed 10-min `Cache-Control`, no custom headers. Fix requires **Cloudflare in front** (free, needs a custom domain — Q8) or moving the host to Netlify / Cloudflare Pages. |
 | "Reduce unused CSS — 341 KiB" | small real cost | ⬜ Low priority — all routes' CSS is inlined in one `<style>` (~30 KB, ~8 KB gzipped). Per-route CSS splitting is a big refactor for little gain. |
 
 **Next Lighthouse run should be in Incognito**, on `#/work/case-qnl` (a heavy case page) *and* `#/` — record both in §8.
@@ -162,7 +182,7 @@ Grammarly / Adobe / other extensions injecting into the page.
 
 - **S1 — Re-run Lighthouse in Incognito** (done once with extensions on — see §6a; the Perf number was contaminated). Incognito = extensions off = the real score.
 - **S2 — Manual screen-reader pass.** VoiceOver (Mac) or NVDA (Windows): tab through the nav, trigger the skip link, change routes, confirm the heading is announced. Automated checks can't fully cover this.
-- **S3 — Convert images to WebP.** The 141 JPEGs are ~11 MB on disk; WebP would roughly halve that and speed up case-study pages further. Low risk, one scripted pass.
+- ~~S3 — Convert images to WebP.~~ **Declined** — Omnia wants max quality / hi-res (Q15).
 - **S4 — Trim `<meta name="description">` to ~155 chars.** Currently 210 — Google truncates it in results. The `og:`/`twitter:` ones can stay long.
 - **S5 — Add `<lastmod>` to `sitemap.xml`** on each deploy (or just once now).
 - **S6 — `rel="me"` links** to LinkedIn/Behance for identity verification (Mastodon-style, low effort).
@@ -173,14 +193,20 @@ Grammarly / Adobe / other extensions injecting into the page.
 
 ## 7. Next steps (in order)
 
-1. ~~LinkedIn Post Inspector~~ — done, warning cleared (2026-09-02).
-2. ~~First Lighthouse run~~ — done (§6a). **Re-run in Incognito** for the true Perf score, record both `#/work/case-qnl` and `#/` in §8.
-3. **You:** answer §3 — especially **Q2** (content for the 14 case studies that still have `todo` markers; QNL is already done).
-4. **You → me:** send full detail for one case study.
-5. **Me:** wire that case study in as the template; you review the format.
-6. **Me:** roll the same through the rest as you supply content; drop `.todo{display:none}` when all done.
-7. **Me:** any Phase 5 items you greenlight (Q7–Q10).
-8. **Me (needs your local tooling for S3):** WebP images, `<meta description>` trim (S4), sitemap `lastmod` (S5), `rel="me"` (S6) — one polish commit.
+**Your quick actions (unblock the automated parts):**
+1. **Click the FormSubmit "Activate Form" email** in Omniaamer835@gmail.com — until then the contact-form email backup doesn't deliver. Then submit the form once yourself to confirm it arrives.
+2. **Create the GoatCounter site** — goatcounter.com → sign up → code `omnia` (must resolve to `omnia.goatcounter.com`). Free, ~2 min.
+3. **Re-run Lighthouse in Incognito** (extensions off) on `#/work/case-qnl` and `#/`; record in §8.
+4. **Answer Q13** (GAMA/MECC = Mannai/2024–Present, yes/no) and **Q14** (metrics: real numbers / qualitative / drop).
+
+**Then the content loop:**
+5. Send me full detail for **one** case study (brief + process + result) → I wire it in as the template → you review.
+6. I roll the same through the other 13 as you supply content; drop `.todo{display:none}` when done.
+
+**Optional, when you decide:**
+7. Q7 (root URL), Q8 (custom domain — also fixes cache lifetimes via Cloudflare), Q11 (og-image), Q12 (light theme).
+8. Hi-res image sources (Q15) → drop into `assets/img/`, I update dimensions.
+9. Small polish commit: `<meta description>` trim (S4), sitemap `lastmod` (S5), `rel="me"` (S6).
 
 ---
 
@@ -198,4 +224,5 @@ social card renders · Download CV returns a valid PDF · no console errors · k
 | 2026-09-02 | QA sweep | — | — | — | — | Desktop + mobile (375 px): all routes render, images load, hamburger works, skip link → real `<main>`, aria-live present, focus rings visible, 0 site console errors. Descriptions → ~194 chars. |
 | 2026-09-02 | Lighthouse (case-qnl, **extensions on**) | 58 | 100 | 100 | 96 | CLS 0 ✅. Perf contaminated by browser extensions (4,315 KiB unused JS not from this site). LCP 4.1s / TBT 1,850ms. |
 | 2026-09-02 | perf fixes | — | — | — | — | Commit `a79e7f6`: LCP image eager+fetchpriority per case page; font CSS non-blocking (−450ms). Fonts verified still rendering. |
+| 2026-09-02 | contact form + branding | — | — | — | — | Commits `2da786f`…`6e677c4`: WhatsApp form (URL + message verified live), FormSubmit AJAX reachable (activation email sent), GoatCounter loads, sparkle favicon + logo mark verified, 0 console errors. |
 | _tbd_ | **Lighthouse in Incognito** | ? | ? | ? | ? | **← re-run with extensions off, `#/work/case-qnl` + `#/`** |
