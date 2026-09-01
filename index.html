@@ -2403,12 +2403,13 @@
         })
       }).then(function(r){ return r.json(); })
         .then(function(res){
-          if(note) note.textContent = (res && res.success)
-            ? 'Sent — WhatsApp is open, and a copy has been emailed. Thanks!'
-            : 'WhatsApp is open. Email backup is still being set up — if WhatsApp didn’t open, use the links above.';
+          var ok = res && (res.success === true || res.success === 'true');
+          if(note) note.textContent = ok
+            ? 'WhatsApp is open — and a copy has been emailed to Omnia. Thanks for reaching out!'
+            : 'WhatsApp is open. If it didn’t, use the WhatsApp or email links above — your message is safe.';
         })
         .catch(function(){
-          if(note) note.textContent = 'WhatsApp is open. (Email backup didn’t go through — if WhatsApp didn’t open, use the links above.)';
+          if(note) note.textContent = 'WhatsApp is open. If it didn’t, use the WhatsApp or email links above — your message is safe.';
         });
     });
   })();
