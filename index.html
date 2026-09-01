@@ -362,6 +362,28 @@
   .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;}
   a:focus-visible, button:focus-visible, [tabindex="0"]:focus-visible, summary:focus-visible{outline:2px solid var(--ink); outline-offset:3px; border-radius:3px;}
   main.page:focus, h1:focus, h2:focus{outline:none;}
+
+  /* ---- contact form ---- */
+  .cform{display:flex; flex-direction:column; gap:18px; max-width:640px;}
+  .cform-row{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:560px){ .cform-row{grid-template-columns:1fr;} }
+  .cfield{display:flex; flex-direction:column; gap:8px;}
+  .cfield > span{font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);}
+  .cfield > span em{color:var(--ink); font-style:normal;}
+  .cfield input, .cfield select, .cfield textarea{
+    width:100%; padding:12px 14px; background:var(--surface-2); color:var(--ink);
+    border:1px solid var(--line); border-radius:var(--radius-md);
+    font-family:var(--font-body); font-size:15px; line-height:1.5; -webkit-appearance:none; appearance:none;
+  }
+  .cfield textarea{resize:vertical; min-height:120px;}
+  .cfield input:focus, .cfield select:focus, .cfield textarea:focus{
+    outline:none; border-color:var(--line-strong); background:var(--surface-3);
+  }
+  .cfield input::placeholder, .cfield textarea::placeholder{color:var(--ink-faint);}
+  .cform-actions{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:4px;}
+  .cform-actions .btn{width:auto;}
+  .cform-note{font-size:13px; color:var(--ink-faint);}
+  .cform-note a{border-bottom:1px solid var(--line-strong);}
 </style>
 
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -688,7 +710,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Qatar National Library (QNL)</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
           <div><dt>Year</dt><dd>2024 &ndash; Present</dd></div>
         </dl>
@@ -770,9 +792,9 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>General Authority for Minors' Affairs, State of Qatar</dd></div>
-          <div><dt>My Role</dt><dd><mark class="todo">Add your role &mdash; e.g. UI/UX Designer</mark></dd></div>
-          <div><dt>Via</dt><dd><mark class="todo">Add the agency/employer this was delivered through, if any</mark></dd></div>
-          <div><dt>Year</dt><dd><mark class="todo">Add project year(s)</mark></dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
+          <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
+          <div><dt>Year</dt><dd>2024 &ndash; Present</dd></div>
         </dl>
         <div class="cd-shot reveal"><img decoding="async" src="assets/img/040.jpg" alt="General Authority for Minors' Affairs — staff intranet homepage: quick links, media center, news, events, announcements and shared assets" width="1150" height="1615" loading="eager" fetchpriority="high"></div>
         <p class="cd-caption reveal">The staff homepage works as a dashboard, not a landing page &mdash; Quick Links, Media Center,
@@ -837,7 +859,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>GRSIA (&ldquo;Daman&rdquo;)</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
           <div><dt>Year</dt><dd>2024 &ndash; Present</dd></div>
         </dl>
@@ -925,7 +947,7 @@
             <div class="cd-url"><a href="https://www.qu.edu.qa/ar/" target="_blank" rel="noopener">qu.edu.qa</a></div>
           </div>
         </div>
-        <dl class="cd-meta reveal"><div><dt>Client</dt><dd>Qatar University</dd></div><div><dt>My Role</dt><dd>UI Consultant</dd></div><div><dt>Engaged via</dt><dd>Mannai Corporation</dd></div><div><dt>Year</dt><dd>2024 – Present</dd></div></dl>
+        <dl class="cd-meta reveal"><div><dt>Client</dt><dd>Qatar University</dd></div><div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div><div><dt>Engaged via</dt><dd>Mannai Corporation</dd></div><div><dt>Year</dt><dd>2024 – Present</dd></div></dl>
         <div class="cd-shot reveal"><img decoding="async" src="assets/img/054.jpg" alt="Qatar University — assistant widget" width="1100" height="802" loading="eager" fetchpriority="high"></div>
         <div class="cd-copy reveal">
           <h4 class="lbl">The Brief</h4>
@@ -950,7 +972,7 @@
             <div class="cd-url"><a href="https://www.saso.gov.sa/en/pages/default.aspx" target="_blank" rel="noopener">saso.gov.sa</a></div>
           </div>
         </div>
-        <dl class="cd-meta reveal"><div><dt>Client</dt><dd>SASO</dd></div><div><dt>My Role</dt><dd>UX Consultant</dd></div><div><dt>Engaged via</dt><dd>Saudi Azm</dd></div><div><dt>Year</dt><dd>Sep 2024 – Sep 2025</dd></div></dl>
+        <dl class="cd-meta reveal"><div><dt>Client</dt><dd>SASO</dd></div><div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div><div><dt>Engaged via</dt><dd>Saudi Azm</dd></div><div><dt>Year</dt><dd>Sep 2024 – Sep 2025</dd></div></dl>
 
         <div class="cd-shot reveal"><img decoding="async" src="assets/img/055.jpg" alt="SASO — public homepage and service catalogue, including &#39;Issue Identity Card for Internal-Combustion Vehicle&#39;" width="1150" height="1216" loading="eager" fetchpriority="high"></div>
         <p class="cd-caption reveal">SASO's public service catalogue &mdash; one of 20+ licence and permit types the authority issues. This case study
@@ -1036,7 +1058,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>MCIT, State of Qatar</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
           <div><dt>Year</dt><dd>2024 &ndash; Present</dd></div>
         </dl>
@@ -1105,9 +1127,9 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>MECC, State of Qatar</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant <mark class="todo" style="font-size:.85em;">confirm</mark></dd></div>
-          <div><dt>Engaged via</dt><dd><mark class="todo" style="font-size:.85em;">confirm</mark></dd></div>
-          <div><dt>Year</dt><dd><mark class="todo" style="font-size:.85em;">confirm</mark></dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
+          <div><dt>Engaged via</dt><dd>Mannai Corporation</dd></div>
+          <div><dt>Year</dt><dd>2024 &ndash; Present</dd></div>
         </dl>
         <div class="cd-pair reveal">
           <div class="cd-shot"><img decoding="async" src="assets/img/070.jpg" alt="MECC — environmental permits portal homepage, permit-type discovery and catalogue" width="600" height="1125" loading="eager" fetchpriority="high"></div>
@@ -1154,7 +1176,7 @@
             <div class="cd-url"><a href="https://www.joodeskan.sa/" target="_blank" rel="noopener">joodeskan.sa</a></div>
           </div>
         </div>
-        <dl class="cd-meta reveal"><div><dt>Client</dt><dd>Jood Eskan</dd></div><div><dt>My Role</dt><dd>UI/UX Designer</dd></div><div><dt>Engaged via</dt><dd>AZM X</dd></div><div><dt>Year</dt><dd>Jan 2023 – Nov 2024</dd></div></dl>
+        <dl class="cd-meta reveal"><div><dt>Client</dt><dd>Jood Eskan</dd></div><div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div><div><dt>Engaged via</dt><dd>AZM X</dd></div><div><dt>Year</dt><dd>Jan 2023 – Nov 2024</dd></div></dl>
         <div class="cd-shot reveal"><img decoding="async" src="assets/img/072.jpg" alt="Jood Eskan homepage" width="1150" height="3284" loading="eager" fetchpriority="high"></div>
         <div class="cd-shot reveal"><img decoding="async" src="assets/img/073.jpg" alt="Jood Eskan — Beneficiary Services page with a three-step eligibility flow and partner-association teaser" width="1150" height="2015" loading="lazy"></div>
         <p class="cd-caption reveal">The beneficiary side of the platform &mdash; a short, guided eligibility flow (&ldquo;How can I benefit from Jood?&rdquo;)
@@ -1235,7 +1257,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Jood Eskan</dd></div>
-          <div><dt>My Role</dt><dd>UX/UI Designer</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>AZM X</dd></div>
           <div><dt>Year</dt><dd>Jan 2023&ndash;Nov 2024</dd></div>
         </dl>
@@ -1300,7 +1322,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Optimum Vision</dd></div>
-          <div><dt>My Role</dt><dd>UI/UX Designer</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Webtek</dd></div>
           <div><dt>Year</dt><dd>Oct 2022&ndash;Feb 2023</dd></div>
         </dl>
@@ -1345,7 +1367,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>TRAGS</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
           <div><dt>Year</dt><dd>Oct 2024&ndash;Present</dd></div>
         </dl>
@@ -1422,7 +1444,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Mehrab (Mihrab Society for Mosque Care)</dd></div>
-          <div><dt>My Role</dt><dd>UX/UI Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Saudi Azm</dd></div>
           <div><dt>Year</dt><dd>Sep 2024 &ndash; Sep 2025</dd></div>
         </dl>
@@ -1513,7 +1535,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Al-Awalia &mdash; Qatar Primary Materials Company (QPMC)</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
           <div><dt>Year</dt><dd>Oct 2024&ndash;Present</dd></div>
         </dl>
@@ -1602,7 +1624,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Community College of Qatar (CCQ)</dd></div>
-          <div><dt>My Role</dt><dd>UX Consultant</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Mannai Corporation</dd></div>
           <div><dt>Year</dt><dd>Oct 2024&ndash;Present</dd></div>
         </dl>
@@ -1690,7 +1712,7 @@
         </div>
         <dl class="cd-meta reveal">
           <div><dt>Client</dt><dd>Surah App</dd></div>
-          <div><dt>My Role</dt><dd>UX Designer</dd></div>
+          <div><dt>My Role</dt><dd>Senior UI/UX Designer</dd></div>
           <div><dt>Via</dt><dd>Alborhan Academy</dd></div>
           <div><dt>Year</dt><dd>Oct 2022&ndash;Feb 2023</dd></div>
         </dl>
@@ -2058,12 +2080,58 @@
 <section class="cta-band">
   <div class="wrap">
     <h2 class="reveal">Hiring for a product team? Let's talk.</h2>
-    <p class="cta-sub reveal">The fastest way to reach me is email &mdash; I usually reply within a day.</p>
+    <p class="cta-sub reveal">Send a message below &mdash; it opens WhatsApp straight to my phone. Or reach me directly:</p>
     <div class="btn-row reveal" style="justify-content:center;">
       <a href="mailto:Omniaamer835@gmail.com" class="btn solid">Email Me</a>
-      <a href="tel:+201558092205" class="btn">+20 155 809 2205</a>
+      <a href="https://wa.me/201558092205" target="_blank" rel="noopener" class="btn">WhatsApp</a>
       <a href="assets/Omnia_Amer_CV.pdf" download class="btn js-cv-download">Download CV <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:-2px;"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
     </div>
+  </div>
+</section>
+
+<section class="section-line" id="contact-form">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Send a message</span>
+      <h2>Start a conversation</h2>
+      <p>Fill this in and it opens WhatsApp with your message ready to send &mdash; it comes straight to my phone. Prefer email? <a href="mailto:Omniaamer835@gmail.com" style="border-bottom:1px solid var(--line-strong);">Omniaamer835@gmail.com</a>.</p>
+    </div>
+    <form class="cform reveal" id="waForm">
+      <div class="cform-row">
+        <label class="cfield">
+          <span>Your name <em>*</em></span>
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label class="cfield">
+          <span>Company / organisation</span>
+          <input type="text" name="company" autocomplete="organization">
+        </label>
+      </div>
+      <div class="cform-row">
+        <label class="cfield">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" placeholder="so I can reply here too">
+        </label>
+        <label class="cfield">
+          <span>I'm reaching out about</span>
+          <select name="topic">
+            <option>A full-time role</option>
+            <option>A contract / freelance project</option>
+            <option>A collaboration</option>
+            <option>Something else</option>
+          </select>
+        </label>
+      </div>
+      <label class="cfield">
+        <span>Message <em>*</em></span>
+        <textarea name="message" rows="5" required placeholder="A few lines about the role or project, timeline, and anything you'd like me to know."></textarea>
+      </label>
+      <div class="cform-actions">
+        <button type="submit" class="btn solid">Open WhatsApp with my message</button>
+        <span class="cform-note" id="waNote" hidden>Opening WhatsApp&hellip; nothing happened? <a id="waFallback" href="https://wa.me/201558092205" target="_blank" rel="noopener">Tap here</a>.</span>
+      </div>
+      <noscript><p class="cform-note">This form needs JavaScript. Message me on <a href="https://wa.me/201558092205" target="_blank" rel="noopener">WhatsApp</a> or by <a href="mailto:Omniaamer835@gmail.com">email</a>.</p></noscript>
+    </form>
   </div>
 </section>
 
@@ -2289,5 +2357,37 @@
   }
   window.addEventListener('hashchange', function(){ applyRoute(true); });
   applyRoute(false);
+</script>
+<script>
+  // Contact form -> WhatsApp deep link (no backend). Builds a pre-filled message
+  // and opens wa.me on submit; a visible fallback link covers popup blockers.
+  (function(){
+    var f = document.getElementById('waForm');
+    if(!f) return;
+    var PHONE = '201558092205';
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var d = new FormData(f);
+      var g = function(k){ return (d.get(k) || '').toString().trim(); };
+      var name = g('name'), company = g('company'), email = g('email'),
+          topic = g('topic'), message = g('message');
+      if(!name || !message) return;
+      var lines = [
+        'Portfolio enquiry',
+        'Name: ' + name,
+        company ? 'Company: ' + company : null,
+        email ? 'Email: ' + email : null,
+        'About: ' + topic,
+        '',
+        message
+      ].filter(Boolean);
+      var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(lines.join('\n'));
+      var fb = document.getElementById('waFallback');
+      if(fb) fb.href = url;
+      var note = document.getElementById('waNote');
+      if(note) note.hidden = false;
+      window.open(url, '_blank', 'noopener');
+    });
+  })();
 </script>
 </body></html>
