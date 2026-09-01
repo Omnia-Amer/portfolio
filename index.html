@@ -42,7 +42,7 @@
   }
 }
 </script>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIzMSIgaGVpZ2h0PSIzMSIgcng9IjciIGZpbGw9IiMxMTExMTEiIHN0cm9rZT0iI2ZmZmZmZjMzIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8cmVjdCB4PSIxNiIgeT0iNSIgd2lkdGg9IjExIiBoZWlnaHQ9IjExIiByeD0iMS41IiBmaWxsPSIjZmZmZmZmIi8+CiAgPHJlY3QgeD0iNSIgeT0iMTYiIHdpZHRoPSIxMSIgaGVpZ2h0PSIxMSIgcng9IjEuNSIgZmlsbD0iI2ZmZmZmZiIvPgo8L3N2Zz4K">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InMiIHgxPSIzIiB5MT0iMyIgeDI9IjI5IiB5Mj0iMjkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY2ZWM0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjUiIHN0b3AtY29sb3I9IiNhMDZiZTgiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNDJjNmZmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHJ4PSI3IiBmaWxsPSIjMGYwZjE0Ii8+CiAgPHBhdGggZD0iTTE1IDQgUTE2LjQgMTQuMiAyNyAxNiBRMTYuNCAxNy44IDE1IDI4IFExMy42IDE3LjggMyAxNiBRMTMuNiAxNC4yIDE1IDQgWiIgZmlsbD0idXJsKCNzKSIvPgogIDxwYXRoIGQ9Ik0yNCA2IFEyNC41IDkuNiAyNy41IDEwLjIgUTI0LjUgMTAuOCAyNCAxNC40IFEyMy41IDEwLjggMjAuNSAxMC4yIFEyMy41IDkuNiAyNCA2IFoiIGZpbGw9IiNmZmQ1NGEiLz4KPC9zdmc+Cg==">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
 </head>
@@ -2096,7 +2096,11 @@
       <h2>Start a conversation</h2>
       <p>Fill this in and it opens WhatsApp with your message ready to send &mdash; it comes straight to my phone. Prefer email? <a href="mailto:Omniaamer835@gmail.com" style="border-bottom:1px solid var(--line-strong);">Omniaamer835@gmail.com</a>.</p>
     </div>
-    <form class="cform reveal" id="waForm">
+    <form class="cform reveal" id="waForm" action="https://formsubmit.co/Omniaamer835@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New portfolio enquiry — omnia-amer.github.io">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px;">
       <div class="cform-row">
         <label class="cfield">
           <span>Your name <em>*</em></span>
@@ -2128,7 +2132,7 @@
       </label>
       <div class="cform-actions">
         <button type="submit" class="btn solid">Open WhatsApp with my message</button>
-        <span class="cform-note" id="waNote" hidden>Opening WhatsApp&hellip; nothing happened? <a id="waFallback" href="https://wa.me/201558092205" target="_blank" rel="noopener">Tap here</a>.</span>
+        <span class="cform-note" id="waNote" hidden>Opening WhatsApp&hellip; nothing happened? <a id="waFallback" href="https://wa.me/201558092205" target="_blank" rel="noopener">Tap here</a>. A copy is also emailed so nothing is lost.</span>
       </div>
       <noscript><p class="cform-note">This form needs JavaScript. Message me on <a href="https://wa.me/201558092205" target="_blank" rel="noopener">WhatsApp</a> or by <a href="mailto:Omniaamer835@gmail.com">email</a>.</p></noscript>
     </form>
@@ -2359,34 +2363,53 @@
   applyRoute(false);
 </script>
 <script>
-  // Contact form -> WhatsApp deep link (no backend). Builds a pre-filled message
-  // and opens wa.me on submit; a visible fallback link covers popup blockers.
+  // Contact form: opens WhatsApp with a pre-filled message AND emails a copy
+  // (FormSubmit AJAX) so nothing is lost if the WhatsApp message isn't sent.
   (function(){
     var f = document.getElementById('waForm');
     if(!f) return;
     var PHONE = '201558092205';
+    var MAIL = 'https://formsubmit.co/ajax/Omniaamer835@gmail.com';
+    var note = document.getElementById('waNote');
+    var fb = document.getElementById('waFallback');
     f.addEventListener('submit', function(e){
       e.preventDefault();
+      if (f._honey && f._honey.value) return; // spam bot
       var d = new FormData(f);
       var g = function(k){ return (d.get(k) || '').toString().trim(); };
       var name = g('name'), company = g('company'), email = g('email'),
           topic = g('topic'), message = g('message');
       if(!name || !message) return;
-      var lines = [
-        'Portfolio enquiry',
-        'Name: ' + name,
-        company ? 'Company: ' + company : null,
-        email ? 'Email: ' + email : null,
-        'About: ' + topic,
-        '',
-        message
-      ].filter(Boolean);
-      var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(lines.join('\n'));
-      var fb = document.getElementById('waFallback');
+
+      var head = ['Portfolio enquiry', 'Name: ' + name];
+      if (company) head.push('Company: ' + company);
+      if (email) head.push('Email: ' + email);
+      head.push('About: ' + topic);
+      var text = head.join('\n') + '\n\n' + message;
+
+      var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
       if(fb) fb.href = url;
-      var note = document.getElementById('waNote');
-      if(note) note.hidden = false;
+      if(note){ note.hidden = false; }
       window.open(url, '_blank', 'noopener');
+
+      // email backup
+      fetch(MAIL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: name, company: company || '—', email: email || '—',
+          topic: topic, message: message,
+          _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
+        })
+      }).then(function(r){ return r.json(); })
+        .then(function(res){
+          if(note) note.textContent = (res && res.success)
+            ? 'Sent — WhatsApp is open, and a copy has been emailed. Thanks!'
+            : 'WhatsApp is open. Email backup is still being set up — if WhatsApp didn’t open, use the links above.';
+        })
+        .catch(function(){
+          if(note) note.textContent = 'WhatsApp is open. (Email backup didn’t go through — if WhatsApp didn’t open, use the links above.)';
+        });
     });
   })();
 </script>
