@@ -2,23 +2,46 @@
 
 Personal portfolio site for Omnia Amer, Senior UI/UX Designer.
 
-Single self-contained `index.html` (all styles and images inlined). No build step.
+**Live:** <https://omnia-amer.github.io/portfolio/>
+
+Static site, no build step. Hash-routed single-page app (`index.html` + inline CSS/JS)
+with assets served from `assets/`.
+
+## Structure
+
+| Path | What |
+|------|------|
+| `index.html` | The whole site — markup, styles, and the client-side router |
+| `assets/img/` | Case-study screenshots (`001.jpg` … `141.jpg`) |
+| `assets/media/` | Case-study video clips (webm + mp4) |
+| `assets/Omnia_Amer_CV.pdf` | CV, linked from the "Download CV" buttons |
+| `favicon.svg` · `og-image.png` | Tab icon and social-share card |
+| `robots.txt` · `sitemap.xml` · `404.html` | SEO + SPA fallback redirect |
+| `ENHANCEMENTS.md` | Improvement plan and its status |
+
+## Edit and deploy
+
+Edit `index.html` (or swap an asset), then:
+
+```bash
+git add -A && git commit -m "…" && git push
+```
+
+GitHub Pages redeploys `main` automatically in ~1 minute.
 
 ## View locally
 
-Open `index.html` in a browser, or serve the folder:
+Serve the folder over HTTP (opening `index.html` via `file://` breaks the asset paths):
 
 ```bash
-python -m http.server 8000
+python3 -m http.server 8000
 ```
 
-## Publish with GitHub Pages
+Then open <http://localhost:8000/>.
 
-1. Create a new repository on GitHub (e.g. `portfolio`).
-2. Push this folder to it (see steps below).
-3. In the repo: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, branch `main`, folder `/ (root)`, then **Save**.
-4. After ~1 minute the site is live at `https://<your-username>.github.io/portfolio/`.
+## Notes
 
-Tip: naming the repo `<your-username>.github.io` serves it at `https://<your-username>.github.io/` with no subpath.
-
-The `.nojekyll` file is included so GitHub Pages serves the files as-is.
+- `.nojekyll` is present so Pages serves every file as-is.
+- The site is dark-theme only, by design.
+- Case studies still contain `<mark class="todo">` placeholders, hidden via
+  `.todo{display:none}` until the real detail is written in (see `ENHANCEMENTS.md`, Phase 4).
