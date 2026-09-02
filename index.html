@@ -396,6 +396,13 @@
   .cform-actions .btn{width:auto;}
   .cform-note{font-size:13px; color:var(--ink-faint);}
   .cform-note a{border-bottom:1px solid var(--line-strong);}
+  .cform-status{margin-top:14px; padding:13px 15px; border:1px solid var(--line); border-radius:var(--radius-md);
+    background:var(--surface-2); font-size:14px; line-height:1.55; color:var(--ink-soft); max-width:640px;}
+  .cform-status strong{color:var(--ink); font-weight:600;}
+  .cform-status a{color:var(--ink); border-bottom:1px solid var(--line-strong);}
+  .cform-status.ok{border-color:rgba(120,220,150,.45);}
+  .cform-status.warn{border-color:rgba(255,200,110,.5);}
+  #waSubmit[disabled]{opacity:.55; cursor:default;}
 </style>
 
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -2092,7 +2099,7 @@
 <section class="cta-band">
   <div class="wrap">
     <h2 class="reveal">Hiring for a product team? Let's talk.</h2>
-    <p class="cta-sub reveal">Send a message below &mdash; it opens WhatsApp straight to my phone. Or reach me directly:</p>
+    <p class="cta-sub reveal">Send a message below and it lands in my inbox &mdash; or reach me directly:</p>
     <div class="btn-row reveal" style="justify-content:center;">
       <a href="mailto:Omniaamer835@gmail.com" class="btn solid">Email Me</a>
       <a href="https://wa.me/201558092205" target="_blank" rel="noopener" class="btn">WhatsApp</a>
@@ -2106,7 +2113,7 @@
     <div class="section-head reveal">
       <span class="eyebrow"><span class="dot"></span>Send a message</span>
       <h2>Start a conversation</h2>
-      <p>Fill this in and it opens WhatsApp with your message ready to send &mdash; it comes straight to my phone. Prefer email? <a href="mailto:Omniaamer835@gmail.com" style="border-bottom:1px solid var(--line-strong);">Omniaamer835@gmail.com</a>.</p>
+      <p>Fill this in and it&rsquo;s emailed straight to me &mdash; I usually reply within a day. You&rsquo;ll get a confirmation here once it&rsquo;s sent, and can open WhatsApp with the same message if you&rsquo;d rather chat. Or email me directly at <a href="mailto:Omniaamer835@gmail.com" style="border-bottom:1px solid var(--line-strong);">Omniaamer835@gmail.com</a>.</p>
     </div>
     <form class="cform reveal" id="waForm" action="https://formsubmit.co/Omniaamer835@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New portfolio enquiry — omnia-amer.github.io">
@@ -2143,10 +2150,11 @@
         <textarea name="message" rows="5" required placeholder="A few lines about the role or project, timeline, and anything you'd like me to know."></textarea>
       </label>
       <div class="cform-actions">
-        <button type="submit" class="btn solid">Open WhatsApp with my message</button>
-        <span class="cform-note" id="waNote" hidden><span id="waStatus">Opening WhatsApp&hellip;</span> <a id="waFallback" href="https://wa.me/201558092205" target="_blank" rel="noopener">Open WhatsApp manually</a> &middot; a copy is also emailed so nothing is lost.</span>
+        <button type="submit" class="btn solid" id="waSubmit">Send message</button>
+        <a class="btn" id="waLink" href="https://wa.me/201558092205" target="_blank" rel="noopener">or message on WhatsApp</a>
       </div>
-      <noscript><p class="cform-note">This form needs JavaScript. Message me on <a href="https://wa.me/201558092205" target="_blank" rel="noopener">WhatsApp</a> or by <a href="mailto:Omniaamer835@gmail.com">email</a>.</p></noscript>
+      <div class="cform-status" id="waStatus" role="status" aria-live="polite" hidden></div>
+      <noscript><p class="cform-note">This form needs JavaScript. Reach Omnia on <a href="https://wa.me/201558092205" target="_blank" rel="noopener">WhatsApp</a> or by <a href="mailto:Omniaamer835@gmail.com">email</a>.</p></noscript>
     </form>
   </div>
 </section>
@@ -2375,17 +2383,16 @@
   applyRoute(false);
 </script>
 <script>
-  // Contact form: navigate this tab to WhatsApp with a pre-filled message,
-  // and fire an email copy (FormSubmit) via sendBeacon so nothing is lost.
+  // Contact form: emails the enquiry via FormSubmit and confirms delivery in the
+  // UI, then offers WhatsApp as a second channel. No page navigation on send.
   (function(){
     var f = document.getElementById('waForm');
     if(!f) return;
     var PHONE = '201558092205';
-    var MAIL_FORM = 'https://formsubmit.co/Omniaamer835@gmail.com';
     var MAIL_AJAX = 'https://formsubmit.co/ajax/Omniaamer835@gmail.com';
-    var note = document.getElementById('waNote');
-    var stat = document.getElementById('waStatus');
-    var fb = document.getElementById('waFallback');
+    var box = document.getElementById('waStatus');
+    var btn = document.getElementById('waSubmit');
+    var waLink = document.getElementById('waLink');
 
     f.addEventListener('submit', function(e){
       e.preventDefault();
@@ -2402,45 +2409,37 @@
       if (email) head.push('Email: ' + email);
       head.push('About: ' + topic);
       var text = head.join('\n') + '\n\n' + message;
-      var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
+      var waUrl = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
+      if (waLink) waLink.href = waUrl;
 
-      if(fb) fb.href = url;
-      if(note) note.hidden = false;
-      if(stat) stat.textContent = 'Opening WhatsApp — ';
+      box.hidden = false; box.className = 'cform-status'; box.textContent = 'Sending…';
+      btn.disabled = true; btn.textContent = 'Sending…';
 
-      // Email a copy. sendBeacon is instant, non-blocking, and guaranteed to
-      // send even as the page unloads. Falls back to fetch if unavailable.
-      var sent = false;
-      try {
-        var p = new URLSearchParams();
-        p.set('name', name); p.set('company', company || '—'); p.set('email', email || '—');
-        p.set('topic', topic); p.set('message', message);
-        p.set('_subject', 'New portfolio enquiry — omnia-amer.github.io');
-        p.set('_template', 'table'); p.set('_captcha', 'false');
-        if (navigator.sendBeacon) sent = navigator.sendBeacon(MAIL_FORM, p);
-      } catch(_){}
-      if (!sent) {
-        try {
-          fetch(MAIL_AJAX, {
-            method: 'POST', keepalive: true,
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({
-              name: name, company: company || '—', email: email || '—', topic: topic, message: message,
-              _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
-            })
-          }).catch(function(){});
-        } catch(_){}
-      }
+      var done = function(ok){
+        btn.disabled = false; btn.textContent = 'Send message';
+        if (ok){
+          box.className = 'cform-status ok';
+          box.innerHTML = '<strong>Message sent ✓</strong> — it’s on its way to Omnia’s inbox. '
+            + 'Prefer to chat now? <a href="' + waUrl + '" target="_blank" rel="noopener">Open WhatsApp</a> with the same message ready to send.';
+          f.reset();
+        } else {
+          box.className = 'cform-status warn';
+          box.innerHTML = 'The email didn’t go through just now. Reach Omnia directly — '
+            + '<a href="' + waUrl + '" target="_blank" rel="noopener">send it on WhatsApp</a> '
+            + '(your message is pre-filled), or <a href="mailto:Omniaamer835@gmail.com?subject=Portfolio%20enquiry&body=' + encodeURIComponent(text) + '">email it</a>.';
+        }
+      };
 
-      // Navigate THIS tab to WhatsApp — the only reliable method. Do it on the
-      // next tick so the beacon is flushed first.
-      setTimeout(function(){ window.location.assign(url); }, 0);
-
-      // If we're somehow still here after 1.2s, surface a big manual link.
-      setTimeout(function(){
-        if (stat) stat.textContent = 'WhatsApp didn’t open automatically — ';
-        if (fb){ fb.textContent = 'tap here to open it'; fb.style.fontWeight = '600'; }
-      }, 1200);
+      fetch(MAIL_AJAX, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: name, company: company || '—', email: email || '—', topic: topic, message: message,
+          _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
+        })
+      }).then(function(r){ return r.json(); })
+        .then(function(res){ done(res && (res.success === true || res.success === 'true')); })
+        .catch(function(){ done(false); });
     });
   })();
 </script>
