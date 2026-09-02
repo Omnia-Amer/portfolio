@@ -27,8 +27,8 @@ Last updated: 2026-09-02
 | 404 / deep links | ✅ | `404.html` redirects to the app, preserving the hash |
 | Mobile | ✅ | verified at 375 px — nav collapses to a working hamburger |
 | Real Lighthouse scores | 🟡 | A11y **100** · SEO **100** · Best Practices **96** · Perf **58** (extension-contaminated — see §6a) · **CLS 0** |
-| Contact form | ✅ | Contact page has a real form → opens WhatsApp (+201558092205) with a pre-filled message **and** emails a copy via FormSubmit so nothing is lost |
-| Analytics | 🟡 | GoatCounter snippet installed (SPA-route aware). **Needs the free `omnia.goatcounter.com` site to exist** — your signup |
+| Contact form | ✅ verified | Form → **navigates to WhatsApp** (+201558092205) with a pre-filled message **and** emails a copy via FormSubmit. Both paths tested live 2026-09-02. |
+| Analytics | ✅ verified | GoatCounter live at `omnia.goatcounter.com` — count request confirmed returning 200; SPA hash routes tracked. |
 | Case-study role / year / employer | ✅ | filled from your CV — role = "Senior UI/UX Designer" on all 15; GAMA + MECC inferred (see §3 Q13) |
 | Case-study brief / process / **metrics** | ⛔ | still `todo` — **needs your input; metrics can't be invented** (see §4) |
 | Image quality (WebP/compression) | ❌ declined | you want max quality / hi-res — WebP + the ~258 KB saving are off the table (see §6a) |
@@ -93,11 +93,11 @@ skip link resolves to a real `<main>`, `#route-status` present, focus rings visi
 | Q6 | Is `assets/Omnia_Amer_CV.pdf` current? | Download CV serves it | ✅ **Answered: keep for now, will be updated later** — swap the file in `assets/` when ready, same name |
 | Q7 | Keep `…github.io/portfolio/` or move to root `omnia-amer.github.io`? | Cleaner on a CV | ⬜ open |
 | Q8 | **Custom domain** (e.g. `omniaamer.com`) — own one / want one? | Also unblocks the cache-lifetime Lighthouse item via Cloudflare | ⬜ open |
-| Q9 | Analytics | — | ✅ **Answered: GoatCounter** — snippet installed; **create the free site** at goatcounter.com (code `omnia`) or it won't record |
-| Q10 | Contact form | — | ✅ **Answered: built** (WhatsApp + FormSubmit email backup). **Click the FormSubmit activation email.** |
+| Q9 | Analytics | — | ✅ **Done** — GoatCounter live at `omnia.goatcounter.com`, verified recording |
+| Q10 | Contact form | — | ✅ **Done & verified** — WhatsApp nav + FormSubmit email backup, both tested live. FormSubmit activated. |
 | Q11 | Regenerate `og-image.png` with real Outfit font? | Cosmetic | ⬜ open (low priority) |
 | Q12 | **Light theme** — confirmed skip? | Big effort; dark by design | ⬜ open |
-| Q13 | **GAMA + MECC** are not in your CV. I set both to `Mannai Corporation / 2024 – Present` to match your other Qatar-gov work. **Correct?** | Currently shown as fact on those two case studies | ⬜ **verify** |
+| Q13 | GAMA + MECC → `Mannai Corporation / 2024 – Present` | — | ✅ **Confirmed correct** |
 | Q14 | **Metrics** — your CV has no numbers. I will **not** invent results. Options: (a) you give real figures per project, (b) replace the "measurable result" line with a true qualitative outcome, (c) drop that sentence. Which? | Fabricated metrics on a job-search portfolio are a serious risk | ⬜ **need direction** |
 | Q15 | **Hi-res images** — you want 4K/super-res. I can't upscale here, and the source screenshots are 480–1150 px wide. Do you have **higher-res exports** (Figma @2×/@3×, or full-res captures)? | Drop them into `assets/img/` (same filenames) and I'll update the dimensions | ⬜ **need files** |
 
@@ -193,11 +193,13 @@ Grammarly / Adobe / other extensions injecting into the page.
 
 ## 7. Next steps (in order)
 
-**Your quick actions (unblock the automated parts):**
-1. **Click the FormSubmit "Activate Form" email** in Omniaamer835@gmail.com — until then the contact-form email backup doesn't deliver. Then submit the form once yourself to confirm it arrives.
-2. **Create the GoatCounter site** — goatcounter.com → sign up → code `omnia` (must resolve to `omnia.goatcounter.com`). Free, ~2 min.
-3. **Re-run Lighthouse in Incognito** (extensions off) on `#/work/case-qnl` and `#/`; record in §8.
-4. **Answer Q13** (GAMA/MECC = Mannai/2024–Present, yes/no) and **Q14** (metrics: real numbers / qualitative / drop).
+**Your quick actions:**
+1. ~~FormSubmit activation~~ ✅ done & verified (a "pipeline test" email was sent during testing — ignore it).
+2. ~~GoatCounter site~~ ✅ done & verified (a `/pipeline-test` hit was logged during testing — ignore/filter it).
+3. ~~Q13~~ ✅ confirmed.
+4. **Hard-refresh the site** (Ctrl+Shift+R) before re-testing the contact form — you were seeing a cached older build.
+5. **Re-run Lighthouse in Incognito** (extensions off) on `#/work/case-qnl` and `#/`; record in §8.
+6. **Answer Q14** (metrics: real numbers / true qualitative outcome / drop the line).
 
 **Then the content loop:**
 5. Send me full detail for **one** case study (brief + process + result) → I wire it in as the template → you review.
@@ -225,5 +227,6 @@ social card renders · Download CV returns a valid PDF · no console errors · k
 | 2026-09-02 | Lighthouse (case-qnl, **extensions on**) | 58 | 100 | 100 | 96 | CLS 0 ✅. Perf contaminated by browser extensions (4,315 KiB unused JS not from this site). LCP 4.1s / TBT 1,850ms. |
 | 2026-09-02 | perf fixes | — | — | — | — | Commit `a79e7f6`: LCP image eager+fetchpriority per case page; font CSS non-blocking (−450ms). Fonts verified still rendering. |
 | 2026-09-02 | contact form + branding | — | — | — | — | Commits `2da786f`…`6e677c4`: WhatsApp form (URL + message verified live), FormSubmit AJAX reachable (activation email sent), GoatCounter loads, sparkle favicon + logo mark verified, 0 console errors. |
-| 2026-09-02 | contact form fix | — | — | — | — | Commit `46449f5`: "nothing happens" was `window.open` popup-blocked. Now falls back to same-tab nav → verified live: button click lands on the WhatsApp "Chat with +20…" page with the message pre-filled. Empty-submit guard + native no-JS action confirmed. 0 console errors. |
+| 2026-09-02 | contact form fix | — | — | — | — | Commit `14ac6a7`: "nothing happens" = `window.open` popup-blocked / opened an unseen background tab. Dropped `window.open` entirely — form now navigates THIS tab to wa.me. Verified live: real button click lands on WhatsApp with the full message pre-filled. |
+| 2026-09-02 | pipeline verified | — | — | — | — | FormSubmit AJAX returns `success:true` (activated, test email sent). GoatCounter `omnia.goatcounter.com/count` returns 200. Q13 confirmed. |
 | _tbd_ | **Lighthouse in Incognito** | ? | ? | ? | ? | **← re-run with extensions off, `#/work/case-qnl` + `#/`** |
