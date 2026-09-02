@@ -2375,54 +2375,72 @@
   applyRoute(false);
 </script>
 <script>
-  // Contact form: opens WhatsApp with a pre-filled message AND emails a copy
-  // (FormSubmit AJAX) so nothing is lost if the WhatsApp message isn't sent.
+  // Contact form: navigate this tab to WhatsApp with a pre-filled message,
+  // and fire an email copy (FormSubmit) via sendBeacon so nothing is lost.
   (function(){
     var f = document.getElementById('waForm');
     if(!f) return;
     var PHONE = '201558092205';
-    var MAIL = 'https://formsubmit.co/ajax/Omniaamer835@gmail.com';
+    var MAIL_FORM = 'https://formsubmit.co/Omniaamer835@gmail.com';
+    var MAIL_AJAX = 'https://formsubmit.co/ajax/Omniaamer835@gmail.com';
     var note = document.getElementById('waNote');
     var stat = document.getElementById('waStatus');
     var fb = document.getElementById('waFallback');
+
     f.addEventListener('submit', function(e){
       e.preventDefault();
       if (f._honey && f._honey.value) return; // spam bot
+
       var d = new FormData(f);
       var g = function(k){ return (d.get(k) || '').toString().trim(); };
       var name = g('name'), company = g('company'), email = g('email'),
           topic = g('topic'), message = g('message');
-      if(!name || !message) return;
+      if(!name || !message){ f.reportValidity && f.reportValidity(); return; }
 
       var head = ['Portfolio enquiry', 'Name: ' + name];
       if (company) head.push('Company: ' + company);
       if (email) head.push('Email: ' + email);
       head.push('About: ' + topic);
       var text = head.join('\n') + '\n\n' + message;
-
       var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
+
       if(fb) fb.href = url;
       if(note) note.hidden = false;
-      if(stat) stat.textContent = 'Opening WhatsApp…';
+      if(stat) stat.textContent = 'Opening WhatsApp — ';
 
-      // Email a copy first. keepalive = the request still completes after we
-      // navigate away. Fire-and-forget; the WhatsApp hop must not wait on it.
+      // Email a copy. sendBeacon is instant, non-blocking, and guaranteed to
+      // send even as the page unloads. Falls back to fetch if unavailable.
+      var sent = false;
       try {
-        fetch(MAIL, {
-          method: 'POST', keepalive: true,
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            name: name, company: company || '—', email: email || '—',
-            topic: topic, message: message,
-            _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
-          })
-        }).catch(function(){});
+        var p = new URLSearchParams();
+        p.set('name', name); p.set('company', company || '—'); p.set('email', email || '—');
+        p.set('topic', topic); p.set('message', message);
+        p.set('_subject', 'New portfolio enquiry — omnia-amer.github.io');
+        p.set('_template', 'table'); p.set('_captcha', 'false');
+        if (navigator.sendBeacon) sent = navigator.sendBeacon(MAIL_FORM, p);
       } catch(_){}
+      if (!sent) {
+        try {
+          fetch(MAIL_AJAX, {
+            method: 'POST', keepalive: true,
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              name: name, company: company || '—', email: email || '—', topic: topic, message: message,
+              _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
+            })
+          }).catch(function(){});
+        } catch(_){}
+      }
 
-      // Go to WhatsApp by navigating THIS tab — the only method that always
-      // works (window.open gets popup-blocked, or opens an unfocused background
-      // tab the visitor never sees). wa.me → the app on mobile, web on desktop.
-      window.location.href = url;
+      // Navigate THIS tab to WhatsApp — the only reliable method. Do it on the
+      // next tick so the beacon is flushed first.
+      setTimeout(function(){ window.location.assign(url); }, 0);
+
+      // If we're somehow still here after 1.2s, surface a big manual link.
+      setTimeout(function(){
+        if (stat) stat.textContent = 'WhatsApp didn’t open automatically — ';
+        if (fb){ fb.textContent = 'tap here to open it'; fb.style.fontWeight = '600'; }
+      }, 1200);
     });
   })();
 </script>
