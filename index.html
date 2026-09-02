@@ -2405,7 +2405,8 @@
       if(note) note.hidden = false;
       if(stat) stat.textContent = 'Opening WhatsApp…';
 
-      // email backup — keepalive lets it finish even after we navigate away
+      // Email a copy first. keepalive = the request still completes after we
+      // navigate away. Fire-and-forget; the WhatsApp hop must not wait on it.
       try {
         fetch(MAIL, {
           method: 'POST', keepalive: true,
@@ -2415,23 +2416,13 @@
             topic: topic, message: message,
             _subject: 'New portfolio enquiry — omnia-amer.github.io', _template: 'table'
           })
-        }).then(function(r){ return r.json(); })
-          .then(function(res){
-            var ok = res && (res.success === true || res.success === 'true');
-            if(stat) stat.textContent = ok
-              ? 'A copy has been emailed to Omnia.'
-              : 'If WhatsApp didn’t open,';
-          }).catch(function(){ if(stat) stat.textContent = 'If WhatsApp didn’t open,'; });
+        }).catch(function(){});
       } catch(_){}
 
-      // Open WhatsApp. Try a new tab; if the browser blocks it, navigate this tab
-      // (a plain location change is never popup-blocked). wa.me opens the app on
-      // mobile and web.whatsapp.com on desktop.
-      var win = null;
-      try { win = window.open(url, '_blank'); } catch(_){}
-      if (!win || win.closed || typeof win.closed === 'undefined') {
-        setTimeout(function(){ window.location.href = url; }, 120);
-      }
+      // Go to WhatsApp by navigating THIS tab — the only method that always
+      // works (window.open gets popup-blocked, or opens an unfocused background
+      // tab the visitor never sees). wa.me → the app on mobile, web on desktop.
+      window.location.href = url;
     });
   })();
 </script>
