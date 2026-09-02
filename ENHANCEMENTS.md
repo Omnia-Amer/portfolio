@@ -197,9 +197,10 @@ Grammarly / Adobe / other extensions injecting into the page.
 1. ~~FormSubmit activation~~ ✅ done & verified (a "pipeline test" email was sent during testing — ignore it).
 2. ~~GoatCounter site~~ ✅ done & verified (a `/pipeline-test` hit was logged during testing — ignore/filter it).
 3. ~~Q13~~ ✅ confirmed.
-4. **Hard-refresh the site** (Ctrl+Shift+R) before re-testing the contact form — you were seeing a cached older build.
-5. **Re-run Lighthouse in Incognito** (extensions off) on `#/work/case-qnl` and `#/`; record in §8.
-6. **Answer Q14** (metrics: real numbers / true qualitative outcome / drop the line).
+4. **Hard-refresh the site** (Ctrl+Shift+R), or test the contact form in a **private window** — the "not working" was a cached old `index.html`. The current build navigates straight to WhatsApp with your message filled in (verified in your Chrome 2026-09-02).
+5. **Delete the test emails** — ~5 automated submissions ("pipeline test", "beacon endpoint probe", "delivery check", "Beacon Chrome Test", "Email Delivery Check") landed in Omniaamer835@gmail.com during debugging. All safe to bin.
+6. **Re-run Lighthouse in Incognito** (extensions off) on `#/work/case-qnl` and `#/`; record in §8.
+7. **Answer Q14** (metrics: real numbers / true qualitative outcome / drop the line).
 
 **Then the content loop:**
 5. Send me full detail for **one** case study (brief + process + result) → I wire it in as the template → you review.
@@ -229,4 +230,5 @@ social card renders · Download CV returns a valid PDF · no console errors · k
 | 2026-09-02 | contact form + branding | — | — | — | — | Commits `2da786f`…`6e677c4`: WhatsApp form (URL + message verified live), FormSubmit AJAX reachable (activation email sent), GoatCounter loads, sparkle favicon + logo mark verified, 0 console errors. |
 | 2026-09-02 | contact form fix | — | — | — | — | Commit `14ac6a7`: "nothing happens" = `window.open` popup-blocked / opened an unseen background tab. Dropped `window.open` entirely — form now navigates THIS tab to wa.me. Verified live: real button click lands on WhatsApp with the full message pre-filled. |
 | 2026-09-02 | pipeline verified | — | — | — | — | FormSubmit AJAX returns `success:true` (activated, test email sent). GoatCounter `omnia.goatcounter.com/count` returns 200. Q13 confirmed. |
+| 2026-09-02 | **real-Chrome validation** | — | — | — | — | Commit `7b9abae`. Tested in the user's actual Chrome (extensions incl. Grammarly present): contact form → submit → **navigates to `api.whatsapp.com/send/` with the full pre-filled message** (verified 3×, distinct payloads). All 8 routes render (1 visible `<main>` each, correct heading, `#main-content` set). 141 images, **0 broken**. 41 todo markers in DOM, **0 visible** anywhere. Favicon (file+inline) + GoatCounter (`.count()` present) OK. **0 site console errors** (only extension noise). The earlier "nothing happens" = stale cached `index.html` (pre-`14ac6a7`, when it used `window.open`). Fix: hard-refresh. |
 | _tbd_ | **Lighthouse in Incognito** | ? | ? | ? | ? | **← re-run with extensions off, `#/work/case-qnl` + `#/`** |
