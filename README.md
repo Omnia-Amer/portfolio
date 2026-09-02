@@ -15,9 +15,16 @@ with assets served from `assets/`.
 | `assets/img/` | Case-study screenshots (`001.jpg` … `141.jpg`) |
 | `assets/media/` | Case-study video clips (webm + mp4) |
 | `assets/Omnia_Amer_CV.pdf` | CV, linked from the "Download CV" buttons |
-| `favicon.svg` · `og-image.png` | Tab icon and social-share card |
+| `favicon.svg` · `og-image.png` | Tab icon (sparkle) and social-share card |
 | `robots.txt` · `sitemap.xml` · `404.html` | SEO + SPA fallback redirect |
-| `ENHANCEMENTS.md` | Improvement plan and its status |
+| `ENHANCEMENTS.md` | Status, plan, and open decisions |
+
+## Third-party services (no backend)
+
+- **Contact form** → [FormSubmit](https://formsubmit.co) emails enquiries to `Omniaamer835@gmail.com`
+  (activated; free). Secondary button opens WhatsApp (`wa.me/201558092205`) with the same pre-filled text.
+- **Analytics** → [GoatCounter](https://omnia.goatcounter.com) (`omnia.goatcounter.com`), cookie-free,
+  counts SPA hash routes.
 
 ## Edit and deploy
 
