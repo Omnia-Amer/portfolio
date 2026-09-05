@@ -162,14 +162,14 @@ line is backed by the 2026 CV.
 - Manual screen-reader pass — **EN and AR** (VoiceOver / NVDA); the AR pass matters most (new RTL).
 - Real-device check — actual iOS Safari / Android Chrome, both languages.
 
-### Enhancements planned, not yet applied (need your call)
-| # | Enhancement | Effort | Needs |
-|---|-------------|--------|-------|
-| E1 | **Split the AR dictionary** into an async `i18n-ar.js` so `index.html` drops from 390 KB back to ~200 KB (loads on first toggle-to-Arabic) | ~1 h | your OK — only matters if the 390 KB bothers you |
-| E2 | Fix the AR hero-H1 contraction ("لـالمؤسسات" → "للمؤسسات") | 2 min | your wording (it's your translation — one dict entry) |
-| E3 | Translate `<title>` / `<meta description>` for AR shares (or a lightweight AR OG image) | ~30 min | your OK |
-| E4 | Case-study **image lightbox / zoom** (screenshots are dense; a click-to-enlarge would help) | ~2 h | your OK |
-| E5 | Per-case-study OG image (share a specific case, get its screenshot as the card) | ~1 h + assets | your OK |
+### Enhancements
+| # | Enhancement | Status |
+|---|-------------|--------|
+| E1 | Split the AR dictionary into `i18n-ar.js` | ✅ done (`c381734`) — `index.html` 390 KB → **223 KB**; English loads fetch 0 bytes of it; loads once on first switch to Arabic (or synchronously on a `?lang=ar` entry — no flash). Verified live. |
+| E2 | Fix the AR hero-H1 contraction | ✅ done (`c381734`) — now "تصميم واجهات للمؤسسات التي يضع الناس ثقتهم فيها." Verified live. |
+| E3 | Translate `<title>` / `<meta description>` for AR shares (or a lightweight AR OG image) | ⬜ your OK · ~30 min |
+| E4 | Case-study **image lightbox / zoom** (screenshots are dense; click-to-enlarge) | ⬜ your OK · ~2 h |
+| E5 | Per-case-study OG image (share a case, get its screenshot as the card) | ⬜ your OK · ~1 h + assets |
 
 ---
 
@@ -202,4 +202,5 @@ line is backed by the 2026 CV.
 | 2026-09-05 | CV + roles (`b9abfcf`) | — | — | — | — | new 2026 CV live (`application/pdf`, 134 KB); per-engagement titles from CV verified live |
 | 2026-09-05 | **bilingual EN/AR** (`6de797d`) | — | — | — | — | Local server: 11/11 routes both langs, toggle round-trips, 0 broken imgs, 0 JS errors, form/FAQ/case studies translate, `dir`/`lang`/localStorage correct |
 | 2026-09-05 | polish | — | — | — | — | `rel="me"` ×3, sitemap `<lastmod>`, meta description → ~165 chars, `<html dir="ltr">` |
+| 2026-09-05 | **E1 + E2** (`c381734`) | — | — | — | — | Live: AR dict → `i18n-ar.js`; EN load fetches **0** bytes of it, AR toggle fetches it **once**, `?lang=ar` loads it synchronously (no flash); `index.html` 390→223 KB; AR hero fixed; 7/7 AR routes, 0 broken imgs, 0 JS errors |
 | _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` (do it in EN and AR) |
