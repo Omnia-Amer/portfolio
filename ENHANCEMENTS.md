@@ -18,9 +18,14 @@ Merged both: deployed shell/head/CSS/scripts **+** artifact's `<main>` content, 
 re-externalised images (159 now), re-applied img dims/lazy/eager, injected the contact
 form into the artifact's contact page, kept the FAQ wording from the artifact.
 
-**One deliberate override:** case-study "My Role" kept as **"Senior UI/UX Designer"**
-(your earlier instruction) — the artifact still had the old per-engagement titles
-("UX Consultant" etc.). Say the word if you want those back.
+**Case-study "My Role"** now follows the 2026 CV's model (commit `b9abfcf`):
+Mannai Corporation + Saudi Azm engagements → **"UX/UI Consultant"** (13);
+AZM X / Alborhan / Webtek → **"UI/UX Designer"** (4). Site headline + JSON-LD
+`jobTitle` stay "Senior UI/UX Designer".
+
+**New CV** (`b9abfcf`): `assets/Omnia_Amer_CV.pdf` is now the current text-based
+`Omnia_Amer_Senior_UIUX_Designer_CV_2026` (134 KB, was a 1.5 MB placeholder) —
+filename kept so all links work. It backs the Guinness World Records line.
 
 Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-manateq` +
 `case-qsl` routes.
@@ -54,7 +59,8 @@ Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-
 | **Contact form** | ✅ verified | Email-first via FormSubmit → "Message sent ✓"; WhatsApp is a secondary button. Both tested live. |
 | **Analytics** | ✅ verified | GoatCounter at `omnia.goatcounter.com` — count returns 200, SPA routes tracked |
 | **Favicon + logo mark** | ✅ | colourful gradient sparkle (✨) + gold twinkle; logo mark matches, spins on hover |
-| Case-study role / year / employer | ✅ | from CV — role = "Senior UI/UX Designer" on all 15; GAMA + MECC = Mannai / 2024–Present (confirmed) |
+| Case-study role / year / employer | ✅ | from the 2026 CV — "UX/UI Consultant" for Mannai/Azm engagements, "UI/UX Designer" for AZM X/Alborhan/Webtek; years + employers per CV |
+| CV file | ✅ | `assets/Omnia_Amer_CV.pdf` = the current 2026 text CV (134 KB) |
 | Case-study brief / process / results | ✅ | **all filled** (from the artifact, 2026-09-05) — qualitative outcomes, no invented metrics. 0 `todo` markers left. |
 | Lighthouse Performance | 🟡 | **58** with extensions on — contaminated; needs an Incognito re-run (see §5) |
 | Image compression / WebP | ❌ | declined — Omnia wants maximum quality / hi-res |
