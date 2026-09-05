@@ -6,6 +6,27 @@ Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ decl
 
 ---
 
+## Artifact merge — 2026-09-05
+
+The Claude artifact (`41d66502…`) had diverged: Omnia added **2 new case studies
+(Manateq, Qatar Stars League)**, filled in every remaining `todo` (briefs, approaches,
+outcomes — all qualitative, no invented metrics), rewrote the FAQ, and bumped the
+counts to 17 products / 8 gov clients. The deployed site meanwhile had all the infra
+(assets, contact form, analytics, SEO, a11y, sparkle branding).
+
+Merged both: deployed shell/head/CSS/scripts **+** artifact's `<main>` content, then
+re-externalised images (159 now), re-applied img dims/lazy/eager, injected the contact
+form into the artifact's contact page, kept the FAQ wording from the artifact.
+
+**One deliberate override:** case-study "My Role" kept as **"Senior UI/UX Designer"**
+(your earlier instruction) — the artifact still had the old per-engagement titles
+("UX Consultant" etc.). Say the word if you want those back.
+
+Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-manateq` +
+`case-qsl` routes.
+
+---
+
 ## TL;DR
 
 - **The site is live, fast (192 KB, down from 14 MB), accessible (Lighthouse A11y 100, SEO 100), and mobile-clean.**
@@ -34,7 +55,7 @@ Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ decl
 | **Analytics** | ✅ verified | GoatCounter at `omnia.goatcounter.com` — count returns 200, SPA routes tracked |
 | **Favicon + logo mark** | ✅ | colourful gradient sparkle (✨) + gold twinkle; logo mark matches, spins on hover |
 | Case-study role / year / employer | ✅ | from CV — role = "Senior UI/UX Designer" on all 15; GAMA + MECC = Mannai / 2024–Present (confirmed) |
-| Case-study brief / process / results | ⛔ | still `todo` on 14 studies — needs Omnia's input (see §4) |
+| Case-study brief / process / results | ✅ | **all filled** (from the artifact, 2026-09-05) — qualitative outcomes, no invented metrics. 0 `todo` markers left. |
 | Lighthouse Performance | 🟡 | **58** with extensions on — contaminated; needs an Incognito re-run (see §5) |
 | Image compression / WebP | ❌ | declined — Omnia wants maximum quality / hi-res |
 | Cache lifetimes / custom domain | ⬜ | needs Cloudflare + a custom domain (see §5) |
