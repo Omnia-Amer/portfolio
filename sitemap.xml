@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://omnia-amer.github.io/portfolio/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://omnia-amer.github.io/portfolio/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://omnia-amer.github.io/portfolio/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://omnia-amer.github.io/portfolio/"/>
   </url>
 </urlset>

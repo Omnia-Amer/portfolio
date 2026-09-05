@@ -8,7 +8,7 @@
 <meta name="author" content="Omnia Amer">
 <link rel="canonical" href="https://omnia-amer.github.io/portfolio/">
 <link rel="alternate" hreflang="en" href="https://omnia-amer.github.io/portfolio/">
-<link rel="alternate" hreflang="ar" href="https://omnia-amer.github.io/portfolio/?lang=ar">
+<link rel="alternate" hreflang="ar" href="https://omnia-amer.github.io/portfolio/ar/">
 <link rel="alternate" hreflang="x-default" href="https://omnia-amer.github.io/portfolio/">
 <link rel="me" href="https://linkedin.com/in/omni-aamer/">
 <link rel="me" href="https://behance.net/omnia-amer">
@@ -2656,6 +2656,32 @@
 // --- bilingual (EN / AR) support ---
 (function(){
   var I18N_AR = window.I18N_AR || {};
+
+  // --- <head> meta (tab title, description, OG/Twitter) per language ---
+  var META_AR = {
+    title: 'أمنية عامر — مصمّمة واجهات وتجربة مستخدم أول',
+    description: 'مصمّمة واجهات وتجربة مستخدم أول متخصّصة في تصميم المنتجات الرقمية ثنائية اللغة (عربي/إنجليزي، RTL/LTR) للجهات الحكومية والمؤسسية. أطلقت 17 منتجًا لأكثر من 8 مؤسسات في القطاع العام عبر قطر والسعودية والإمارات.',
+    ogDescription: 'تصميم واجهات للمؤسسات التي يضع الناس ثقتهم فيها. خمس سنوات في تحويل المتطلبات الحكومية والمؤسسية المعقّدة وثنائية اللغة (عربي/إنجليزي) إلى منتجات تُطلَق بثقة — عبر قطر والسعودية والإمارات.'
+  };
+  var META_EN = null;
+  function setMeta(sel, val){ var el = document.head.querySelector(sel); if(el && val != null) el.setAttribute('content', val); }
+  function applyMeta(isAr){
+    if(!META_EN){
+      var g = function(s){ var e = document.head.querySelector(s); return e ? e.getAttribute('content') : null; };
+      META_EN = { title: document.title, description: g('meta[name="description"]'),
+        ogTitle: g('meta[property="og:title"]'), ogDescription: g('meta[property="og:description"]'),
+        twTitle: g('meta[name="twitter:title"]'), twDescription: g('meta[name="twitter:description"]'),
+        ogLocale: g('meta[property="og:locale"]') || 'en_US' };
+    }
+    document.title = isAr ? META_AR.title : META_EN.title;
+    setMeta('meta[name="description"]',        isAr ? META_AR.description   : META_EN.description);
+    setMeta('meta[property="og:title"]',       isAr ? META_AR.title         : META_EN.ogTitle);
+    setMeta('meta[property="og:description"]', isAr ? META_AR.ogDescription : META_EN.ogDescription);
+    setMeta('meta[name="twitter:title"]',      isAr ? META_AR.title         : META_EN.twTitle);
+    setMeta('meta[name="twitter:description"]',isAr ? META_AR.ogDescription : META_EN.twDescription);
+    setMeta('meta[property="og:locale"]',      isAr ? 'ar_AR'               : META_EN.ogLocale);
+  }
+
   var dictLoading = null;
   function ensureDict(cb){
     if(window.I18N_AR){ I18N_AR = window.I18N_AR; return cb(); }
@@ -2718,6 +2744,7 @@
     document.querySelectorAll('.lang-toggle').forEach(function(b){
       b.textContent = isAr ? 'EN' : '\u0639\u0631\u0628\u064a';
     });
+    applyMeta(isAr);
         attrEls.forEach(function(el, idx){
       [['placeholder',0],['aria-label',1]].forEach(function(pair){
         var attr = pair[0], orig = attrOrig[idx][pair[1]];
