@@ -166,7 +166,9 @@ line is backed by the 2026 CV.
 | E2 | Fix the AR hero-H1 contraction | ✅ done (`c381734`) — now "تصميم واجهات للمؤسسات التي يضع الناس ثقتهم فيها." Verified live. |
 | E3 | Translate `<title>` / `<meta description>` for AR shares | ✅ done (`f4efe81`) — `applyMeta()` swaps title/description/OG/Twitter/`og:locale` EN↔AR on toggle; new static `ar/index.html` carries full Arabic OG/Twitter meta for social scrapers and redirects humans to `/portfolio/?lang=ar`; head `hreflang="ar"` → `/portfolio/ar/`; sitemap `xhtml:link` alternates. Verified live. |
 | E4 | Case-study **image lightbox / zoom** (screenshots are dense; click-to-enlarge) | ✅ done (`d2fa660`) — click / Enter / Space any case-study screenshot → full-size overlay with prev·next (scoped to that case page), counter, caption from `alt`, Esc / backdrop close, focus trap + restore, body-scroll lock. Screenshots are now `role="button"` + `tabindex=0` + `aria-label`. RTL-aware; closes on route change; honours `prefers-reduced-motion`. Verified live. |
-| E5 | Per-case-study OG image (share a case, get its screenshot as the card) | ⬜ your OK · ~1 h + assets |
+| E5 | Per-case-study OG image (share a case, get its screenshot as the card) | ✅ done (`480fefe`) — 17 bespoke **1200×630** share cards in `assets/og/case-*.jpg` (brand card: sector eyebrow + case name + byline + gradient spine + that case's own hero screenshot) and 17 **static pages at real URLs** `…/portfolio/work/<id>/` carrying per-case `<title>` / description / OG / Twitter / canonical, then redirecting a human into the SPA. `sitemap.xml` lists all 17. Verified live (pages 200, images 1200×630, redirect lands on the right case). **Note:** the rich card shows on the *clean* URL (`…/work/<id>/`) — that's the one to paste into a post / application. The in-app hash URL (`…/#/work/<id>`) still unfurls with the site-level card, because scrapers ignore `#`. |
+
+> **E5 follow-up (optional, your call):** to make the *address-bar* URL of a case also the shareable one, the SPA would need real-path routing instead of `#/` hashes — a bigger change. Cheaper half-measures: a "copy share link" button on each case page that copies the clean URL, or point the "View Case Study" buttons at the clean URLs (costs one extra redirect on click). None are needed for the cards to work — they're about which URL people copy.
 
 ---
 
@@ -178,7 +180,9 @@ line is backed by the 2026 CV.
 3. Re-run Lighthouse in **Incognito** (EN and AR); paste scores into §7.
 4. Skim the Arabic side — especially the hero H1 wording (E2).
 
-**Then, if you want them:** greenlight any of E1–E5, decide Q7/Q8/Q11/Q12, send hi-res images (Q15).
+5. Share case studies using the **clean URLs** — `https://omnia-amer.github.io/portfolio/work/<case-id>/` — to get the per-case preview card (list of ids in `sitemap.xml`).
+
+**E1–E5 are all done.** Still open: decide Q7/Q8/Q11/Q12, send hi-res images (Q15), regenerate `og-image.png` with the current 17 / 8 numbers, optional E5 follow-up (§5).
 
 ---
 
@@ -202,4 +206,5 @@ line is backed by the 2026 CV.
 | 2026-09-05 | **E1 + E2** (`c381734`) | — | — | — | — | Live: AR dict → `i18n-ar.js`; EN load fetches **0** bytes of it, AR toggle fetches it **once**, `?lang=ar` loads it synchronously (no flash); `index.html` 390→223 KB; AR hero fixed; 7/7 AR routes, 0 broken imgs, 0 JS errors |
 | 2026-09-05 | **E3** (`f4efe81`) | — | — | — | — | Live: `/portfolio/ar/` returns 200 with Arabic `<title>` + `og:locale=ar_AR` + refresh→`?lang=ar`; main-page toggle swaps `<title>`/`meta description`/`og:locale` EN↔AR both directions, 0 JS errors; sitemap + head `hreflang` updated |
 | 2026-09-06 | **E4** (`d2fa660`) | — | — | — | — | Live (case-saso, case-qnl, case-gama): screenshot → overlay opens, counter `n / N`, next/prev step + disable at ends, caption = `alt`, Esc + backdrop + route-change all close, focus restores to the thumbnail, scroll-lock toggles, 0 JS errors; RTL: Arabic button labels + `ArrowLeft`=next; home page has 0 wired shots (guard OK) |
+| 2026-09-06 | **E5** (`480fefe`) | — | — | — | — | Live: 17 `work/<id>/` pages return 200 with per-case `<title>` + `og:title/description/image` + canonical; 17 `assets/og/case-*.jpg` serve as `image/jpeg` 1200×630; `work/case-manateq/` redirect lands on `#/work/case-manateq` and renders that case; `sitemap.xml` has 18 `<loc>` |
 | _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` (do it in EN and AR) |
