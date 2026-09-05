@@ -3,10 +3,95 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://omnia-amer.github.io/portfolio/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <xhtml:link rel="alternate" hreflang="en" href="https://omnia-amer.github.io/portfolio/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omnia-amer.github.io/portfolio/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omnia-amer.github.io/portfolio/"/>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-qnl/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-gama/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-grsia/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-qu/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-saso/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-mcit/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-mecc/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-joodeskan/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-joodeskan-kiosk/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-optimumvision/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-trags/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-mehrab/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-qpmc/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-ccq/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-surah/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-manateq/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-qsl/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
   </url>
 </urlset>
