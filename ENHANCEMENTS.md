@@ -149,7 +149,7 @@ line is backed by the 2026 CV.
 | **"Improve image delivery" (~258 KiB)** | ❌ Declined — max quality wanted. Accepted trade-off. | Q15 |
 | **"Efficient cache lifetimes" (~369 KiB)** | ⛔ Impossible on bare GitHub Pages (fixed 10-min cache, no custom headers). Needs Cloudflare / Netlify. | Q8 |
 | **Hi-res images** | Sources are 480–1150 px. Can't upscale to 4K here. If you have Figma @2×/@3× or full-res exports, drop them into `assets/img/` (same filenames) → I update dimensions. | Q15 |
-| **og-image font** | Current `og-image.png` uses a metric-compatible fallback, not real Outfit. Cosmetic. | Q11 |
+| ~~**og-image numbers / font**~~ | ✅ done (`76000a4`) — `og-image.png` rebuilt at 1200×630 with **17 SHIPPED PRODUCTS · 8 NATIONAL INSTITUTIONS**, real Outfit + IBM Plex Mono, and the current gradient-sparkle mark (was the old placeholder). `og:image`/`twitter:image` carry `?v=2` so scrapers re-fetch. | Q11 |
 | **Light theme** | Big effort; site is dark by design. Likely skip. | Q12 |
 
 ### Smaller polish
@@ -182,7 +182,7 @@ line is backed by the 2026 CV.
 
 5. Share case studies using the **clean URLs** — `https://omnia-amer.github.io/portfolio/work/<case-id>/` — to get the per-case preview card (list of ids in `sitemap.xml`).
 
-**E1–E5 are all done.** Still open: decide Q7/Q8/Q11/Q12, send hi-res images (Q15), regenerate `og-image.png` with the current 17 / 8 numbers, optional E5 follow-up (§5).
+**E1–E5 are all done; `og-image.png` regenerated (17 / 8).** Still open: decide Q7/Q8/Q12, send hi-res images (Q15), optional E5 follow-up (§5). After the LinkedIn/social card matters to you, run it through the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) once to force a re-scrape of the new card.
 
 ---
 
@@ -207,4 +207,5 @@ line is backed by the 2026 CV.
 | 2026-09-05 | **E3** (`f4efe81`) | — | — | — | — | Live: `/portfolio/ar/` returns 200 with Arabic `<title>` + `og:locale=ar_AR` + refresh→`?lang=ar`; main-page toggle swaps `<title>`/`meta description`/`og:locale` EN↔AR both directions, 0 JS errors; sitemap + head `hreflang` updated |
 | 2026-09-06 | **E4** (`d2fa660`) | — | — | — | — | Live (case-saso, case-qnl, case-gama): screenshot → overlay opens, counter `n / N`, next/prev step + disable at ends, caption = `alt`, Esc + backdrop + route-change all close, focus restores to the thumbnail, scroll-lock toggles, 0 JS errors; RTL: Arabic button labels + `ArrowLeft`=next; home page has 0 wired shots (guard OK) |
 | 2026-09-06 | **E5** (`480fefe`) | — | — | — | — | Live: 17 `work/<id>/` pages return 200 with per-case `<title>` + `og:title/description/image` + canonical; 17 `assets/og/case-*.jpg` serve as `image/jpeg` 1200×630; `work/case-manateq/` redirect lands on `#/work/case-manateq` and renders that case; `sitemap.xml` has 18 `<loc>` |
+| 2026-09-06 | CV link + og-image (`cadb573`, `76000a4`) | — | — | — | — | CV: both artifact links → site, old URL gone from text layer, other links intact (pdf.js). `og-image.png` live 1200×630, `17 / 8` numbers, `?v=2` on meta |
 | _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` (do it in EN and AR) |
