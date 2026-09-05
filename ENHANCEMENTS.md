@@ -1,8 +1,34 @@
 # Portfolio — Status & Plan
 
-Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-02
+Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-05
 
 Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ declined
+
+---
+
+## Bilingual (English / Arabic) — merged 2026-09-05 (`6de797d`)
+
+The artifact gained a **language toggle** (عربي / EN). Merged into the deployed site:
+- Header toggle button; choice persists in `localStorage`, applied on load.
+- `I18N_AR` dictionary + a DOM text-node swap that also flips `<html lang dir>`.
+- **Extended** beyond the artifact: the toggle now also translates the contact-form
+  labels, `<option>`s, placeholders, `aria-label`s and the skip link (~25 keys the
+  artifact's dict predated), and the submit-status messages are bilingual.
+- RTL CSS: IBM Plex Sans Arabic font stack (non-blocking `<link>`), mirrored spacing,
+  brand wordmark + numeric runs pinned LTR, `og:locale:alternate`, `<html dir="ltr">`.
+
+**Verified (local server):** EN + AR, all 23 routes render, toggle round-trips,
+0 broken images in both modes, 0 JS errors, form + FAQ + case studies all translate.
+
+**Known Arabic-copy nit (your call, it's your translation):** the hero H1 renders
+"…لـالمؤسسات…" — the `لـ` prefix doesn't contract with the following `ال`. Fix that
+one dictionary entry in the artifact if it bothers you.
+
+**Size:** `index.html` 216 KB → 390 KB (the AR dictionary is ~165 KB of that; gzips to
+~45 KB over the wire). If it grows further, split the dict into an async `i18n.js`.
+
+Also this session: `rel="me"` links, `sitemap.xml` `<lastmod>`, `<meta description>`
+trimmed to ~165 chars.
 
 ---
 
@@ -48,7 +74,8 @@ Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-
 | Area | Status | Notes |
 |------|--------|-------|
 | Site live & public | ✅ | GitHub Pages, HTTPS enforced |
-| Page weight | ✅ | 14 MB → **192 KB** — images/video/CV moved to `assets/` |
+| **Bilingual EN / AR** | ✅ verified | header toggle, full RTL, localStorage-persisted; all routes + contact form translate |
+| Page weight | ✅ | 14 MB → 192 KB (core); **390 KB** with the inline AR dictionary (~45 KB gzipped) |
 | Image performance | ✅ | intrinsic `width`/`height` + `loading` tuned on all 141 images; **CLS 0** |
 | Social share card | ✅ | OG + Twitter + `og-image.png`; descriptions ≥ 100 chars (LinkedIn clean) |
 | SEO | ✅ | canonical, JSON-LD `Person`, `robots.txt`, `sitemap.xml` — Lighthouse SEO **100** |
@@ -181,4 +208,8 @@ Inventing metrics for a job-search portfolio would be fabricating credentials �
 | 2026-09-02 | branding + form v1 (`…6e677c4`) | — | — | — | — | sparkle favicon + logo mark; WhatsApp form; GoatCounter loads |
 | 2026-09-02 | pipeline (`14ac6a7`, `7b9abae`) | — | — | — | — | FormSubmit `success:true`; GoatCounter 200; real-Chrome: form → WhatsApp with full message (3×); 8 routes render; 141 imgs 0 broken; 0 site errors |
 | 2026-09-02 | **email-first form** (`6906ac2`) | — | — | — | — | Real Chrome: "Send message" → **"Message sent ✓"**, form resets, POST `{"success":"true"}`. 2 test emails to Omniaamer835@gmail.com. |
-| _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` |
+| 2026-09-05 | artifact merge (`774206f`) | — | — | — | — | 2 new case studies + all `todo` filled; 23 routes render; 159 imgs 0 broken; 0 todos; 0 JS errors; contact form + FAQ verified |
+| 2026-09-05 | CV + roles (`b9abfcf`) | — | — | — | — | new 2026 CV live (`application/pdf`, 134 KB); per-engagement titles from CV verified live |
+| 2026-09-05 | **bilingual EN/AR** (`6de797d`) | — | — | — | — | Local server: 11/11 routes both langs, toggle round-trips, 0 broken imgs, 0 JS errors, form/FAQ/case studies translate, `dir`/`lang`/localStorage correct |
+| 2026-09-05 | polish | — | — | — | — | `rel="me"` ×3, sitemap `<lastmod>`, meta description → ~165 chars, `<html dir="ltr">` |
+| _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` (do it in EN and AR) |
