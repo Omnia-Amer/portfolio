@@ -7,6 +7,9 @@
 <meta name="description" content="Senior UI/UX Designer — bilingual (Arabic/English) government and enterprise product design across Qatar, Saudi Arabia and the UAE. 17 shipped, 8 for national institutions.">
 <meta name="author" content="Omnia Amer">
 <link rel="canonical" href="https://omnia-amer.github.io/portfolio/">
+<link rel="alternate" hreflang="en" href="https://omnia-amer.github.io/portfolio/">
+<link rel="alternate" hreflang="ar" href="https://omnia-amer.github.io/portfolio/?lang=ar">
+<link rel="alternate" hreflang="x-default" href="https://omnia-amer.github.io/portfolio/">
 <link rel="me" href="https://linkedin.com/in/omni-aamer/">
 <link rel="me" href="https://behance.net/omnia-amer">
 <link rel="me" href="https://dribbble.com/Omniaamer">
@@ -2712,7 +2715,13 @@
       });
     });
     try{ document.dispatchEvent(new CustomEvent('langchange', {detail:{lang:lang}})); }catch(e){}
-try{ localStorage.setItem('omnia_lang', lang); }catch(e){}
+    try{ localStorage.setItem('omnia_lang', lang); }catch(e){}
+    // keep a shareable ?lang=ar in the URL (so an Arabic link opens in Arabic)
+    try{
+      var u = new URL(location.href);
+      if(isAr){ u.searchParams.set('lang','ar'); } else { u.searchParams.delete('lang'); }
+      history.replaceState(null, '', u.pathname + (u.search ? u.search : '') + u.hash);
+    }catch(e){}
   }
 
   document.querySelectorAll('.lang-toggle').forEach(function(b){
@@ -2723,7 +2732,10 @@ try{ localStorage.setItem('omnia_lang', lang); }catch(e){}
   });
 
   var saved = 'en';
-  try{ saved = localStorage.getItem('omnia_lang') || 'en'; }catch(e){}
+  try{
+    var qp = new URLSearchParams(location.search).get('lang');
+    saved = (qp === 'ar' || qp === 'en') ? qp : (localStorage.getItem('omnia_lang') || 'en');
+  }catch(e){}
   applyLang(saved);
 })();
 
