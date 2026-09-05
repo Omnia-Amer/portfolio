@@ -20,12 +20,9 @@ The artifact gained a **language toggle** (عربي / EN). Merged into the deplo
 **Verified (local server):** EN + AR, all 23 routes render, toggle round-trips,
 0 broken images in both modes, 0 JS errors, form + FAQ + case studies all translate.
 
-**Known Arabic-copy nit (your call, it's your translation):** the hero H1 renders
-"…لـالمؤسسات…" — the `لـ` prefix doesn't contract with the following `ال`. Fix that
-one dictionary entry in the artifact if it bothers you.
-
-**Size:** `index.html` 216 KB → 390 KB (the AR dictionary is ~165 KB of that; gzips to
-~45 KB over the wire). If it grows further, split the dict into an async `i18n.js`.
+**Follow-ups (all done — see §5 Enhancements):** hero H1 wording fixed (E2); AR
+dictionary split into async `i18n-ar.js`, `index.html` back to 223 KB (E1); `<title>`
+/ meta / OG translated for Arabic shares + static `/ar/` landing page (E3).
 
 Also this session: `rel="me"` links, `sitemap.xml` `<lastmod>`, `<meta description>`
 trimmed to ~165 chars.
@@ -167,7 +164,7 @@ line is backed by the 2026 CV.
 |---|-------------|--------|
 | E1 | Split the AR dictionary into `i18n-ar.js` | ✅ done (`c381734`) — `index.html` 390 KB → **223 KB**; English loads fetch 0 bytes of it; loads once on first switch to Arabic (or synchronously on a `?lang=ar` entry — no flash). Verified live. |
 | E2 | Fix the AR hero-H1 contraction | ✅ done (`c381734`) — now "تصميم واجهات للمؤسسات التي يضع الناس ثقتهم فيها." Verified live. |
-| E3 | Translate `<title>` / `<meta description>` for AR shares (or a lightweight AR OG image) | ⬜ your OK · ~30 min |
+| E3 | Translate `<title>` / `<meta description>` for AR shares | ✅ done (`f4efe81`) — `applyMeta()` swaps title/description/OG/Twitter/`og:locale` EN↔AR on toggle; new static `ar/index.html` carries full Arabic OG/Twitter meta for social scrapers and redirects humans to `/portfolio/?lang=ar`; head `hreflang="ar"` → `/portfolio/ar/`; sitemap `xhtml:link` alternates. Verified live. |
 | E4 | Case-study **image lightbox / zoom** (screenshots are dense; click-to-enlarge) | ⬜ your OK · ~2 h |
 | E5 | Per-case-study OG image (share a case, get its screenshot as the card) | ⬜ your OK · ~1 h + assets |
 
@@ -203,4 +200,5 @@ line is backed by the 2026 CV.
 | 2026-09-05 | **bilingual EN/AR** (`6de797d`) | — | — | — | — | Local server: 11/11 routes both langs, toggle round-trips, 0 broken imgs, 0 JS errors, form/FAQ/case studies translate, `dir`/`lang`/localStorage correct |
 | 2026-09-05 | polish | — | — | — | — | `rel="me"` ×3, sitemap `<lastmod>`, meta description → ~165 chars, `<html dir="ltr">` |
 | 2026-09-05 | **E1 + E2** (`c381734`) | — | — | — | — | Live: AR dict → `i18n-ar.js`; EN load fetches **0** bytes of it, AR toggle fetches it **once**, `?lang=ar` loads it synchronously (no flash); `index.html` 390→223 KB; AR hero fixed; 7/7 AR routes, 0 broken imgs, 0 JS errors |
+| 2026-09-05 | **E3** (`f4efe81`) | — | — | — | — | Live: `/portfolio/ar/` returns 200 with Arabic `<title>` + `og:locale=ar_AR` + refresh→`?lang=ar`; main-page toggle swaps `<title>`/`meta description`/`og:locale` EN↔AR both directions, 0 JS errors; sitemap + head `hreflang` updated |
 | _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` (do it in EN and AR) |
