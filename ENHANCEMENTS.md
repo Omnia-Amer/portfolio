@@ -165,7 +165,7 @@ line is backed by the 2026 CV.
 | E1 | Split the AR dictionary into `i18n-ar.js` | ✅ done (`c381734`) — `index.html` 390 KB → **223 KB**; English loads fetch 0 bytes of it; loads once on first switch to Arabic (or synchronously on a `?lang=ar` entry — no flash). Verified live. |
 | E2 | Fix the AR hero-H1 contraction | ✅ done (`c381734`) — now "تصميم واجهات للمؤسسات التي يضع الناس ثقتهم فيها." Verified live. |
 | E3 | Translate `<title>` / `<meta description>` for AR shares | ✅ done (`f4efe81`) — `applyMeta()` swaps title/description/OG/Twitter/`og:locale` EN↔AR on toggle; new static `ar/index.html` carries full Arabic OG/Twitter meta for social scrapers and redirects humans to `/portfolio/?lang=ar`; head `hreflang="ar"` → `/portfolio/ar/`; sitemap `xhtml:link` alternates. Verified live. |
-| E4 | Case-study **image lightbox / zoom** (screenshots are dense; click-to-enlarge) | ⬜ your OK · ~2 h |
+| E4 | Case-study **image lightbox / zoom** (screenshots are dense; click-to-enlarge) | ✅ done (`d2fa660`) — click / Enter / Space any case-study screenshot → full-size overlay with prev·next (scoped to that case page), counter, caption from `alt`, Esc / backdrop close, focus trap + restore, body-scroll lock. Screenshots are now `role="button"` + `tabindex=0` + `aria-label`. RTL-aware; closes on route change; honours `prefers-reduced-motion`. Verified live. |
 | E5 | Per-case-study OG image (share a case, get its screenshot as the card) | ⬜ your OK · ~1 h + assets |
 
 ---
@@ -201,4 +201,5 @@ line is backed by the 2026 CV.
 | 2026-09-05 | polish | — | — | — | — | `rel="me"` ×3, sitemap `<lastmod>`, meta description → ~165 chars, `<html dir="ltr">` |
 | 2026-09-05 | **E1 + E2** (`c381734`) | — | — | — | — | Live: AR dict → `i18n-ar.js`; EN load fetches **0** bytes of it, AR toggle fetches it **once**, `?lang=ar` loads it synchronously (no flash); `index.html` 390→223 KB; AR hero fixed; 7/7 AR routes, 0 broken imgs, 0 JS errors |
 | 2026-09-05 | **E3** (`f4efe81`) | — | — | — | — | Live: `/portfolio/ar/` returns 200 with Arabic `<title>` + `og:locale=ar_AR` + refresh→`?lang=ar`; main-page toggle swaps `<title>`/`meta description`/`og:locale` EN↔AR both directions, 0 JS errors; sitemap + head `hreflang` updated |
+| 2026-09-06 | **E4** (`d2fa660`) | — | — | — | — | Live (case-saso, case-qnl, case-gama): screenshot → overlay opens, counter `n / N`, next/prev step + disable at ends, caption = `alt`, Esc + backdrop + route-change all close, focus restores to the thumbnail, scroll-lock toggles, 0 JS errors; RTL: Arabic button labels + `ArrowLeft`=next; home page has 0 wired shots (guard OK) |
 | _tbd_ | **Lighthouse — Incognito** | ? | ? | ? | ? | ← re-run, extensions off, `#/work/case-qnl` + `#/` (do it in EN and AR) |
