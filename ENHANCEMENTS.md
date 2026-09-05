@@ -133,28 +133,12 @@ real `:focus-visible` outlines · reduced-motion respected.
 
 ---
 
-## 4. Phase 4 — case-study content ⛔ (needs Omnia)
+## 4. Phase 4 — case-study content ✅ DONE
 
-Role, employer, and years are filled from the CV. Still `todo` on **14 case studies**
-(GAMA, GRSIA/Daman, QU, SASO, MCIT, MECC, Jood Eskan web, Jood Eskan kiosk, Optimum Vision, TRAGS, Me7rab, QPMC, CCQ; QNL needs only 2). Surah is complete.
-
-Per study, needed:
-- [ ] **The brief / constraints** you were given
-- [ ] **Your process** — research method, stakeholder sign-off, IA work, testing
-- [ ] **A result** — see Q14 below
-
-Plus the 3 `confirm` markers (unverified claims incl. a Guinness World Record reference — accurate as written? = Q3).
-
-**Fastest path:** send everything for **one** study → it's wired in as the template → you review the format → we roll through the rest → the `.todo{display:none}` line comes out.
-
-### ⚠️ Q14 — the results/metrics line (the one real blocker)
-
-The CV has **no numbers** — it's titles, employers, dates, project names. Nothing to "calculate".
-Inventing metrics for a job-search portfolio would be fabricating credentials — not doing that. Pick one:
-
-- **(a)** give real figures per project, or
-- **(b)** replace the "measurable result" sentence with a true qualitative outcome ("shipped and in production", "adopted across all N colleges" — only if true), or
-- **(c)** drop that sentence and let the work speak.
+All 17 case studies now carry a real Brief / Approach / Outcome (written by Omnia in
+the artifact, merged 2026-09-05). **0 `todo` markers left.** Outcomes are qualitative —
+no invented metrics — so Q14 is resolved by choice (b). The Guinness World Records
+line is backed by the 2026 CV.
 
 ---
 
@@ -171,27 +155,33 @@ Inventing metrics for a job-search portfolio would be fabricating credentials �
 | **og-image font** | Current `og-image.png` uses a metric-compatible fallback, not real Outfit. Cosmetic. | Q11 |
 | **Light theme** | Big effort; site is dark by design. Likely skip. | Q12 |
 
-### Smaller polish (one commit, any time)
-- Trim `<meta name="description">` to ~155 chars (currently 210 — Google truncates).
-- Add `<lastmod>` to `sitemap.xml`.
-- `rel="me"` links to LinkedIn/Behance.
-- Manual screen-reader pass (VoiceOver / NVDA).
-- Real-device check (actual iOS Safari / Android Chrome).
+### Smaller polish
+- ~~Trim `<meta name="description">`~~ ✅ done (~165 chars).
+- ~~`sitemap.xml` `<lastmod>`~~ ✅ done.
+- ~~`rel="me"` links~~ ✅ done (LinkedIn / Behance / Dribbble).
+- Manual screen-reader pass — **EN and AR** (VoiceOver / NVDA); the AR pass matters most (new RTL).
+- Real-device check — actual iOS Safari / Android Chrome, both languages.
+
+### Enhancements planned, not yet applied (need your call)
+| # | Enhancement | Effort | Needs |
+|---|-------------|--------|-------|
+| E1 | **Split the AR dictionary** into an async `i18n-ar.js` so `index.html` drops from 390 KB back to ~200 KB (loads on first toggle-to-Arabic) | ~1 h | your OK — only matters if the 390 KB bothers you |
+| E2 | Fix the AR hero-H1 contraction ("لـالمؤسسات" → "للمؤسسات") | 2 min | your wording (it's your translation — one dict entry) |
+| E3 | Translate `<title>` / `<meta description>` for AR shares (or a lightweight AR OG image) | ~30 min | your OK |
+| E4 | Case-study **image lightbox / zoom** (screenshots are dense; a click-to-enlarge would help) | ~2 h | your OK |
+| E5 | Per-case-study OG image (share a specific case, get its screenshot as the card) | ~1 h + assets | your OK |
 
 ---
 
 ## 6. Next steps
 
 **Omnia — now:**
-1. Hard-refresh the site (Ctrl+Shift+R) / use a private window — earlier "form not working" was a cached old build.
-2. Check inbox **and spam** for the FormSubmit test emails ("Omnia Self-Test"). Mark "not spam" so real enquiries land in the inbox.
-3. Delete the ~7 debug test emails/analytics hits from today.
-4. Re-run Lighthouse in **Incognito**; paste scores into §7.
-5. **Answer Q14** (results line: real numbers / qualitative / drop).
+1. Check inbox **and spam** for FormSubmit test emails; mark "not spam".
+2. Delete the debug test emails / analytics hits from testing.
+3. Re-run Lighthouse in **Incognito** (EN and AR); paste scores into §7.
+4. Skim the Arabic side — especially the hero H1 wording (E2).
 
-**Then:**
-6. Send one full case study → template → roll through the other 13.
-7. Decide Q7 / Q8 / Q11 / Q12; supply hi-res images (Q15) if you have them.
+**Then, if you want them:** greenlight any of E1–E5, decide Q7/Q8/Q11/Q12, send hi-res images (Q15).
 
 ---
 
