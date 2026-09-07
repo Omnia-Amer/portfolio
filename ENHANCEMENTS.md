@@ -48,9 +48,9 @@ not the site.
 ### Open follow-ups from this pass
 | Item | Detail |
 |------|--------|
-| ⬜ `assets/og/case-clayton.jpg` | Bespoke 1200×630 share card (E5 pattern). `card-clayton.html` (a self-contained generator, sent to Omnia) produces it — save its output to `assets/og/`, then point the stub's `og:image`/`twitter:image` back at it (currently falls back to the site-level `og-image.png?v=3`). |
+| ✅ `assets/og/case-clayton.jpg` | Bespoke 1200×630 E5-style card (magenta glow, mono eyebrow, title, gradient spine, hero screenshot bleeding right); stub's `og:image`/`twitter:image` point at it. |
 | ✅ `og-image.png` | Regenerated at **18** (`5237c44`). |
-| ⬜ Arabic review | Native-speaker pass over the 23 new Clayton `i18n-ar.js` keys + the reworded Work-page intro key. |
+| 🟡 Arabic review | End-to-end AR sweep done (`f8507ba`) — every route walked, gaps filled (Clayton keys, product-name titles/clients, `Featured Projects (08)`, Webtek). Still worth a native-speaker read of the ~30 new keys for tone. |
 | ⬜ `ar/index.html` | Says "17 منتجًا … عبر قطر والسعودية والإمارات" — left at 17 (Clayton is neither Gulf nor public-sector); confirm that's the intent, or reword. |
 | ⬜ EN vs AR count | EN meta now says "18 delivered"; AR meta stays "17". Decide whether to align. |
 | ⬜ `.cd-num` (pre-existing) | `case-joodeskan` has none; `case-joodeskan-kiosk` and `case-manateq` both show "14". Not caused by this pass. |
