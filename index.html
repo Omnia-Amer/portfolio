@@ -186,13 +186,15 @@
   .mosaic{margin-top:64px; column-count:3; column-gap:16px; max-width:1200px; width:100%; margin-left:auto; margin-right:auto;}
   @media (max-width:900px){ .mosaic{column-count:2;} }
   @media (max-width:560px){ .mosaic{column-count:1;} }
-  .mcell{position:relative; break-inside:avoid; margin-bottom:16px; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--line); background:var(--surface);}
-  .mcell img{width:100%; height:auto; filter:grayscale(1) contrast(1.06) brightness(.92); transition:filter .5s ease, transform .6s ease;}
-  .mcell:hover img{filter:grayscale(.15) contrast(1.03) brightness(1); transform:scale(1.035);}
-  .mcell .mtag{position:absolute; top:14px; left:14px; font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:rgba(0,0,0,.5); backdrop-filter:blur(6px); padding:6px 10px; border-radius:var(--radius-pill); border:1px solid rgba(255,255,255,.18);}
-  .mcell .mbtn{position:absolute; left:14px; right:14px; bottom:14px; opacity:0; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;}
+  /* uniform matte: every screenshot is inset on a consistent dark card, so tiles read
+     the same regardless of each captured site's own background colour / width */
+  .mcell{position:relative; break-inside:avoid; margin-bottom:16px; padding:8px; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--line); background:var(--surface-2);}
+  .mcell img{width:100%; height:auto; border-radius:var(--radius-md); box-shadow:0 0 0 1px rgba(255,255,255,.05); filter:grayscale(1) contrast(1.06) brightness(.92); transition:filter .5s ease, transform .6s ease;}
+  .mcell:hover img{filter:grayscale(.15) contrast(1.03) brightness(1); transform:scale(1.02);}
+  .mcell .mtag{position:absolute; top:16px; left:16px; font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:rgba(0,0,0,.5); backdrop-filter:blur(6px); padding:6px 10px; border-radius:var(--radius-pill); border:1px solid rgba(255,255,255,.18);}
+  .mcell .mbtn{position:absolute; left:16px; right:16px; bottom:16px; opacity:0; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;}
   .mcell:hover .mbtn{opacity:1; transform:translateY(0);}
-  .mcell::after{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.65), transparent 45%); opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .mcell::after{content:""; position:absolute; inset:8px; border-radius:var(--radius-md); background:linear-gradient(to top, rgba(0,0,0,.65), transparent 45%); opacity:0; transition:opacity .3s ease; pointer-events:none;}
   .mcell:hover::after{opacity:1;}
   @media (hover:none){ .mcell .mbtn{opacity:1; transform:none;} .mcell::after{opacity:1;} .mcell img{filter:grayscale(.4) contrast(1.03);} }
   .mbtn .btn{width:100%; justify-content:center; background:rgba(10,10,10,.72); backdrop-filter:blur(8px);}
