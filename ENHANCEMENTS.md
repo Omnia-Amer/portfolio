@@ -1,8 +1,45 @@
 # Portfolio — Status & Plan
 
-Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-05
+Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-07
 
 Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ declined
+
+---
+
+## Artifact reconciliation + 18th case study — 2026-09-07 (working tree, uncommitted)
+
+Diffed the deployed site against the design master (artifact `41d66502…`). **CSS / design
+system: zero drift** — every departure (non-blocking fonts, `--ink-faint` .40→.55 for AA,
+sparkle mark, a11y block, contact-form CSS, RTL rules, E4 lightbox) is a documented
+improvement. All 17 shared case narratives are byte-identical to the artifact.
+
+**Ported the one thing the site was missing — `case-clayton`** (Clayton Art House, craft
+studio, Alexandria/Egypt, freelance, 2023), which the artifact had in full and the repo had
+nowhere:
+- `assets/img/160–167.jpg` — 8 case screenshots (decoded from the artifact's base64, all 900w);
+  `assets/img/168.jpg` — mosaic crop (654×805).
+- `index.html` — new `#/work/case-clayton` detail page (cd-num 16, verbatim brief/approach/
+  outcome + 8 captions); home mosaic tile (→ 18); `#/work` card under **Featured Projects (08)**;
+  **stat tile 17 → 18**; 3 `<meta>` descriptions 17 → 18 (Gulf/gov prose kept per Omnia).
+- `work/case-clayton/index.html` — E5 static SEO stub + redirect.
+- `sitemap.xml` — `case-clayton` entry (18 case URLs now).
+- `i18n-ar.js` — +23 Arabic keys covering every Clayton string (h3, tag, meta, 8 captions,
+  3 copy paragraphs, mosaic/card labels). **Needs a native-speaker review before it ships.**
+
+**Role labels:** artifact has 6 inconsistent variants; deployed site's normalized 2
+(`UX/UI Consultant` ×13, `UI/UX Designer` ×4, per the CV) is the keeper — **fix the artifact**,
+not the site.
+
+### Open follow-ups from this pass
+| Item | Detail |
+|------|--------|
+| ⬜ `assets/og/case-clayton.jpg` | Bespoke 1200×630 share card (E5 pattern). Couldn't render one in this environment; `card-clayton.html` (a self-contained generator) produces it — save its output to `assets/og/`, then point the stub's `og:image`/`twitter:image` back at it (currently falls back to the site-level `og-image.png`). |
+| ⬜ `og-image.png` | Still reads "17 SHIPPED PRODUCTS" — regenerate at **18**. |
+| ⬜ Arabic review | Native-speaker pass over the 23 new `i18n-ar.js` keys. |
+| ⬜ `ar/index.html` | Says "17 منتجًا … عبر قطر والسعودية والإمارات" — left at 17 (Clayton is neither Gulf nor public-sector); confirm that's the intent, or reword. |
+| ⬜ EN vs AR count | EN meta now says "18 delivered"; AR meta stays "17". Decide whether to align. |
+| ⬜ `.cd-num` (pre-existing) | `case-joodeskan` has none; `case-joodeskan-kiosk` and `case-manateq` both show "14". Not caused by this pass. |
+| ⬜ "2 Countries delivered in" stat | Clayton adds Egypt; the artifact still shows "2". Confirm the intended number. |
 
 ---
 

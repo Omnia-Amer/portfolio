@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://omnia-amer.github.io/portfolio/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <xhtml:link rel="alternate" hreflang="en" href="https://omnia-amer.github.io/portfolio/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omnia-amer.github.io/portfolio/ar/"/>
@@ -92,6 +92,11 @@
   <url>
     <loc>https://omnia-amer.github.io/portfolio/work/case-qsl/</loc>
     <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://omnia-amer.github.io/portfolio/work/case-clayton/</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
