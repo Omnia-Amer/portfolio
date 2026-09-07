@@ -305,8 +305,8 @@
   .pcard .pshot .pending{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px;}
   .pcard .pbody{padding:24px;}
   .pcard .ptop{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;}
-  .pcard h4{font-size:17px; font-weight:500;}
-  .pcard .ptag{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap;}
+  .pcard h4{font-size:17px; font-weight:500; flex:1 1 auto; min-width:0;}
+  .pcard .ptag{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; text-align:right;}
   .pcard p{margin:0 0 16px; color:var(--ink-soft); font-size:13.5px; line-height:1.55;}
   .pcard .btn{width:100%; justify-content:center;}
 
