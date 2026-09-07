@@ -170,7 +170,8 @@
   .btn-row{display:flex; gap:16px; flex-wrap:wrap;}
 
   /* ---- hero ---- */
-  .hero{padding:168px 0 0;}
+  .hero{padding:168px 0 104px;}
+  @media (max-width:720px){ .hero{padding:120px 0 64px;} }
   .hero .wrap{display:flex; flex-direction:column; align-items:center; text-align:center; gap:24px;}
   .hero h1{font-size:clamp(38px,6.6vw,74px); line-height:1.06; letter-spacing:-.015em; max-width:920px;}
   .hero h1 em{font-style:normal; color:var(--ink-faint);}
