@@ -6,12 +6,27 @@ Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ decl
 
 ---
 
-## Artifact reconciliation + 18th case study — 2026-09-07 (working tree, uncommitted)
+## Artifact reconciliation + 18th case study + polish — 2026-09-07 (shipped)
+
+Commits `8b3f3fd` · `5237c44` · `e26724a` · `d6cc139` · `9e29b31` · `5c2685e` — all live.
 
 Diffed the deployed site against the design master (artifact `41d66502…`). **CSS / design
 system: zero drift** — every departure (non-blocking fonts, `--ink-faint` .40→.55 for AA,
 sparkle mark, a11y block, contact-form CSS, RTL rules, E4 lightbox) is a documented
 improvement. All 17 shared case narratives are byte-identical to the artifact.
+
+**Polish pass (same day):**
+- `og-image.png` regenerated at **18 SHIPPED PRODUCTS** (was 17); `?v=2`→`?v=3` everywhere.
+- Work-page intro "Seventeen … enterprise" → "Eighteen … enterprise and lifestyle".
+- **Hero**: added bottom padding (`168px 0 104px` / `120px 0 64px`) — the project mosaic
+  was sitting flush against the `#impact` divider line.
+- **Mosaic**: uniform matte — every `.mcell` insets its screenshot 8px on a `--surface-2`
+  card with concentric radii, so tiles read consistently regardless of each captured
+  site's own background (QNL grey margins vs SASO white bleed etc.).
+- **8-point grid**: snapped off-grid spacing (forms, skills, tool badges, footer, skip
+  link, lightbox, `.mtag`) to multiples of 8. `.wrap` 135px gutter kept by request;
+  deliberate 2px cell-divider gaps and 1px borders left alone.
+- AR: "Saudi Azm" → **عزم السعودية** (was أزم السعودية).
 
 **Ported the one thing the site was missing — `case-clayton`** (Clayton Art House, craft
 studio, Alexandria/Egypt, freelance, 2023), which the artifact had in full and the repo had
@@ -33,13 +48,14 @@ not the site.
 ### Open follow-ups from this pass
 | Item | Detail |
 |------|--------|
-| ⬜ `assets/og/case-clayton.jpg` | Bespoke 1200×630 share card (E5 pattern). Couldn't render one in this environment; `card-clayton.html` (a self-contained generator) produces it — save its output to `assets/og/`, then point the stub's `og:image`/`twitter:image` back at it (currently falls back to the site-level `og-image.png`). |
-| ⬜ `og-image.png` | Still reads "17 SHIPPED PRODUCTS" — regenerate at **18**. |
-| ⬜ Arabic review | Native-speaker pass over the 23 new `i18n-ar.js` keys. |
+| ⬜ `assets/og/case-clayton.jpg` | Bespoke 1200×630 share card (E5 pattern). `card-clayton.html` (a self-contained generator, sent to Omnia) produces it — save its output to `assets/og/`, then point the stub's `og:image`/`twitter:image` back at it (currently falls back to the site-level `og-image.png?v=3`). |
+| ✅ `og-image.png` | Regenerated at **18** (`5237c44`). |
+| ⬜ Arabic review | Native-speaker pass over the 23 new Clayton `i18n-ar.js` keys + the reworded Work-page intro key. |
 | ⬜ `ar/index.html` | Says "17 منتجًا … عبر قطر والسعودية والإمارات" — left at 17 (Clayton is neither Gulf nor public-sector); confirm that's the intent, or reword. |
 | ⬜ EN vs AR count | EN meta now says "18 delivered"; AR meta stays "17". Decide whether to align. |
 | ⬜ `.cd-num` (pre-existing) | `case-joodeskan` has none; `case-joodeskan-kiosk` and `case-manateq` both show "14". Not caused by this pass. |
 | ⬜ "2 Countries delivered in" stat | Clayton adds Egypt; the artifact still shows "2". Confirm the intended number. |
+| ⬜ Role labels in the artifact | 6 inconsistent variants; the site's normalized 2 are the keeper — republish the artifact to match. |
 
 ---
 
