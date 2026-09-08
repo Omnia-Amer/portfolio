@@ -5,17 +5,22 @@ Personal portfolio site for Omnia Amer, Senior UI/UX Designer.
 **Live:** <https://omnia-amer.github.io/portfolio/>
 
 Static site, no build step. Hash-routed single-page app (`index.html` + inline CSS/JS)
-with assets served from `assets/`.
+with assets served from `assets/`. Bilingual: English + Arabic (RTL) via a header
+toggle, with the Arabic strings in `i18n-ar.js` (lazy-loaded on first switch to عربي,
+persisted in `localStorage`).
 
 ## Structure
 
 | Path | What |
 |------|------|
 | `index.html` | The whole site — markup, styles, and the client-side router |
-| `assets/img/` | Case-study screenshots (`001.jpg` … `141.jpg`) |
+| `i18n-ar.js` | Arabic translation dictionary + RTL text-node swap |
+| `assets/img/` | Case-study screenshots (`001.jpg` … `168.jpg`) + client logos (`logo-*.png/.svg`) |
 | `assets/media/` | Case-study video clips (webm + mp4) |
-| `assets/Omnia_Amer_CV.pdf` | CV, linked from the "Download CV" buttons |
-| `favicon.svg` · `og-image.png` | Tab icon (sparkle) and social-share card |
+| `assets/og/` | Per-case 1200×630 social-share cards (`case-*.jpg`) |
+| `assets/Omnia_Amer_CV_2026.pdf` | CV, linked from the "Download CV" buttons (`?v=2` cache-bust). `assets/Omnia_Amer_CV.pdf` is a legacy-name copy of the same file. |
+| `work/<case-id>/` · `ar/` | Static SEO stubs — real URLs with per-page `<title>`/OG meta that redirect a human into the SPA |
+| `favicon.svg` · `og-image.png` | Tab icon (sparkle) and site-level social-share card |
 | `robots.txt` · `sitemap.xml` · `404.html` | SEO + SPA fallback redirect |
 | `ENHANCEMENTS.md` | Status, plan, and open decisions |
 
@@ -50,5 +55,5 @@ Then open <http://localhost:8000/>.
 
 - `.nojekyll` is present so Pages serves every file as-is.
 - The site is dark-theme only, by design.
-- Case studies still contain `<mark class="todo">` placeholders, hidden via
-  `.todo{display:none}` until the real detail is written in (see `ENHANCEMENTS.md`, Phase 4).
+- Every case study carries real Brief / Approach / Outcome copy — the old
+  `<mark class="todo">` placeholders are gone (see `ENHANCEMENTS.md`, Phase 4).

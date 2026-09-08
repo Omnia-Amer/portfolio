@@ -1,8 +1,29 @@
 # Portfolio — Status & Plan
 
-Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-07
+Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-08
 
 Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ declined
+
+---
+
+## Polish pass 2 — 2026-09-08 (shipped)
+
+Commits `947721c` · `e1bdf3d` · `754d09b` · `3322b97` · `5a0bcb9` · `5e68ab3` — all live.
+
+- **CV updated** to the 2026-09 version — `assets/Omnia_Amer_CV_2026.pdf` (58 KB, was
+  the 134 KB 2026-09-05 text CV); `assets/Omnia_Amer_CV.pdf` kept as a legacy-name copy.
+  Both "Download CV" links now carry `?v=2`. Changes vs the prior CV are wording /
+  formatting only (present-tense bullets, "Serving as a UI/UX Consultant") — no new
+  roles or projects, so no case-study copy drifted. **Closes Q6.**
+- **Client logos** in the case headers (`.cd-logo`): QNL (`assets/img/logo-qnl.png`,
+  white PNG) and Manateq (`assets/img/logo-manateq.svg`, white vector). Progress table
+  in the 2026-09-07 pass.
+- **Trust row** — client names fill with the brand gradient on hover / focus (was a
+  flat colour swap).
+- **Work grid** — the sector label (`.ptag`) ellipsises instead of hard-clipping when
+  it collides with the project name.
+- **Contact form (AR)** — fixed a 10 000 px phantom horizontal scroll on `/contact`:
+  the honeypot field used `left:-9999px`; swapped to a clip-rect visually-hidden style.
 
 ---
 
@@ -153,7 +174,7 @@ Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-
 | **Analytics** | ✅ verified | GoatCounter at `omnia.goatcounter.com` — count returns 200, SPA routes tracked |
 | **Favicon + logo mark** | ✅ | colourful gradient sparkle (✨) + gold twinkle; logo mark matches, spins on hover |
 | Case-study role / year / employer | ✅ | from the 2026 CV — "UX/UI Consultant" for Mannai/Azm engagements, "UI/UX Designer" for AZM X/Alborhan/Webtek; years + employers per CV |
-| CV file | ✅ | `assets/Omnia_Amer_CV.pdf` = the current 2026 text CV (134 KB) |
+| CV file | ✅ | `assets/Omnia_Amer_CV_2026.pdf` = the 2026-09 CV (58 KB); links carry `?v=2`. `assets/Omnia_Amer_CV.pdf` is a legacy-name copy. |
 | Case-study brief / process / results | ✅ | **all filled** (from the artifact, 2026-09-05) — qualitative outcomes, no invented metrics. 0 `todo` markers left. |
 | Lighthouse Performance | 🟡 | **58** with extensions on — contaminated; needs an Incognito re-run (see §5) |
 | Image compression / WebP | ❌ | declined — Omnia wants maximum quality / hi-res |
@@ -192,7 +213,7 @@ real `:focus-visible` outlines · reduced-motion respected.
 |---|--------|
 | Q4 · profile URLs (`behance.net/omnia-amer`, `dribbble.com/Omniaamer`, `linkedin.com/in/omni-aamer/`) | **Correct** — kept in JSON-LD + footer |
 | Q5 · phone `+20 155 809 2205` + email public | **Correct, OK to expose** |
-| Q6 · `assets/Omnia_Amer_CV.pdf` current? | **Keep for now**, will be updated — replace the file in `assets/`, same name, when ready |
+| Q6 · `assets/Omnia_Amer_CV.pdf` current? | **Done** (2026-09-08) — replaced with the 2026-09 CV as `Omnia_Amer_CV_2026.pdf` (`?v=2`); legacy name kept as a copy |
 | Q9 · analytics | **GoatCounter** — done & verified |
 | Q10 · contact form | **Done & verified** — email-first + WhatsApp secondary |
 | Q13 · GAMA + MECC = Mannai / 2024–Present | **Confirmed correct** |
