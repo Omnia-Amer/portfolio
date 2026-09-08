@@ -147,12 +147,13 @@ Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-
 
 ## TL;DR
 
-- **The site is live, fast (192 KB, down from 14 MB), accessible (Lighthouse A11y 100, SEO 100), and mobile-clean.**
+- **The site is live, fast (~240 KB core / ~55 KB gzipped, down from 14 MB), accessible (Lighthouse A11y 100, SEO 100), and mobile-clean.**
+- **Bilingual EN / عربي** — header toggle, full RTL, `localStorage`-persisted; the Arabic dictionary is a separate `i18n-ar.js` fetched only on switch to Arabic.
+- **All 18 case studies carry real Brief / Approach / Outcome copy** (0 `todo` markers). Outcomes are qualitative — no invented metrics — so Q14 is resolved by choice (b).
 - **Contact form works and is verified** — it emails Omnia (FormSubmit, activated), shows "Message sent ✓", and offers WhatsApp as a second option. Test emails were sent to Omniaamer835@gmail.com — check inbox/spam.
 - **Analytics live** at `omnia.goatcounter.com`.
 - **Favicon + logo** are now a colourful sparkle.
-- **Case-study role / employer / year are filled from the CV.** What's left is the *narrative* (brief, process) and *results* — that needs Omnia (the CV has no metrics; nothing to invent).
-- **One real decision outstanding: Q14 (metrics).** Plus optional items (custom domain, light theme, hi-res images).
+- **Open:** optional infra decisions (Q7 root URL, Q8 custom domain, Q12 light theme), hi-res images (Q15), and a native-speaker Arabic review.
 
 ---
 
@@ -162,8 +163,8 @@ Files: `index.html` 202 KB → 216 KB · `assets/img/` 141 → 159 · new `case-
 |------|--------|-------|
 | Site live & public | ✅ | GitHub Pages, HTTPS enforced |
 | **Bilingual EN / AR** | ✅ verified | header toggle, full RTL, localStorage-persisted; all routes + contact form translate |
-| Page weight | ✅ | 14 MB → 192 KB (core); **390 KB** with the inline AR dictionary (~45 KB gzipped) |
-| Image performance | ✅ | intrinsic `width`/`height` + `loading` tuned on all 141 images; **CLS 0** |
+| Page weight | ✅ | 14 MB → **~240 KB** core `index.html` (~55 KB gzipped); the Arabic dictionary is a separate **~173 KB** `i18n-ar.js` (~45 KB gzipped), fetched only on switch to عربي |
+| Image performance | ✅ | intrinsic `width`/`height` + `loading` tuned on all **168** case-study images; **CLS 0** |
 | Social share card | ✅ | OG + Twitter + `og-image.png`; descriptions ≥ 100 chars (LinkedIn clean) |
 | SEO | ✅ | canonical, JSON-LD `Person`, `robots.txt`, `sitemap.xml` — Lighthouse SEO **100** |
 | Accessibility | ✅ | contrast AA, skip link, SPA focus management, focus rings — Lighthouse A11y **100** |
