@@ -53,9 +53,25 @@ not the site.
 | 🟡 Arabic review | End-to-end AR sweep done (`f8507ba`) — every route walked, gaps filled (Clayton keys, product-name titles/clients, `Featured Projects (08)`, Webtek). Still worth a native-speaker read of the ~30 new keys for tone. |
 | ⬜ `ar/index.html` | Says "17 منتجًا … عبر قطر والسعودية والإمارات" — left at 17 (Clayton is neither Gulf nor public-sector); confirm that's the intent, or reword. |
 | ⬜ EN vs AR count | EN meta now says "18 delivered"; AR meta stays "17". Decide whether to align. |
-| ⬜ `.cd-num` (pre-existing) | `case-joodeskan` has none; `case-joodeskan-kiosk` and `case-manateq` both show "14". Not caused by this pass. |
+| ✅ `.cd-num` "14s" | `case-joodeskan-kiosk` read "14s" (typo) — now the `GWR` badge like `case-joodeskan`, since the kiosk is the same Guinness campaign (`683448b`). Numeric sequence is 01–16, no dupes. |
 | ⬜ "2 Countries delivered in" stat | Clayton adds Egypt; the artifact still shows "2". Confirm the intended number. |
 | ⬜ Role labels in the artifact | 6 inconsistent variants; the site's normalized 2 are the keeper — republish the artifact to match. |
+
+### Per-case client logos (`.cd-logo` in the `.cd-head`)
+
+The mechanism existed but only `case-surah` used it. Sourcing each client's own
+published white/mono logo, adding where it reads on the dark theme:
+
+| Client | Status |
+|--------|--------|
+| Surah | ✅ pre-existing (`assets/img/134.png`) |
+| QNL | ✅ `assets/img/logo-qnl.png` (white transparent PNG, `3322b97`) |
+| Manateq | ✅ `assets/img/logo-manateq.svg` (white vector, `3322b97`) |
+| QSL | ⬜ colour logo on a solid box; white asset is the cup crest not the wordmark — needs knockout or a compromise |
+| TRAGS | ⬜ only a 140×70 mid-tone PNG published |
+| Clayton | ⬜ logo is ~30 KB of fragmented positioned inline SVG (design-tool export) |
+| GAMA, GRSIA/Daman, QU, SASO, MCIT, MECC, QPMC, CCQ | ⬜ gov emblems — navy/gold crests; most won't sit on black at 44px without a mono/white treatment. **Omnia's own brand assets would be far better than scraped ones.** |
+| Optimum Vision, Mehrab, Jood Eskan | ⬜ not yet checked |
 
 ---
 
