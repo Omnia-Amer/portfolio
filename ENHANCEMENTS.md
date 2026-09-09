@@ -33,6 +33,25 @@ inspected directly, not taken on trust.
 - 3 new `i18n-ar.js` caption keys translated locally — **diff against the Artifact's
   dictionary when possible** to avoid wording drift.
 
+**Second image pass (2026-09-09):** validated all 148 case images MD5 + visually against
+the Artifact. Found cross-project contamination in 4 more cases — `case-qnl` (Al-Awalia +
+triplicated shot), `case-saso` (an MCIT dialog + a dupe), `case-mehrab` (Al-Awalia + GAMA),
+`case-ccq` (2× Jood Eskan + SASO homepage + a stray). Removed the wrong images (10 files),
+restored QNL's real screenshots from the Artifact, rewrote captions + AR to match. All four
+now mirror the Artifact 1:1.
+
+**Gallery port (2026-09-09):** `case-mecc` 2 → 9 images and `case-joodeskan-kiosk` 3 → 8,
+from the Artifact's expanded sets (`assets/img/169–182`), with captions + 7 new AR keys.
+`074/075.jpg` deleted. Case narratives left as-is (they already match the CV). Images are
+the Artifact's own resolution — a quality upgrade still needs Figma exports (see
+`IMAGE-SOURCES.md`).
+
+**Image quality:** re-encoding / WebP / AVIF / upscale can't add detail the low-res source
+captures never had. In-tooling re-capture is blocked (screenshots cap ~1568px, DPR 1.1, no
+full-page, no file output). `IMAGE-SOURCES.md` maps every image to where a 2× replacement
+must come from (public re-shoot / logged-in / Figma). ~67 are public re-shoots; the rest
+are Figma-only.
+
 ### ⛔ Baked into screenshots — needs Omnia (corrected export + fresh screenshot)
 Confirmed still present on GitHub Pages; not fixable by editing the site:
 | Case | Issue |

@@ -124,8 +124,10 @@ full-width shots ~1040 px → export **≥ 2080 px**; paired shots ~510 px → e
 | 067 | case-mcit | MCIT official ministry website | 🌐 `mcit.gov.qa` |
 | 072 | case-mcit | Job vacancies list | 🌐 careers — ⚠️ vacancy copy is oil-&-gas (TRAGS) lorem; fix the listing data |
 | 073 | case-mcit | "Create your account" registration | 🌐 — ⚠️ field placeholders read "Select the reporting month" |
-| 074 | case-mecc | Permits portal homepage | 🌐 `mecc.gov.qa` |
-| 075 | case-mecc | "How the platform works" | 🌐 |
+| 169 | case-mecc | Public portal homepage (hero, counters, catalogue, FAQ) | 🌐 `mecc.gov.qa` |
+| 170 | case-mecc | Sign-in (Qatari national ID) | 🌐 |
+| 176 | case-mecc | Contact Us form | 🌐 |
+| 177 | case-mecc | FAQ section | 🌐 |
 | 090 | case-trags | Corporate homepage | 🌐 `tragsqatar.com` |
 | 122 | case-ccq | Public Community Services landing (logged out) | 🌐 `community.edu.qa` |
 | 124 | case-ccq | Service Catalog (Student / Faculty toggle) | 🌐 or 🔒 (may need login) |
@@ -141,7 +143,7 @@ full-width shots ~1040 px → export **≥ 2080 px**; paired shots ~510 px → e
 | case-ccq | 127, 128, 129, 130, 132, 133 | My Tasks, My Requests, graduation-application flow, advisor review panel, success screen — student & advisor accounts |
 | case-mehrab | 099, 100 | Donor Reports Log (list + chart) |
 | case-joodeskan | 083, 084 | Donor dashboard, My Contributions |
-| case-mecc *(from the artifact's expanded set — not yet on the site)* | — | Requests dashboard, Identity & Account Management (personal + corporate), Create Delegation form, Project Details modal |
+| case-mecc | 171, 172, 173, 174, 175 | Requests dashboard, Identity & Account Management (personal + corporate), Create Delegation form, Project Details modal — *(ported from the artifact 2026-09-09; still low-res)* |
 
 ---
 
@@ -162,7 +164,7 @@ full-width shots ~1040 px → export **≥ 2080 px**; paired shots ~510 px → e
 
 | Case | Files | What it is |
 |------|-------|-----------|
-| **case-joodeskan-kiosk** | 086, 087, 088 *(+ 5 more in the artifact: Arabic idle screen, 5-preset amount screen, contactless mid-flow, thank-you, declined-card)* | Physical donation-kiosk touchscreen — not a website. **Also the biggest content gap: the site shows 3 screens, the artifact has 8.** |
+| **case-joodeskan-kiosk** | 086–088, 178–182 (all 8) | Physical donation-kiosk touchscreen — not a website. *(All 8 artifact screens ported 2026-09-09; still low-res — Figma export for a quality upgrade.)* |
 | **case-optimumvision** | 089 | "Onboarding / service categories / booking flow" composite — app screens. Higher-res version may be on your [Behance project](https://www.behance.net/gallery/159732165/OV-Optiumum-Vision-Tourism) |
 
 ---
