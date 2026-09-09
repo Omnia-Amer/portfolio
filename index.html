@@ -308,12 +308,12 @@
   .pcard .pshot img{width:100%; height:100%; object-fit:cover; object-position:center top; filter:grayscale(1) contrast(1.05); transition:filter .4s ease, transform .5s ease;}
   .pcard:hover .pshot img{filter:grayscale(.15) contrast(1.02); transform:scale(1.05);}
   .pcard .pshot .pending{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px;}
-  .pcard .pbody{padding:24px;}
-  .pcard .ptop{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;}
-  .pcard h4{font-size:17px; font-weight:500; flex:1 1 auto; min-width:0;}
-  .pcard .ptag{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; text-align:right;}
+  .pcard .pbody{padding:24px; display:flex; flex-direction:column; flex:1;}
+  .pcard .ptop{display:flex; flex-direction:column; gap:6px; margin-bottom:8px;}
+  .pcard h4{font-size:17px; font-weight:500; line-height:1.32; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.64em;}
+  .pcard .ptag{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);}
   .pcard p{margin:0 0 16px; color:var(--ink-soft); font-size:13.5px; line-height:1.55;}
-  .pcard .btn{width:100%; justify-content:center;}
+  .pcard .btn{width:100%; justify-content:center; margin-top:auto;}
 
   /* ---- detailed case studies ---- */
   .case-detail{padding:104px 0;}
@@ -545,6 +545,18 @@
         </div>
 
         <div class="mcell">
+          <a href="#/work/case-joodeskan-kiosk"><img decoding="async" src="assets/img/011.jpg" alt="Jood Eskan · Donation Kiosk" loading="lazy" width="480" height="175"></a>
+          <div class="mtag">Jood Eskan · Donation Kiosk</div>
+          <div class="mbtn"><a class="btn small" href="#/work/case-joodeskan-kiosk">View Case Study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+        </div>
+
+        <div class="mcell">
+          <a href="#/work/case-optimumvision"><img decoding="async" src="assets/img/012.jpg" alt="Optimum Vision · Dubai" loading="lazy" width="480" height="340"></a>
+          <div class="mtag">Optimum Vision · Dubai</div>
+          <div class="mbtn"><a class="btn small" href="#/work/case-optimumvision">View Case Study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+        </div>
+
+        <div class="mcell">
           <a href="#/work/case-gama"><img decoding="async" src="assets/img/004.jpg" alt="General Authority for Minors' Affairs · Qatar" loading="lazy" width="480" height="674"></a>
           <div class="mtag">General Authority for Minors' Affairs · Qatar</div>
           <div class="mbtn"><a class="btn small" href="#/work/case-gama">View Case Study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
@@ -584,18 +596,6 @@
           <a href="#/work/case-mcit"><img decoding="async" src="assets/img/010.jpg" alt="MCIT · Qatar" loading="lazy" width="480" height="762"></a>
           <div class="mtag">MCIT · Qatar</div>
           <div class="mbtn"><a class="btn small" href="#/work/case-mcit">View Case Study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
-        </div>
-
-        <div class="mcell">
-          <a href="#/work/case-joodeskan-kiosk"><img decoding="async" src="assets/img/011.jpg" alt="Jood Eskan · Donation Kiosk" loading="lazy" width="480" height="175"></a>
-          <div class="mtag">Jood Eskan · Donation Kiosk</div>
-          <div class="mbtn"><a class="btn small" href="#/work/case-joodeskan-kiosk">View Case Study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
-        </div>
-
-        <div class="mcell">
-          <a href="#/work/case-optimumvision"><img decoding="async" src="assets/img/012.jpg" alt="Optimum Vision · Dubai" loading="lazy" width="480" height="340"></a>
-          <div class="mtag">Optimum Vision · Dubai</div>
-          <div class="mbtn"><a class="btn small" href="#/work/case-optimumvision">View Case Study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
         </div>
 
         <div class="mcell">
@@ -1027,13 +1027,9 @@
           retiree-benefits programme, offering exclusive partner discounts across categories from cafes to healthcare. It's
           the most unusual piece of the system: a retail-style marketplace, with filters, sorting and pagination, carried by
           the same government authority that runs pension calculations two clicks away.</p>
-        <div class="cd-pair reveal">
-          <div class="cd-shot"><img decoding="async" src="assets/img/056.jpg" alt="Daman Media Center — the full List of Magazines archive grid" width="600" height="1196" loading="lazy"></div>
-          <div class="cd-shot"><img decoding="async" src="assets/img/057.jpg" alt="Daman — Let's Get in Touch contact page, with call, email, hours and social channels, a message form and an office map" width="600" height="653" loading="lazy"></div>
-        </div>
-        <p class="cd-caption reveal">Left &mdash; the Archive behind every magazine edition. Right &mdash; Contact Us, with
-          four ways in (phone, email, service hours, social) alongside a structured message form and the office location on
-          a map, for the pensioners and staff who still need a human.</p>
+        <div class="cd-shot reveal"><img decoding="async" src="assets/img/056.jpg" alt="Daman Media Center — the full List of Magazines archive grid" width="600" height="1196" loading="lazy"></div>
+        <p class="cd-caption reveal">The Media Center archive &mdash; a full grid of past magazine issues by date, for the
+          pensioners and staff who want to look one up.</p>
         <div class="cd-copy reveal">
           <h4 class="lbl">The Brief</h4>
           <p>GRSIA administers pensions and social insurance for Qatar's retirees and workforce, and was rolling out a new
@@ -1196,14 +1192,9 @@
           occasion, deadline, workshop, operational timeframe and international day on one shared timeline, filtered by category,
           date range or audience (all MCIT users, full-time employees only, department heads, section heads, or workers by
           department), instead of chasing updates department by department.</p>
-        <div class="cd-trio reveal">
-          <div class="cd-shot"><img decoding="async" src="assets/img/069.jpg" alt="MCIT Calendar — Admin Landing page listing every submitted item with its status and row actions" width="420" height="274" loading="lazy"></div>
-          <div class="cd-shot"><img decoding="async" src="assets/img/070.jpg" alt="MCIT Calendar — Admin Items Review with a Filter panel for status, submission date, created-by year and subcategory" width="420" height="274" loading="lazy"></div>
-          <div class="cd-shot"><img decoding="async" src="assets/img/071.jpg" alt="MCIT Calendar — Item Edited successfully confirmation" width="420" height="233" loading="lazy"></div>
-        </div>
-        <p class="cd-caption reveal">The admin review loop behind the calendar: every submitted item lands as <b>New</b>, an admin
-          filters and reviews it, approves or edits it, and gets a clear confirmation the moment a change is saved &mdash; so nothing
-          reaches the public timeline unchecked.</p>
+        <div class="cd-shot reveal"><img decoding="async" src="assets/img/071.jpg" alt="MCIT Calendar — Item Edited successfully confirmation" width="420" height="233" loading="lazy"></div>
+        <p class="cd-caption reveal">The confirmation an admin sees the moment a calendar item is saved &mdash; a clear signal
+          that a change went through before they move on to the next request.</p>
         <div class="cd-pair reveal">
           <div class="cd-shot"><img decoding="async" src="assets/img/072.jpg" alt="MCIT public website — List of job vacancies with Apply Now, and All / Saved / Applied tabs" width="600" height="721" loading="lazy"></div>
           <div class="cd-shot"><img decoding="async" src="assets/img/073.jpg" alt="MCIT public website — Create your account registration page" width="600" height="380" loading="lazy"></div>
@@ -1314,12 +1305,9 @@
         <p class="cd-caption reveal"><b>Jood 365</b> &mdash; the recurring-giving product built around our core design goal: a donor picks a
           preset daily amount (1 / 5 / 10 SAR) or types a custom figure, taps &ldquo;&#1575;&#1588;&#1578;&#1585;&#1603; &#1575;&#1604;&#1570;&#1606;&rdquo; (Subscribe Now),
           and is done &mdash; no cart, no multi-page checkout, no reason to keep scrolling.</p>
-        <div class="cd-pair reveal">
-          <div class="cd-shot"><img decoding="async" src="assets/img/081.jpg" alt="Jood Eskan — Major Donors application and contact form" width="600" height="734" loading="lazy"></div>
-          <div class="cd-shot"><img decoding="async" src="assets/img/082.jpg" alt="Jood Eskan — Report a Problem donor support form" width="600" height="715" loading="lazy"></div>
-        </div>
-        <p class="cd-caption reveal">Two lightweight tracks running alongside the main donation flow &mdash; a dedicated intake for
-          major donors giving at scale, and a direct &ldquo;report a problem&rdquo; channel so a donor never has to wonder where a concern goes.</p>
+        <div class="cd-shot reveal"><img decoding="async" src="assets/img/082.jpg" alt="Jood Eskan — Report a Problem donor support form" width="600" height="715" loading="lazy"></div>
+        <p class="cd-caption reveal">A direct &ldquo;report a problem&rdquo; channel, so a donor never has to wonder where a
+          concern about a payment or a case goes.</p>
         <div class="cd-pair reveal">
           <div class="cd-shot"><img decoding="async" src="assets/img/083.jpg" alt="Jood Eskan — donor dashboard with a donation-history chart totalling $48,574.21 and stats on beneficiaries, initiatives and donation count" width="600" height="1010" loading="lazy"></div>
           <div class="cd-shot"><img decoding="async" src="assets/img/084.jpg" alt="Jood Eskan — My Contributions tab, listing general donations by type (Zakat, Sadaqah) and housing-support donations with progress rings" width="600" height="1063" loading="lazy"></div>
@@ -2473,15 +2461,6 @@
         <div class="acc-item reveal">
           <div class="acc-head">
             <span class="acc-num">02</span>
-            <h3 style="font-size:18px;">What's your availability / notice period?</h3>
-            <span class="acc-chevron"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-          </div>
-          <div class="acc-body"><div class="acc-body-in"><p>Immediately &mdash; I'm available to start right away, with no notice period to work around. I take on full-time roles, part-time engagements, and freelance/contract projects alike, and I'm happy to shape the arrangement around what your team needs.</p></div></div>
-        </div>
-
-        <div class="acc-item reveal">
-          <div class="acc-head">
-            <span class="acc-num">03</span>
             <h3 style="font-size:18px;">Do you design bilingual Arabic/English and RTL interfaces?</h3>
             <span class="acc-chevron"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </div>
@@ -2490,7 +2469,7 @@
 
         <div class="acc-item reveal">
           <div class="acc-head">
-            <span class="acc-num">04</span>
+            <span class="acc-num">03</span>
             <h3 style="font-size:18px;">What tools do you design in?</h3>
             <span class="acc-chevron"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </div>
@@ -2499,7 +2478,7 @@
 
         <div class="acc-item reveal">
           <div class="acc-head">
-            <span class="acc-num">05</span>
+            <span class="acc-num">04</span>
             <h3 style="font-size:18px;">Can you work inside an existing design system?</h3>
             <span class="acc-chevron"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </div>
@@ -2508,7 +2487,7 @@
 
         <div class="acc-item reveal">
           <div class="acc-head">
-            <span class="acc-num">06</span>
+            <span class="acc-num">05</span>
             <h3 style="font-size:18px;">Remote, on-site, or both?</h3>
             <span class="acc-chevron"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </div>

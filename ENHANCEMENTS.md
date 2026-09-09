@@ -1,8 +1,47 @@
 # Portfolio — Status & Plan
 
-Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-08
+Live: <https://omnia-amer.github.io/portfolio/> · Repo: `Omnia-Amer/portfolio` · Updated: 2026-09-09
 
 Legend: ✅ done · 🟡 partial · ⬜ open · ⛔ blocked on Omnia · ❌ declined
+
+---
+
+## Artifact-side sync — 2026-09-09 (shipped)
+
+Ported the outstanding Artifact changes documented in `Claude outputs/` (FAQ removal,
+card-grid fix, image audit). Validated each against the repo first; suspect images were
+inspected directly, not taken on trust.
+
+- **FAQ** — removed the About-page "What's your availability / notice period?" item
+  (was 02 of 6); remaining items renumbered 02–05. Process-page accordion untouched.
+  Two `i18n-ar.js` keys removed.
+- **Work-grid cards** (`.pcard`) — adopted the Artifact's final layout: title and sector
+  tag stack vertically (no more horizontal squeeze on long tags), title line-clamps to 2
+  with a fixed `min-height`, button pinned to the card bottom (`margin-top:auto` in a
+  column-flex `.pbody`). Replaces the earlier ellipsis-only fix (`e1bdf3d`).
+- **Cross-project image mix-ups** — confirmed present and fixed (wrong image removed,
+  block collapsed to a solo `cd-shot`, caption + AR rewritten):
+  - `case-grsia` — `057.jpg` was a **QNL Gallery** page, not Daman's Contact Us.
+  - `case-mcit` — `069.jpg` + `070.jpg` were **this portfolio's own homepage**, not MCIT
+    admin screens. Solo `071.jpg` (the "Item Edited" confirmation) kept.
+  - `case-joodeskan` — `081.jpg` was a duplicate of the **Jood 365** page, not Major
+    Donors. Solo `082.jpg` (Report a Problem) kept.
+  - `assets/img/057, 069, 070, 081.jpg` deleted from the repo.
+- **Home mosaic** — grouped the Jood Eskan kiosk and Optimum Vision tiles immediately
+  after the Jood Eskan tile (they were 8 tiles adrift, reading as disordered in RTL
+  masonry). DOM reorder only.
+- 3 new `i18n-ar.js` caption keys translated locally — **diff against the Artifact's
+  dictionary when possible** to avoid wording drift.
+
+### ⛔ Baked into screenshots — needs Omnia (corrected export + fresh screenshot)
+Confirmed still present on GitHub Pages; not fixable by editing the site:
+| Case | Issue |
+|------|-------|
+| `case-gama` | `044` + `047` (and per the audit, ~5 images) — footer reads "© TechCorp", "hello@techcorp.com", "123 Tech Street, Silicon Valley"; body copy is oil-&-gas (TRAGS) placeholder |
+| `case-mcit` | `072` job-vacancy descriptions are TRAGS oil-&-gas lorem; `073` field placeholders wrong |
+| `case-qpmc` | `116` Locations map shows **San Francisco**, not Qatar |
+| `case-manateq` | billing-table image contains Vietnamese placeholder text (per audit) |
+| `case-clayton` | footer shows leftover `info@grsia.gov.qa` / `info@squareevents.com` / Lorem ipsum (per audit) |
 
 ---
 
